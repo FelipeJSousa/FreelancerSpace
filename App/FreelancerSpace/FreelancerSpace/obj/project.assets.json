@@ -2163,6 +2163,15 @@
         "runtime": {
           "lib/netstandard1.3/System.Xml.XmlSerializer.dll": {}
         }
+      },
+      "Repositorio/1.0.0": {
+        "type": "project",
+        "compile": {
+          "bin/placeholder/Repositorio.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Repositorio.dll": {}
+        }
       }
     }
   },
@@ -7467,6 +7476,11 @@
         "system.xml.xmlserializer.4.3.0.nupkg.sha512",
         "system.xml.xmlserializer.nuspec"
       ]
+    },
+    "Repositorio/1.0.0": {
+      "type": "project",
+      "path": "../Repositorio/Repositorio.csproj",
+      "msbuildProject": "../Repositorio/Repositorio.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -7475,6 +7489,7 @@
       "Microsoft.EntityFrameworkCore.SqlServer >= 5.0.4",
       "Microsoft.EntityFrameworkCore.SqlServer.Design >= 1.1.6",
       "Microsoft.EntityFrameworkCore.Tools >= 5.0.4",
+      "Repositorio >= 1.0.0",
       "System.Linq >= 4.3.0",
       "System.Linq.Expressions >= 4.3.0",
       "System.Linq.Queryable >= 4.3.0"
@@ -7506,7 +7521,11 @@
       "frameworks": {
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
-          "projectReferences": {}
+          "projectReferences": {
+            "F:\\Ylksz\\Documentos\\SI\\2021 - 01\\Projeto WebXRequisitos\\App\\FreelancerSpace\\Repositorio\\Repositorio.csproj": {
+              "projectPath": "F:\\Ylksz\\Documentos\\SI\\2021 - 01\\Projeto WebXRequisitos\\App\\FreelancerSpace\\Repositorio\\Repositorio.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

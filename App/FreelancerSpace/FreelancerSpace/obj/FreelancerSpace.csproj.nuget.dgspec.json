@@ -27,7 +27,11 @@
         "frameworks": {
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
-            "projectReferences": {}
+            "projectReferences": {
+              "F:\\Ylksz\\Documentos\\SI\\2021 - 01\\Projeto WebXRequisitos\\App\\FreelancerSpace\\Repositorio\\Repositorio.csproj": {
+                "projectPath": "F:\\Ylksz\\Documentos\\SI\\2021 - 01\\Projeto WebXRequisitos\\App\\FreelancerSpace\\Repositorio\\Repositorio.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -91,6 +95,16 @@
           },
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
         }
+      }
+    },
+    "F:\\Ylksz\\Documentos\\SI\\2021 - 01\\Projeto WebXRequisitos\\App\\FreelancerSpace\\Repositorio\\Repositorio.csproj": {
+      "restore": {
+        "projectUniqueName": "F:\\Ylksz\\Documentos\\SI\\2021 - 01\\Projeto WebXRequisitos\\App\\FreelancerSpace\\Repositorio\\Repositorio.csproj",
+        "projectName": "Repositorio",
+        "projectPath": "F:\\Ylksz\\Documentos\\SI\\2021 - 01\\Projeto WebXRequisitos\\App\\FreelancerSpace\\Repositorio\\Repositorio.csproj"
+      },
+      "frameworks": {
+        "net472": {}
       }
     }
   }
