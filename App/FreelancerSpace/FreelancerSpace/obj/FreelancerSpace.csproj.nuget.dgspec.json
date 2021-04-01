@@ -27,11 +27,7 @@
         "frameworks": {
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
-            "projectReferences": {
-              "F:\\Ylksz\\Documentos\\SI\\2021 - 01\\Projeto WebXRequisitos\\App\\FreelancerSpace\\Repositorio\\Repositorio.csproj": {
-                "projectPath": "F:\\Ylksz\\Documentos\\SI\\2021 - 01\\Projeto WebXRequisitos\\App\\FreelancerSpace\\Repositorio\\Repositorio.csproj"
-              }
-            }
+            "projectReferences": {}
           }
         },
         "warningProperties": {
@@ -43,34 +39,6 @@
       "frameworks": {
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
-          "dependencies": {
-            "Microsoft.EntityFrameworkCore.SqlServer": {
-              "target": "Package",
-              "version": "[5.0.4, )"
-            },
-            "Microsoft.EntityFrameworkCore.SqlServer.Design": {
-              "target": "Package",
-              "version": "[1.1.6, )"
-            },
-            "Microsoft.EntityFrameworkCore.Tools": {
-              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
-              "suppressParent": "All",
-              "target": "Package",
-              "version": "[5.0.4, )"
-            },
-            "System.Linq": {
-              "target": "Package",
-              "version": "[4.3.0, )"
-            },
-            "System.Linq.Expressions": {
-              "target": "Package",
-              "version": "[4.3.0, )"
-            },
-            "System.Linq.Queryable": {
-              "target": "Package",
-              "version": "[4.3.0, )"
-            }
-          },
           "imports": [
             "net461",
             "net462",
@@ -91,16 +59,6 @@
           },
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
         }
-      }
-    },
-    "F:\\Ylksz\\Documentos\\SI\\2021 - 01\\Projeto WebXRequisitos\\App\\FreelancerSpace\\Repositorio\\Repositorio.csproj": {
-      "restore": {
-        "projectUniqueName": "F:\\Ylksz\\Documentos\\SI\\2021 - 01\\Projeto WebXRequisitos\\App\\FreelancerSpace\\Repositorio\\Repositorio.csproj",
-        "projectName": "Repositorio",
-        "projectPath": "F:\\Ylksz\\Documentos\\SI\\2021 - 01\\Projeto WebXRequisitos\\App\\FreelancerSpace\\Repositorio\\Repositorio.csproj"
-      },
-      "frameworks": {
-        "net472": {}
       }
     }
   }
