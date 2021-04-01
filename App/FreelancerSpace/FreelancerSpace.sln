@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31105.61
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FreelancerSpace", "FreelancerSpace\FreelancerSpace.csproj", "{76E453EA-3011-489C-A344-205208E5263A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FreelancerSpace", "FreelancerSpace\FreelancerSpace.csproj", "{76E453EA-3011-489C-A344-205208E5263A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repositorio", "Repositorio\Repositorio.csproj", "{B1FA2967-4372-416A-920B-2089ACD70DBC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{76E453EA-3011-489C-A344-205208E5263A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{76E453EA-3011-489C-A344-205208E5263A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{76E453EA-3011-489C-A344-205208E5263A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1FA2967-4372-416A-920B-2089ACD70DBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1FA2967-4372-416A-920B-2089ACD70DBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1FA2967-4372-416A-920B-2089ACD70DBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1FA2967-4372-416A-920B-2089ACD70DBC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

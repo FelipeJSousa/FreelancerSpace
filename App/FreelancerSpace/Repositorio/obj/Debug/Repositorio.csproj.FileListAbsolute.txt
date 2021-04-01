@@ -1,0 +1,6 @@
+F:\Ylksz\Documentos\SI\2021 - 01\Projeto WebXRequisitos\App\FreelancerSpace\Repositorio\bin\Debug\Repositorio.dll
+F:\Ylksz\Documentos\SI\2021 - 01\Projeto WebXRequisitos\App\FreelancerSpace\Repositorio\bin\Debug\Repositorio.pdb
+F:\Ylksz\Documentos\SI\2021 - 01\Projeto WebXRequisitos\App\FreelancerSpace\Repositorio\obj\Debug\Repositorio.csprojAssemblyReference.cache
+F:\Ylksz\Documentos\SI\2021 - 01\Projeto WebXRequisitos\App\FreelancerSpace\Repositorio\obj\Debug\Repositorio.csproj.CoreCompileInputs.cache
+F:\Ylksz\Documentos\SI\2021 - 01\Projeto WebXRequisitos\App\FreelancerSpace\Repositorio\obj\Debug\Repositorio.dll
+F:\Ylksz\Documentos\SI\2021 - 01\Projeto WebXRequisitos\App\FreelancerSpace\Repositorio\obj\Debug\Repositorio.pdb
