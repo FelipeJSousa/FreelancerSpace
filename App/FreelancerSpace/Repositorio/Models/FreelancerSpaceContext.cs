@@ -503,8 +503,6 @@ namespace Repositorio.Models
             {
                 entity.ToTable("RamoAtividade");
 
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.Nome)
                     .IsRequired()
                     .HasMaxLength(50)
