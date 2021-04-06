@@ -18,7 +18,9 @@ namespace FreelancerSpace
             var config = new MapperConfiguration(cfg => {
                 cfg.CreateMap<Usuario, UsuariosModel>();
                 cfg.CreateMap<UsuariosModel, Usuario>();
-
+                
+                cfg.CreateMap<RamoAtividade, RamoAtividadeModel>();
+                cfg.CreateMap<RamoAtividadeModel, RamoAtividade>();
 
             });
             return config;

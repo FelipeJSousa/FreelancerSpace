@@ -35,18 +35,32 @@ namespace Repositorio
         {
             using (_context = new FreelancerSpaceContext())
             {
-                _context.Set<T>().Add(item);
-                _context.SaveChanges();
+                try
+                {
+                    _context.Set<T>().Add(item);
+                    _context.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                }
             }
         }
 
-        public void delete(T item)
+        public bool delete(T item)
         {
             using (_context = new FreelancerSpaceContext())
             {
-                //_context.Set<T>().Remove(item);
-                _context.Entry(item).State = EntityState.Deleted;
-                _context.SaveChanges();
+                try
+                {
+                    //_context.Set<T>().Remove(item);
+                    _context.Entry(item).State = EntityState.Deleted;
+                    _context.SaveChanges();
+                    return true;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
             }
 
            
