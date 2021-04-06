@@ -151,3 +151,7 @@ F:\Ylksz\Documentos\SI\2021 - 01\Projeto WebXRequisitos\App\FreelancerSpace\Free
 F:\Ylksz\Documentos\SI\2021 - 01\Projeto WebXRequisitos\App\FreelancerSpace\FreelancerSpace\bin\Debug\netcoreapp3.1\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
 F:\Ylksz\Documentos\SI\2021 - 01\Projeto WebXRequisitos\App\FreelancerSpace\FreelancerSpace\bin\Debug\netcoreapp3.1\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
 F:\Ylksz\Documentos\SI\2021 - 01\Projeto WebXRequisitos\App\FreelancerSpace\FreelancerSpace\bin\Debug\netcoreapp3.1\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
+F:\Ylksz\Documentos\SI\2021 - 01\Projeto WebXRequisitos\App\FreelancerSpace\FreelancerSpace\obj\Debug\netcoreapp3.1\Razor\Views\Usuarios\Index.cshtml.g.cs
+F:\Ylksz\Documentos\SI\2021 - 01\Projeto WebXRequisitos\App\FreelancerSpace\FreelancerSpace\bin\Debug\netcoreapp3.1\AutoMapper.dll
+F:\Ylksz\Documentos\SI\2021 - 01\Projeto WebXRequisitos\App\FreelancerSpace\FreelancerSpace\bin\Debug\netcoreapp3.1\Repositorio.dll
+F:\Ylksz\Documentos\SI\2021 - 01\Projeto WebXRequisitos\App\FreelancerSpace\FreelancerSpace\bin\Debug\netcoreapp3.1\Repositorio.pdb

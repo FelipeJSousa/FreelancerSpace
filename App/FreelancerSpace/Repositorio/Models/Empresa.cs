@@ -24,7 +24,6 @@ namespace Repositorio.Models
         public string ImagemDestaque { get; set; }
         public int IdAtividadesDivisao { get; set; }
 
-        public virtual AtividadesDiviso IdAtividadesDivisaoNavigation { get; set; }
         public virtual ICollection<FaqPergunta> FaqPergunta { get; set; }
         public virtual ICollection<Funcionario> Funcionarios { get; set; }
         public virtual ICollection<NotaAvaliacao> NotaAvaliacaos { get; set; }

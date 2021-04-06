@@ -13,15 +13,15 @@ namespace Repositorio.Models
         }
 
         public int Id { get; set; }
-        public int PermiassaoCadastro { get; set; }
-        public int PermiassaoPerfilEmpresa { get; set; }
-        public int PermiassaoFaqEmpresa { get; set; }
-        public int PermiassaoEstatisticas { get; set; }
+        public int PermissaoCadastro { get; set; }
+        public int PermissaoPerfilEmpresa { get; set; }
+        public int PermissaoFaqEmpresa { get; set; }
+        public int PermissaoEstatisticas { get; set; }
 
-        public virtual PermissaoAcesso PermiassaoCadastroNavigation { get; set; }
-        public virtual PermissaoAcesso PermiassaoEstatisticasNavigation { get; set; }
-        public virtual PermissaoAcesso PermiassaoFaqEmpresaNavigation { get; set; }
-        public virtual PermissaoAcesso PermiassaoPerfilEmpresaNavigation { get; set; }
+        public virtual PermissaoAcesso PermissaoCadastroNavigation { get; set; }
+        public virtual PermissaoAcesso PermissaoEstatisticasNavigation { get; set; }
+        public virtual PermissaoAcesso PermissaoFaqEmpresaNavigation { get; set; }
+        public virtual PermissaoAcesso PermissaoPerfilEmpresaNavigation { get; set; }
         public virtual ICollection<GruposAcesso> GruposAcessos { get; set; }
     }
 }

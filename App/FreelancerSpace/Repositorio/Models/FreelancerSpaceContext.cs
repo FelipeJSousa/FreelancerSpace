@@ -1,6 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using System;
 
 #nullable disable
 
@@ -18,9 +18,6 @@ namespace Repositorio.Models
         }
 
         public virtual DbSet<Acesso> Acessos { get; set; }
-        public virtual DbSet<AtividadesClass> AtividadesClasses { get; set; }
-        public virtual DbSet<AtividadesDiviso> AtividadesDivisoes { get; set; }
-        public virtual DbSet<AtividadesGrupo> AtividadesGrupos { get; set; }
         public virtual DbSet<Cidade> Cidades { get; set; }
         public virtual DbSet<Cliente> Clientes { get; set; }
         public virtual DbSet<Empresa> Empresas { get; set; }
@@ -41,6 +38,7 @@ namespace Repositorio.Models
         public virtual DbSet<Pessoa> Pessoas { get; set; }
         public virtual DbSet<ProdutosServico> ProdutosServicos { get; set; }
         public virtual DbSet<ProdutosServicosXempresa> ProdutosServicosXempresas { get; set; }
+        public virtual DbSet<RamoAtividade> RamoAtividades { get; set; }
         public virtual DbSet<TiposEndereco> TiposEnderecos { get; set; }
         public virtual DbSet<Usuario> Usuarios { get; set; }
 
@@ -48,7 +46,8 @@ namespace Repositorio.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=DESKTOP-4QBF915 ; Database=FreelancerSpace; integrated security=true;");
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("Server=. ; Database= FreelancerSpace; integrated security=true;");
             }
         }
 
@@ -58,71 +57,29 @@ namespace Repositorio.Models
 
             modelBuilder.Entity<Acesso>(entity =>
             {
-                entity.HasOne(d => d.PermiassaoCadastroNavigation)
-                    .WithMany(p => p.AcessoPermiassaoCadastroNavigations)
-                    .HasForeignKey(d => d.PermiassaoCadastro)
+                entity.HasOne(d => d.PermissaoCadastroNavigation)
+                    .WithMany(p => p.AcessoPermissaoCadastroNavigations)
+                    .HasForeignKey(d => d.PermissaoCadastro)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Acessos_PermissaoAcesso");
 
-                entity.HasOne(d => d.PermiassaoEstatisticasNavigation)
-                    .WithMany(p => p.AcessoPermiassaoEstatisticasNavigations)
-                    .HasForeignKey(d => d.PermiassaoEstatisticas)
+                entity.HasOne(d => d.PermissaoEstatisticasNavigation)
+                    .WithMany(p => p.AcessoPermissaoEstatisticasNavigations)
+                    .HasForeignKey(d => d.PermissaoEstatisticas)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Acessos_PermissaoAcesso3");
 
-                entity.HasOne(d => d.PermiassaoFaqEmpresaNavigation)
-                    .WithMany(p => p.AcessoPermiassaoFaqEmpresaNavigations)
-                    .HasForeignKey(d => d.PermiassaoFaqEmpresa)
+                entity.HasOne(d => d.PermissaoFaqEmpresaNavigation)
+                    .WithMany(p => p.AcessoPermissaoFaqEmpresaNavigations)
+                    .HasForeignKey(d => d.PermissaoFaqEmpresa)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Acessos_PermissaoAcesso2");
 
-                entity.HasOne(d => d.PermiassaoPerfilEmpresaNavigation)
-                    .WithMany(p => p.AcessoPermiassaoPerfilEmpresaNavigations)
-                    .HasForeignKey(d => d.PermiassaoPerfilEmpresa)
+                entity.HasOne(d => d.PermissaoPerfilEmpresaNavigation)
+                    .WithMany(p => p.AcessoPermissaoPerfilEmpresaNavigations)
+                    .HasForeignKey(d => d.PermissaoPerfilEmpresa)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Acessos_PermissaoAcesso1");
-            });
-
-            modelBuilder.Entity<AtividadesClass>(entity =>
-            {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
-                entity.Property(e => e.Nome)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.HasOne(d => d.IdAtividadeGruposNavigation)
-                    .WithMany(p => p.AtividadesClasses)
-                    .HasForeignKey(d => d.IdAtividadeGrupos)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_AtividadesClasses_AtividadesGrupos");
-            });
-
-            modelBuilder.Entity<AtividadesDiviso>(entity =>
-            {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
-                entity.Property(e => e.Nome)
-                    .IsRequired()
-                    .HasMaxLength(40)
-                    .IsUnicode(false);
-            });
-
-            modelBuilder.Entity<AtividadesGrupo>(entity =>
-            {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
-                entity.Property(e => e.Nome)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.HasOne(d => d.IdAtividadeDivisaoNavigation)
-                    .WithMany(p => p.AtividadesGrupos)
-                    .HasForeignKey(d => d.IdAtividadeDivisao)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_AtividadesGrupos_AtividadesDivisoes");
             });
 
             modelBuilder.Entity<Cidade>(entity =>
@@ -194,12 +151,6 @@ namespace Repositorio.Models
                     .IsRequired()
                     .HasMaxLength(80)
                     .IsUnicode(false);
-
-                entity.HasOne(d => d.IdAtividadesDivisaoNavigation)
-                    .WithMany(p => p.Empresas)
-                    .HasForeignKey(d => d.IdAtividadesDivisao)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Empresas_AtividadesDivisoes");
             });
 
             modelBuilder.Entity<Endereco>(entity =>
@@ -522,9 +473,9 @@ namespace Repositorio.Models
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.HasOne(d => d.IdAtividadeClasseNavigation)
+                entity.HasOne(d => d.IdRamoAtividadeNavigation)
                     .WithMany(p => p.ProdutosServicos)
-                    .HasForeignKey(d => d.IdAtividadeClasse)
+                    .HasForeignKey(d => d.IdRamoAtividade)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ProdutosServicos_AtividadesClasses");
             });
@@ -546,6 +497,18 @@ namespace Repositorio.Models
                     .HasForeignKey(d => d.IdProdutoServico)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ProdutosServicosXEmpresas_ProdutosServicos");
+            });
+
+            modelBuilder.Entity<RamoAtividade>(entity =>
+            {
+                entity.ToTable("RamoAtividade");
+
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.Nome)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<TiposEndereco>(entity =>

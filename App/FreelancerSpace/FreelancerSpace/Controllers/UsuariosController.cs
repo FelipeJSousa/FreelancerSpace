@@ -27,6 +27,7 @@ namespace FreelancerSpace.Controllers
                     var mapper = new Mapper(AutoMapperConfig.RegisterMappings());
 
                     Usuario user = mapper.Map<Usuario>(model);
+                    user.IdGrupoAcesso = 1;
 
                     UsuarioRepository rep = new UsuarioRepository();
                     rep.add(user);

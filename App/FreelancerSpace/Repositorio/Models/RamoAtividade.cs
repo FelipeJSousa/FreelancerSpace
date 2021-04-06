@@ -5,18 +5,16 @@ using System.Collections.Generic;
 
 namespace Repositorio.Models
 {
-    public partial class AtividadesClass
+    public partial class RamoAtividade
     {
-        public AtividadesClass()
+        public RamoAtividade()
         {
             ProdutosServicos = new HashSet<ProdutosServico>();
         }
 
         public int Id { get; set; }
-        public int IdAtividadeGrupos { get; set; }
         public string Nome { get; set; }
 
-        public virtual AtividadesGrupo IdAtividadeGruposNavigation { get; set; }
         public virtual ICollection<ProdutosServico> ProdutosServicos { get; set; }
     }
 }

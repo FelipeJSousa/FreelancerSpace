@@ -9,10 +9,10 @@ namespace Repositorio.Models
     {
         public PermissaoAcesso()
         {
-            AcessoPermiassaoCadastroNavigations = new HashSet<Acesso>();
-            AcessoPermiassaoEstatisticasNavigations = new HashSet<Acesso>();
-            AcessoPermiassaoFaqEmpresaNavigations = new HashSet<Acesso>();
-            AcessoPermiassaoPerfilEmpresaNavigations = new HashSet<Acesso>();
+            AcessoPermissaoCadastroNavigations = new HashSet<Acesso>();
+            AcessoPermissaoEstatisticasNavigations = new HashSet<Acesso>();
+            AcessoPermissaoFaqEmpresaNavigations = new HashSet<Acesso>();
+            AcessoPermissaoPerfilEmpresaNavigations = new HashSet<Acesso>();
         }
 
         public int Id { get; set; }
@@ -21,9 +21,9 @@ namespace Repositorio.Models
         public string Excluir { get; set; }
         public string Criar { get; set; }
 
-        public virtual ICollection<Acesso> AcessoPermiassaoCadastroNavigations { get; set; }
-        public virtual ICollection<Acesso> AcessoPermiassaoEstatisticasNavigations { get; set; }
-        public virtual ICollection<Acesso> AcessoPermiassaoFaqEmpresaNavigations { get; set; }
-        public virtual ICollection<Acesso> AcessoPermiassaoPerfilEmpresaNavigations { get; set; }
+        public virtual ICollection<Acesso> AcessoPermissaoCadastroNavigations { get; set; }
+        public virtual ICollection<Acesso> AcessoPermissaoEstatisticasNavigations { get; set; }
+        public virtual ICollection<Acesso> AcessoPermissaoFaqEmpresaNavigations { get; set; }
+        public virtual ICollection<Acesso> AcessoPermissaoPerfilEmpresaNavigations { get; set; }
     }
 }
