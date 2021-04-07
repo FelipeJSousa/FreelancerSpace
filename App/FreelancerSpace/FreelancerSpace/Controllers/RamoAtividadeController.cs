@@ -38,13 +38,11 @@ namespace FreelancerSpace.Controllers
         public IActionResult Salvar(RamoAtividadeModel model)
         {
             string operation = "";
+            var mapper = new Mapper(AutoMapperConfig.RegisterMappings());
             try
             {
                 if (ModelState.IsValid)
                 {
-
-                    var mapper = new Mapper(AutoMapperConfig.RegisterMappings());
-
                     Repositorio.Models.RamoAtividade ramo = mapper.Map<Repositorio.Models.RamoAtividade>(model);
 
                     RamoAtividadeRepository rep = new RamoAtividadeRepository();
@@ -66,8 +64,9 @@ namespace FreelancerSpace.Controllers
             {
                 ViewBag.message = $"Não foi possível {operation}r o Ramo de atividade!";
             }
-
-            return View("Create");
+            List<RamoAtividade> listRamo = new RamoAtividadeRepository().getAll();
+            List<RamoAtividadeModel> listRamoModel = mapper.Map<List<RamoAtividadeModel>>(listRamo);
+            return View("Index", listRamoModel);
         }
 
         public IActionResult Excluir(int id)
@@ -81,8 +80,10 @@ namespace FreelancerSpace.Controllers
             {
                 ViewBag.message = $"Não foi possível excluir o ramo de atividade {ramo.Nome}!";
             }
-
-            return View("Index");
+            var mapper = new Mapper(AutoMapperConfig.RegisterMappings());
+            List<RamoAtividade> listRamo = new RamoAtividadeRepository().getAll();
+            List<RamoAtividadeModel> listRamoModel = mapper.Map<List<RamoAtividadeModel>>(listRamo);
+            return View("Index", listRamoModel);
         }
     }
 }
