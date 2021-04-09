@@ -15,7 +15,7 @@ namespace FreelancerSpace.Controllers
         public IActionResult Index()
         {
             var mapper = new Mapper(AutoMapperConfig.RegisterMappings());
-            List<RamoAtividade> listRamo = new RamoAtividadeRepository().getAll();
+            List<RamoAtividade> listRamo = new ProdutoServicosRepository().getAll();
             List<RamoAtividadeModel> listRamoModel = mapper.Map<List<RamoAtividadeModel>>(listRamo);
             return View(listRamoModel);
         }
@@ -24,7 +24,7 @@ namespace FreelancerSpace.Controllers
             RamoAtividadeModel ramoModel = new RamoAtividadeModel();
             if(id != null)
             {
-                var ramo = new RamoAtividadeRepository().get(id.Value);
+                var ramo = new ProdutoServicosRepository().get(id.Value);
                 ramoModel = new Mapper(AutoMapperConfig.RegisterMappings()).Map<RamoAtividadeModel>(ramo);
             }
             else
@@ -45,7 +45,7 @@ namespace FreelancerSpace.Controllers
                 {
                     Repositorio.Models.RamoAtividade ramo = mapper.Map<Repositorio.Models.RamoAtividade>(model);
 
-                    RamoAtividadeRepository rep = new RamoAtividadeRepository();
+                    ProdutoServicosRepository rep = new ProdutoServicosRepository();
                     if(ramo.Id != 0)
                     {
                         operation = "edita";
@@ -64,15 +64,15 @@ namespace FreelancerSpace.Controllers
             {
                 ViewBag.message = $"Não foi possível {operation}r o Ramo de atividade!";
             }
-            List<RamoAtividade> listRamo = new RamoAtividadeRepository().getAll();
+            List<RamoAtividade> listRamo = new ProdutoServicosRepository().getAll();
             List<RamoAtividadeModel> listRamoModel = mapper.Map<List<RamoAtividadeModel>>(listRamo);
             return View("Index", listRamoModel);
         }
 
         public IActionResult Excluir(int id)
         {
-            var ramo = new RamoAtividadeRepository().get(id);
-            if(new RamoAtividadeRepository().delete(ramo))
+            var ramo = new ProdutoServicosRepository().get(id);
+            if(new ProdutoServicosRepository().delete(ramo))
             {
                 ViewBag.message = $"Ramo de atividade {ramo.Nome} foi excluído!";
             }
@@ -81,7 +81,7 @@ namespace FreelancerSpace.Controllers
                 ViewBag.message = $"Não foi possível excluir o ramo de atividade {ramo.Nome}!";
             }
             var mapper = new Mapper(AutoMapperConfig.RegisterMappings());
-            List<RamoAtividade> listRamo = new RamoAtividadeRepository().getAll();
+            List<RamoAtividade> listRamo = new ProdutoServicosRepository().getAll();
             List<RamoAtividadeModel> listRamoModel = mapper.Map<List<RamoAtividadeModel>>(listRamo);
             return View("Index", listRamoModel);
         }

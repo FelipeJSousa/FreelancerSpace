@@ -22,6 +22,9 @@ namespace FreelancerSpace
                 cfg.CreateMap<RamoAtividade, RamoAtividadeModel>();
                 cfg.CreateMap<RamoAtividadeModel, RamoAtividade>();
 
+                cfg.CreateMap<ProdutosServico, ProdutosServicosModel>();
+                cfg.CreateMap<ProdutosServicosModel, ProdutosServico>();
+
             });
             return config;
 
