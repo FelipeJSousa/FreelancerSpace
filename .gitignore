@@ -442,3 +442,7 @@ $RECYCLE.BIN/
 !.vscode/extensions.json
 *.v2
 *.cache
+App/FreelancerSpace/Repositorio/obj/Debug/netcoreapp3.1/Repositorio.csprojAssemblyReference.cache
+*.cache
+App/FreelancerSpace/Repositorio/obj/Debug/netcoreapp3.1/Repositorio.csprojAssemblyReference.cache
+*.cache
