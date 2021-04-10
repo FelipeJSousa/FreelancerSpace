@@ -440,9 +440,12 @@ $RECYCLE.BIN/
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+<<<<<<< HEAD
 *.v2
 *.cache
 App/FreelancerSpace/Repositorio/obj/Debug/netcoreapp3.1/Repositorio.csprojAssemblyReference.cache
 *.cache
 App/FreelancerSpace/Repositorio/obj/Debug/netcoreapp3.1/Repositorio.csprojAssemblyReference.cache
 *.cache
+=======
+>>>>>>> parent of 9e0fe6f (Update .gitignore)
