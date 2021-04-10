@@ -449,3 +449,6 @@ App/FreelancerSpace/Repositorio/obj/Debug/netcoreapp3.1/Repositorio.csprojAssemb
 *.cache
 =======
 >>>>>>> parent of 9e0fe6f (Update .gitignore)
+*.cache
+App/FreelancerSpace/FreelancerSpace/obj/Debug/netcoreapp3.1/FreelancerSpace.csprojAssemblyReference.cache
+App/FreelancerSpace/.vs/FreelancerSpace/v16/.suo
