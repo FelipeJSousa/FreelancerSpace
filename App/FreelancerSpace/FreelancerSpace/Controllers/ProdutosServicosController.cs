@@ -12,14 +12,55 @@ namespace FreelancerSpace.Controllers
 {
     public class ProdutosServicosController : Controller
     {
-        public IActionResult Index()
+        private List<ProdutosServicosModel> RelacionaProdsXRamos (List<ProdutosServicosModel> listservprod)
         {
-            var list = new ProdutosServicosRepository().getAll();
-            var mapper = new Mapper(AutoMapperConfig.RegisterMappings());
-            List<ProdutosServicosModel> listmodel = mapper.Map<List<ProdutosServicosModel>>(list);
+            try
+            {
+                var listramo = new RamoAtividadesRepository().getAll();
+                List<RamoAtividadeModel> listramomodel = null;
+                listramomodel = new Mapper(AutoMapperConfig.RegisterMappings()).Map<List<RamoAtividadeModel>>(listramo);
+                foreach (var item in listservprod)
+                {
+                    item.IdRamoAtividadeNavigation = listramomodel.FirstOrDefault(x => x.Id == item.IdRamoAtividade);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+            return listservprod;
+        }
+
+        private List<ProdutosServicosModel> GetProdutosServicos()
+        {
+            List<ProdutosServicosModel> listprodservmodel = null;
+            try
+            {
+                listprodservmodel = new Mapper(
+                        AutoMapperConfig.RegisterMappings()
+                    ).Map<List<ProdutosServicosModel>>(
+                        new ProdutosServicosRepository().getAll()
+                    );
+
+                var listramo = new RamoAtividadesRepository().getAll();
+                List<RamoAtividadeModel> listramomodel = null;
+                listramomodel = new Mapper(AutoMapperConfig.RegisterMappings()).Map<List<RamoAtividadeModel>>(listramo);
+                listprodservmodel = RelacionaProdsXRamos(listprodservmodel);
+                ViewBag.listRamoAtividade = listramomodel;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+            return listprodservmodel;
+        }
 
 
-            return View(listmodel);
+        public IActionResult Index()
+         {
+            return View(GetProdutosServicos());
         }
 
 
@@ -29,7 +70,7 @@ namespace FreelancerSpace.Controllers
             List<RamoAtividadeModel> listmodel = null;
             try
             {
-                var list = new ProdutoServicosRepository().getAll();
+                var list = new RamoAtividadesRepository().getAll();
                 listmodel = mapper.Map<List<RamoAtividadeModel>>(list);
             }
             catch (Exception)
@@ -73,15 +114,13 @@ namespace FreelancerSpace.Controllers
             {
                 ViewBag.message = $"Não foi possível {operation}r o Produto/Serviço!";
             }
-            List<ProdutosServico> listprodserv = new ProdutosServicosRepository().getAll();
-            List<ProdutosServicosModel> listprodservmodel = mapper.Map<List<ProdutosServicosModel>>(listprodserv);
-            return View("Index", listprodservmodel);
+            return View("Index", GetProdutosServicos());
         }
 
         public IActionResult Excluir(int id)
         {
-            var prodserv = new ProdutoServicosRepository().get(id);
-            if (new ProdutoServicosRepository().delete(prodserv))
+            var prodserv = new ProdutosServicosRepository().get(id);
+            if (new ProdutosServicosRepository().delete(prodserv))
             {
                 ViewBag.message = $"Ramo de atividade {prodserv.Nome} foi excluído!";
             }
@@ -90,8 +129,8 @@ namespace FreelancerSpace.Controllers
                 ViewBag.message = $"Não foi possível excluir o ramo de atividade {prodserv.Nome}!";
             }
             var mapper = new Mapper(AutoMapperConfig.RegisterMappings());
-            List<RamoAtividade> listprodserv = new ProdutoServicosRepository().getAll();
-            List<RamoAtividadeModel> listprodservmodel = mapper.Map<List<RamoAtividadeModel>>(listprodserv);
+            List<ProdutosServico> listprodserv = new ProdutosServicosRepository().getAll();
+            List<ProdutosServicosModel> listprodservmodel = mapper.Map<List<ProdutosServicosModel>>(listprodserv);
             return View("Index", listprodservmodel);
         }
     }

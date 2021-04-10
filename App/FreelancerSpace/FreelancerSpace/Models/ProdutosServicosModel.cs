@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -10,6 +11,7 @@ namespace FreelancerSpace.Models
     {
         [KeyAttribute]
         public int Id { get; set; }
+        [ForeignKey("Article")]
         public int IdRamoAtividade { get; set; }
         [Required(ErrorMessage = "Nome Produto/Serviço é obrigatório")]
         [Display(Name = "Nome Produto/Serviço")]
@@ -17,7 +19,7 @@ namespace FreelancerSpace.Models
         [Display(Name = "Descrição")]
         [StringLength(maximumLength: 50, ErrorMessage = "Informar no máximo 100 caracteres")]
         public string Descricao { get; set; }
-
+        [ForeignKey("Article")]
         public virtual RamoAtividadeModel IdRamoAtividadeNavigation { get; set; }
     }
 }
