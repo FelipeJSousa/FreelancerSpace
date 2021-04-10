@@ -155,3 +155,7 @@ F:\Ylksz\Documentos\SI\2021 - 01\Projeto WebXRequisitos\App\FreelancerSpace\Free
 F:\Ylksz\Documentos\SI\2021 - 01\Projeto WebXRequisitos\App\FreelancerSpace\FreelancerSpace\bin\Debug\netcoreapp3.1\AutoMapper.dll
 F:\Ylksz\Documentos\SI\2021 - 01\Projeto WebXRequisitos\App\FreelancerSpace\FreelancerSpace\bin\Debug\netcoreapp3.1\Repositorio.dll
 F:\Ylksz\Documentos\SI\2021 - 01\Projeto WebXRequisitos\App\FreelancerSpace\FreelancerSpace\bin\Debug\netcoreapp3.1\Repositorio.pdb
+F:\Ylksz\Documentos\SI\2021 - 01\Projeto WebXRequisitos\App\FreelancerSpace\FreelancerSpace\obj\Debug\netcoreapp3.1\Razor\Views\ProdutosServicos\Create.cshtml.g.cs
+F:\Ylksz\Documentos\SI\2021 - 01\Projeto WebXRequisitos\App\FreelancerSpace\FreelancerSpace\obj\Debug\netcoreapp3.1\Razor\Views\RamoAtividade\Create.cshtml.g.cs
+F:\Ylksz\Documentos\SI\2021 - 01\Projeto WebXRequisitos\App\FreelancerSpace\FreelancerSpace\obj\Debug\netcoreapp3.1\Razor\Views\RamoAtividade\Index.cshtml.g.cs
+F:\Ylksz\Documentos\SI\2021 - 01\Projeto WebXRequisitos\App\FreelancerSpace\FreelancerSpace\obj\Debug\netcoreapp3.1\Razor\Views\ProdutosServicos\Index.cshtml.g.cs
