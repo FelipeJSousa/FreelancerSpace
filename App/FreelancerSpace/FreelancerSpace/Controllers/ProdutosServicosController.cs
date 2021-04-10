@@ -78,10 +78,7 @@ namespace FreelancerSpace.Controllers
                 throw;
             }
 
-
-
             ViewBag.listRamoAtividade = listmodel;
-
             return View();
         }
 
@@ -122,16 +119,14 @@ namespace FreelancerSpace.Controllers
             var prodserv = new ProdutosServicosRepository().get(id);
             if (new ProdutosServicosRepository().delete(prodserv))
             {
-                ViewBag.message = $"Ramo de atividade {prodserv.Nome} foi excluído!";
+                ViewBag.message = $"Serviço/Produto {prodserv.Nome} foi excluído!";
             }
             else
             {
-                ViewBag.message = $"Não foi possível excluir o ramo de atividade {prodserv.Nome}!";
+                ViewBag.message = $"Não foi possível excluir o serviço/produto {prodserv.Nome}!";
             }
-            var mapper = new Mapper(AutoMapperConfig.RegisterMappings());
-            List<ProdutosServico> listprodserv = new ProdutosServicosRepository().getAll();
-            List<ProdutosServicosModel> listprodservmodel = mapper.Map<List<ProdutosServicosModel>>(listprodserv);
-            return View("Index", listprodservmodel);
+            
+            return View("Index", GetProdutosServicos());
         }
     }
 }
