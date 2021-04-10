@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Repositorio.Repositorios
 {
-    public class ProdutoServicosRepository : BaseRepository<RamoAtividade>
+    public class RamoAtividadesRepository : BaseRepository<RamoAtividade>
     {
     }
 }
