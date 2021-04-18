@@ -64,9 +64,8 @@ namespace FreelancerSpace.Controllers
             {
                 ViewBag.message = $"Não foi possível {operation}r o Ramo de atividade!";
             }
-            List<RamoAtividade> listRamo = new RamoAtividadesRepository().getAll();
-            List<RamoAtividadeModel> listRamoModel = mapper.Map<List<RamoAtividadeModel>>(listRamo);
-            return View("Index", listRamoModel);
+            
+            return RedirectToAction("Index") ;
         }
 
         public IActionResult Excluir(int id)

@@ -10,7 +10,7 @@ namespace Repositorio
     public class BaseRepository<T>
          : IDisposable, IBaseRepository<T> where T : class
     {
-        private FreelancerSpaceContext _context;
+        protected FreelancerSpaceContext _context;
 
 
         public T get(int id)

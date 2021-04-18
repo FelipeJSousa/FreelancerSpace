@@ -16,13 +16,13 @@ namespace FreelancerSpace.Controllers
         {
             try
             {
-                var listramo = new RamoAtividadesRepository().getAll();
-                List<RamoAtividadeModel> listramomodel = null;
-                listramomodel = new Mapper(AutoMapperConfig.RegisterMappings()).Map<List<RamoAtividadeModel>>(listramo);
-                foreach (var item in listservprod)
-                {
-                    item.IdRamoAtividadeNavigation = listramomodel.FirstOrDefault(x => x.Id == item.IdRamoAtividade);
-                }
+                //var listramo = new RamoAtividadesRepository().getAll();
+                //List<RamoAtividadeModel> listramomodel = null;
+                //listramomodel = new Mapper(AutoMapperConfig.RegisterMappings()).Map<List<RamoAtividadeModel>>(listramo);
+                //foreach (var item in listservprod)
+                //{
+                //    item.IdRamoAtividadeNavigation = listramomodel.FirstOrDefault(x => x.Id == item.IdRamoAtividade);
+                //}
             }
             catch (Exception ex)
             {
@@ -40,14 +40,8 @@ namespace FreelancerSpace.Controllers
                 listprodservmodel = new Mapper(
                         AutoMapperConfig.RegisterMappings()
                     ).Map<List<ProdutosServicosModel>>(
-                        new ProdutosServicosRepository().getAll()
+                        new ProdutosServicosRepository().getAllProdServ()
                     );
-
-                var listramo = new RamoAtividadesRepository().getAll();
-                List<RamoAtividadeModel> listramomodel = null;
-                listramomodel = new Mapper(AutoMapperConfig.RegisterMappings()).Map<List<RamoAtividadeModel>>(listramo);
-                listprodservmodel = RelacionaProdsXRamos(listprodservmodel);
-                ViewBag.listRamoAtividade = listramomodel;
             }
             catch (Exception ex)
             {
@@ -64,12 +58,22 @@ namespace FreelancerSpace.Controllers
         }
 
 
-        public IActionResult Create()
+        public IActionResult Create(int? id)
         {
+            ProdutosServicosModel prodservmodel = new ProdutosServicosModel();
             var mapper = new Mapper(AutoMapperConfig.RegisterMappings());
             List<RamoAtividadeModel> listmodel = null;
             try
             {
+                if (id != null)
+                {
+                    var prodserv = new ProdutosServicosRepository().get(id.Value);
+                    prodservmodel = new Mapper(AutoMapperConfig.RegisterMappings()).Map<ProdutosServicosModel>(prodserv);
+                }
+                else
+                {
+                    prodservmodel.Id = 0;
+                }
                 var list = new RamoAtividadesRepository().getAll();
                 listmodel = mapper.Map<List<RamoAtividadeModel>>(list);
             }

@@ -1,0 +1,8 @@
+ausencia de s nos models
+
+estrutura de create e index
+
+Return View("Index", listRamoModel);
+
+Relacionamento para View
+
