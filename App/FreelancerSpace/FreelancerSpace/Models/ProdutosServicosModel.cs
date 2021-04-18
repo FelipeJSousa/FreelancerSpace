@@ -17,7 +17,7 @@ namespace FreelancerSpace.Models
         [Display(Name = "Nome Produto/Serviço")]
         public string Nome { get; set; }
         [Display(Name = "Descrição")]
-        [StringLength(maximumLength: 50, ErrorMessage = "Informar no máximo 100 caracteres")]
+        [StringLength(maximumLength: 100, ErrorMessage = "Informar no máximo 100 caracteres")]
         public string Descricao { get; set; }
         [ForeignKey("Article")]
         public RamoAtividadeModel IdRamoAtividadeNavigation { get; set; }

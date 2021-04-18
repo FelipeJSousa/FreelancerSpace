@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "KFgDoCb5lrXNhSlDI/yAv9ARTLqk7gK1BAadIo+Gp7XbktLuu10jOPZ+k2BLSK7ljoHYPEGSBuZxifVUZO07kg==",
+  "dgSpecHash": "NIutkfLHInhUnw/udXKNhayDkPNHNGwNr2cq7pq4m3U9pn8EUvLjYCjL54TZwX5NlfwBsJwAcPONcQ5DchQp9Q==",
   "success": true,
   "projectFilePath": "F:\\Ylksz\\Documentos\\SI\\2021 - 01\\Projeto WebXRequisitos\\App\\FreelancerSpace\\FreelancerSpace\\FreelancerSpace.csproj",
   "expectedPackageFiles": [
@@ -164,7 +164,9 @@
     "C:\\Users\\Ylksz\\.nuget\\packages\\system.xml.readerwriter\\4.3.0\\system.xml.readerwriter.4.3.0.nupkg.sha512",
     "C:\\Users\\Ylksz\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512",
     "C:\\Users\\Ylksz\\.nuget\\packages\\system.xml.xmldocument\\4.3.0\\system.xml.xmldocument.4.3.0.nupkg.sha512",
-    "C:\\Users\\Ylksz\\.nuget\\packages\\system.xml.xmlserializer\\4.3.0\\system.xml.xmlserializer.4.3.0.nupkg.sha512"
+    "C:\\Users\\Ylksz\\.nuget\\packages\\system.xml.xmlserializer\\4.3.0\\system.xml.xmlserializer.4.3.0.nupkg.sha512",
+    "C:\\Users\\Ylksz\\.nuget\\packages\\xunit.abstractions\\2.0.3\\xunit.abstractions.2.0.3.nupkg.sha512",
+    "C:\\Users\\Ylksz\\.nuget\\packages\\xunit.extensibility.core\\2.4.1\\xunit.extensibility.core.2.4.1.nupkg.sha512"
   ],
   "logs": []
 }

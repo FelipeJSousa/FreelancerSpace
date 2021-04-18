@@ -1,7 +1,9 @@
-﻿using Repositorio.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using Repositorio.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -16,6 +18,14 @@ namespace Repositorio.Repositorios
 
     public class UsuarioRepository : BaseRepository<Usuario>
     {
+        public new List<Usuario> getAll()
+        {
+            using (_context = new FreelancerSpaceContext())
+            {
+                List<Usuario> list = _context.Usuarios.Include("IdGrupoAcessoNavigation").ToList();
+                return list;
+            }
+        }
 
         public string Encrypt(string Data)
         {
