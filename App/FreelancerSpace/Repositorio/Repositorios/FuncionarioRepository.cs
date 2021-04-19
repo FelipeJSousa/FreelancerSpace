@@ -1,15 +1,15 @@
-﻿using Repositorio.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using Repositorio.Models;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
+using System.Text;
 
 namespace Repositorio.Repositorios
 {
-    public class ProdutosServicosRepository : BaseRepository<ProdutosServico>
+    public class FuncionarioRepository : BaseRepository<Funcionario>
     {
-        public List<ProdutosServico> getAllProdServ()
+        public new List<Funcionario> getAll()
         {
             List<ProdutosServico> list = new List<ProdutosServico>();
             using (_context = new FreelancerSpaceContext())

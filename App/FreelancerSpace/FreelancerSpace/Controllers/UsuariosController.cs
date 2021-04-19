@@ -17,7 +17,7 @@ namespace FreelancerSpace.Controllers
             return View();
         }
 
-        public IActionResult salvar(UsuariosModel model)
+        public IActionResult Validar(UsuariosModel model)
         {
             try
             {
@@ -43,5 +43,7 @@ namespace FreelancerSpace.Controllers
 
             return View("Index");
         }
+
+
     }
 }

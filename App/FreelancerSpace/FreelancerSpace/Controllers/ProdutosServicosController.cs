@@ -12,26 +12,6 @@ namespace FreelancerSpace.Controllers
 {
     public class ProdutosServicosController : Controller
     {
-        private List<ProdutosServicosModel> RelacionaProdsXRamos (List<ProdutosServicosModel> listservprod)
-        {
-            try
-            {
-                //var listramo = new RamoAtividadesRepository().getAll();
-                //List<RamoAtividadeModel> listramomodel = null;
-                //listramomodel = new Mapper(AutoMapperConfig.RegisterMappings()).Map<List<RamoAtividadeModel>>(listramo);
-                //foreach (var item in listservprod)
-                //{
-                //    item.IdRamoAtividadeNavigation = listramomodel.FirstOrDefault(x => x.Id == item.IdRamoAtividade);
-                //}
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-
-            return listservprod;
-        }
-
         private List<ProdutosServicosModel> GetProdutosServicos()
         {
             List<ProdutosServicosModel> listprodservmodel = null;

@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace FreelancerSpace.Controllers
 {
-    public class UsuarioEmpresaController : Controller
+    public class PessoaController : Controller
     {
         public IActionResult Index()
         {
+
             return View();
         }
     }

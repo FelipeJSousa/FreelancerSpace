@@ -11,11 +11,12 @@ namespace Repositorio.Repositorios
     {
         public new List<GruposAcesso> getAll()
         {
+            List<GruposAcesso> list = new List<GruposAcesso>();
             using (_context = new FreelancerSpaceContext())
             {
-                List<GruposAcesso> list = _context.Acessos.Include("IdAcessosNavigation").ToList();
-                return list;
+                list = _context.GruposAcessos.Include("IdAcessosNavigation").ToList();
             }
+            return list;
         }
     }
 }
