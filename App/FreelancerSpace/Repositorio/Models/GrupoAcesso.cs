@@ -5,19 +5,19 @@ using System.Collections.Generic;
 
 namespace Repositorio.Models
 {
-    public partial class GruposAcesso
+    public partial class GrupoAcesso
     {
-        public GruposAcesso()
+        public GrupoAcesso()
         {
+            Acessos = new HashSet<Acesso>();
             Usuarios = new HashSet<Usuario>();
         }
 
         public int Id { get; set; }
         public string Nome { get; set; }
         public string Descricao { get; set; }
-        public int IdAcessos { get; set; }
 
-        public virtual Acesso IdAcessosNavigation { get; set; }
+        public virtual ICollection<Acesso> Acessos { get; set; }
         public virtual ICollection<Usuario> Usuarios { get; set; }
     }
 }

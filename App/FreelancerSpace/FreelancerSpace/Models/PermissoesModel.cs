@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace FreelancerSpace.Models
 {
-    public class GrupoAcessoModel
+    public class PermissoesModel
     {
-
         public int Id { get; set; }
         [Required(ErrorMessage = "Nome é obrigatório")]
         [Display(Name = "Nome")]
@@ -17,10 +16,7 @@ namespace FreelancerSpace.Models
         [Display(Name = "Descrição")]
         [StringLength(maximumLength: 100, ErrorMessage = "Informar no máximo 100 caracteres")]
         public string Descricao { get; set; }
-        public int IdAcessos { get; set; }
 
-        public virtual AcessosModel IdAcessosNavigation { get; set; }
-        public virtual ICollection<UsuariosModel> Usuarios { get; set; }
-
+        public virtual ICollection<AcessosModel> Acessos { get; set; }
     }
 }

@@ -11,10 +11,12 @@ namespace Repositorio.Repositorios
     {
         public new List<Funcionario> getAll()
         {
-            List<ProdutosServico> list = new List<ProdutosServico>();
+            List<Funcionario> list = new List<Funcionario>();
             using (_context = new FreelancerSpaceContext())
             {
-                list = _context.ProdutosServicos.Include("IdRamoAtividadeNavigation").ToList();
+            list = _context.Funcionarios.Include("IdEmpresaNavigation")
+                                        .Include("IdPessoaNavigation")
+                                        .Include("UsernameNavigation").ToList();
             }
             return list;
         }

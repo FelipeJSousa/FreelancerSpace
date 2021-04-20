@@ -27,14 +27,15 @@ namespace Repositorio.Models
         public virtual DbSet<Estado> Estados { get; set; }
         public virtual DbSet<FaqPergunta> FaqPerguntas { get; set; }
         public virtual DbSet<FaqResposta> FaqRespostas { get; set; }
+        public virtual DbSet<Funcionalidade> Funcionalidades { get; set; }
         public virtual DbSet<Funcionario> Funcionarios { get; set; }
-        public virtual DbSet<GruposAcesso> GruposAcessos { get; set; }
+        public virtual DbSet<GrupoAcesso> GrupoAcessos { get; set; }
         public virtual DbSet<HorarioAtendimento> HorarioAtendimentos { get; set; }
         public virtual DbSet<HorarioAtendimentoXempresa> HorarioAtendimentoXempresas { get; set; }
         public virtual DbSet<NotaAvaliacao> NotaAvaliacaos { get; set; }
         public virtual DbSet<Pai> Pais { get; set; }
         public virtual DbSet<PerfilEmpresa> PerfilEmpresas { get; set; }
-        public virtual DbSet<PermissaoAcesso> PermissaoAcessos { get; set; }
+        public virtual DbSet<Permissoes> Permissoes { get; set; }
         public virtual DbSet<Pessoa> Pessoas { get; set; }
         public virtual DbSet<ProdutosServico> ProdutosServicos { get; set; }
         public virtual DbSet<ProdutosServicosXempresa> ProdutosServicosXempresas { get; set; }
@@ -57,29 +58,23 @@ namespace Repositorio.Models
 
             modelBuilder.Entity<Acesso>(entity =>
             {
-                entity.HasOne(d => d.PermissaoCadastroNavigation)
-                    .WithMany(p => p.AcessoPermissaoCadastroNavigations)
-                    .HasForeignKey(d => d.PermissaoCadastro)
+                entity.HasOne(d => d.IdFuncionalidadeNavigation)
+                    .WithMany(p => p.Acessos)
+                    .HasForeignKey(d => d.IdFuncionalidade)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Acessos_PermissaoAcesso");
+                    .HasConstraintName("FK_Acessos_Funcionalidades");
 
-                entity.HasOne(d => d.PermissaoEstatisticasNavigation)
-                    .WithMany(p => p.AcessoPermissaoEstatisticasNavigations)
-                    .HasForeignKey(d => d.PermissaoEstatisticas)
+                entity.HasOne(d => d.IdGrupoNavigation)
+                    .WithMany(p => p.Acessos)
+                    .HasForeignKey(d => d.IdGrupo)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Acessos_PermissaoAcesso3");
+                    .HasConstraintName("FK_Acessos_GrupoAcessos");
 
-                entity.HasOne(d => d.PermissaoFaqEmpresaNavigation)
-                    .WithMany(p => p.AcessoPermissaoFaqEmpresaNavigations)
-                    .HasForeignKey(d => d.PermissaoFaqEmpresa)
+                entity.HasOne(d => d.IdPermissaoNavigation)
+                    .WithMany(p => p.Acessos)
+                    .HasForeignKey(d => d.IdPermissao)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Acessos_PermissaoAcesso2");
-
-                entity.HasOne(d => d.PermissaoPerfilEmpresaNavigation)
-                    .WithMany(p => p.AcessoPermissaoPerfilEmpresaNavigations)
-                    .HasForeignKey(d => d.PermissaoPerfilEmpresa)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Acessos_PermissaoAcesso1");
+                    .HasConstraintName("FK_Acessos_Permissoes");
             });
 
             modelBuilder.Entity<Cidade>(entity =>
@@ -287,6 +282,18 @@ namespace Repositorio.Models
                     .HasConstraintName("FK_FaqRespostas_FaqPerguntas");
             });
 
+            modelBuilder.Entity<Funcionalidade>(entity =>
+            {
+                entity.Property(e => e.Descricao)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Nome)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+            });
+
             modelBuilder.Entity<Funcionario>(entity =>
             {
                 entity.Property(e => e.DataContratacao).HasColumnType("date");
@@ -315,22 +322,16 @@ namespace Repositorio.Models
                     .HasConstraintName("FK_Funcionarios_Usuarios");
             });
 
-            modelBuilder.Entity<GruposAcesso>(entity =>
+            modelBuilder.Entity<GrupoAcesso>(entity =>
             {
                 entity.Property(e => e.Descricao)
-                    .HasMaxLength(100)
+                    .HasMaxLength(50)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Nome)
                     .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false);
-
-                entity.HasOne(d => d.IdAcessosNavigation)
-                    .WithMany(p => p.GruposAcessos)
-                    .HasForeignKey(d => d.IdAcessos)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_GruposAcessos_Acessos");
             });
 
             modelBuilder.Entity<HorarioAtendimento>(entity =>
@@ -412,33 +413,16 @@ namespace Repositorio.Models
                     .HasConstraintName("FK_PerfilEmpresa_Empresas");
             });
 
-            modelBuilder.Entity<PermissaoAcesso>(entity =>
+            modelBuilder.Entity<Permissoes>(entity =>
             {
-                entity.ToTable("PermissaoAcesso");
+                entity.Property(e => e.Descricao)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
 
-                entity.Property(e => e.Criar)
+                entity.Property(e => e.Nome)
                     .IsRequired()
-                    .HasMaxLength(1)
-                    .IsUnicode(false)
-                    .IsFixedLength(true);
-
-                entity.Property(e => e.Editar)
-                    .IsRequired()
-                    .HasMaxLength(1)
-                    .IsUnicode(false)
-                    .IsFixedLength(true);
-
-                entity.Property(e => e.Excluir)
-                    .IsRequired()
-                    .HasMaxLength(1)
-                    .IsUnicode(false)
-                    .IsFixedLength(true);
-
-                entity.Property(e => e.Ler)
-                    .IsRequired()
-                    .HasMaxLength(1)
-                    .IsUnicode(false)
-                    .IsFixedLength(true);
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<Pessoa>(entity =>
@@ -536,7 +520,7 @@ namespace Repositorio.Models
                     .WithMany(p => p.Usuarios)
                     .HasForeignKey(d => d.IdGrupoAcesso)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Usuarios_GruposAcessos");
+                    .HasConstraintName("FK_Usuarios_GrupoAcessos");
             });
 
             OnModelCreatingPartial(modelBuilder);

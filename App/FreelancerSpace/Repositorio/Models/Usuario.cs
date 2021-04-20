@@ -17,7 +17,7 @@ namespace Repositorio.Models
         public int IdGrupoAcesso { get; set; }
         public string Senha { get; set; }
 
-        public virtual GruposAcesso IdGrupoAcessoNavigation { get; set; }
+        public virtual GrupoAcesso IdGrupoAcessoNavigation { get; set; }
         public virtual ICollection<Cliente> Clientes { get; set; }
         public virtual ICollection<Funcionario> Funcionarios { get; set; }
     }
