@@ -11,6 +11,7 @@ namespace Repositorio.Models
         public int IdRamoAtividade { get; set; }
         public string Nome { get; set; }
         public string Descricao { get; set; }
+        public string Ativo { get; set; }
 
         public virtual RamoAtividade IdRamoAtividadeNavigation { get; set; }
     }

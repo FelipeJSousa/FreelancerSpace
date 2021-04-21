@@ -8,9 +8,9 @@ namespace Repositorio
     {
         T get(int id);
         List<T> getAll();
-        void add(T item);
+        bool add(T item);
         bool delete(T item);
-        void edit(T item);
+        bool edit(T item);
 
 
        

@@ -16,5 +16,7 @@ namespace FreelancerSpace.Models
         [Required(ErrorMessage = "Senha é obrigatória")]
         [Display(Name = "Senha")]
         public string senha { get; set; }
+
+        public virtual GrupoAcessoModel IdGrupoAcessoNavigation { get; set; }
     }
 }
