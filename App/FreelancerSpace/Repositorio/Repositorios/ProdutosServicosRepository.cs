@@ -14,9 +14,18 @@ namespace Repositorio.Repositorios
             List<ProdutosServico> list = new List<ProdutosServico>();
             using (_context = new FreelancerSpaceContext())
             {
-                list = _context.ProdutosServicos.Include("IdRamoAtividadeNavigation").ToList();
+                list = _context.ProdutosServicos.Include("IdRamoAtividadeNavigation").Where(x => x.Ativo.Equals("S")).ToList();
             }
             return list;
+        }
+        public new ProdutosServico get(int id)
+        {
+            ProdutosServico prodserv = new ProdutosServico();
+            using (_context = new FreelancerSpaceContext())
+            {
+                prodserv = _context.ProdutosServicos.Include("IdRamoAtividadeNavigation").FirstOrDefault(x => x.Ativo.Equals("S") && x.Id.Equals(id));
+            }
+            return prodserv;
         }
     }
 }

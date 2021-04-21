@@ -13,9 +13,9 @@ namespace FreelancerSpace.Models
         public int IdFuncionalidade { get; set; }
         public int IdPermissao { get; set; }
         
-        public virtual FuncionalidadeModel IdFuncionalidadeNavigation { get; set; }
+        public virtual FuncionalidadesModel IdFuncionalidadeNavigation { get; set; }
         public virtual GrupoAcessoModel IdGrupoNavigation { get; set; }
-        public virtual PermissaoModel IdPermissaoNavigation { get; set; }
+        public virtual PermissoesModel IdPermissaoNavigation { get; set; }
 
     }
 }

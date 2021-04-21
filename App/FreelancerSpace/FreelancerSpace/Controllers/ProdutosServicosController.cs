@@ -17,11 +17,10 @@ namespace FreelancerSpace.Controllers
             List<ProdutosServicosModel> listprodservmodel = null;
             try
             {
-                listprodservmodel = new Mapper(
-                        AutoMapperConfig.RegisterMappings()
-                    ).Map<List<ProdutosServicosModel>>(
-                        new ProdutosServicosRepository().getAllProdServ()
-                    );
+                listprodservmodel = new Mapper(AutoMapperConfig.RegisterMappings())
+                                                .Map<List<ProdutosServicosModel>>(
+                                                    new ProdutosServicosRepository().getAllProdServ()
+                );
             }
             catch (Exception ex)
             {
@@ -33,7 +32,8 @@ namespace FreelancerSpace.Controllers
 
 
         public IActionResult Index()
-         {
+        {
+            ViewBag.message = TempData["redirectMessage"]?.ToString();
             return View(GetProdutosServicos());
         }
 
@@ -62,11 +62,9 @@ namespace FreelancerSpace.Controllers
                 throw;
             }
 
-
-
             ViewBag.listRamoAtividade = listmodel;
 
-            return View();
+            return View(prodservmodel);
         }
 
         public IActionResult Salvar(ProdutosServicosModel model)
@@ -82,40 +80,46 @@ namespace FreelancerSpace.Controllers
                     ProdutosServicosRepository rep = new ProdutosServicosRepository();
                     if (prodserv.Id != 0)
                     {
+                        prodserv.Ativo = "S";
                         operation = "edita";
-                        rep.edit(prodserv);
+                        if (!rep.edit(prodserv))
+                        {
+                            TempData["redirectMessage"] = $"Não foi possível {operation}r o Produto/Serviço!";
+                        }
                     }
                     else
                     {
                         operation = "cria";
-                        rep.add(prodserv);
+                        if (!rep.add(prodserv))
+                        {
+                            TempData["redirectMessage"] = $"Não foi possível {operation}r o Produto/Serviço!";
+                        }
                     }
 
-                    ViewBag.message = $"Ramo de atividade {operation}do com Sucesso!";
+                    TempData["redirectMessage"] = $"Ramo de atividade {operation}do com Sucesso!";
                 }
             }
             catch (Exception ex)
             {
-                ViewBag.message = $"Não foi possível {operation}r o Produto/Serviço!";
+                TempData["redirectMessage"] = $"Não foi possível {operation}r o Produto/Serviço!";
             }
-            return View("Index", GetProdutosServicos());
+            return RedirectToAction("Index");
         }
 
         public IActionResult Excluir(int id)
         {
             var prodserv = new ProdutosServicosRepository().get(id);
-            if (new ProdutosServicosRepository().delete(prodserv))
+            prodserv.Ativo = "N";
+            if (new ProdutosServicosRepository().edit(prodserv))
             {
-                ViewBag.message = $"Ramo de atividade {prodserv.Nome} foi excluído!";
+                TempData["redirectMessage"] = $"O produto/servico {prodserv.Nome} foi excluído!";
             }
             else
             {
-                ViewBag.message = $"Não foi possível excluir o ramo de atividade {prodserv.Nome}!";
+                TempData["redirectMessage"] = $"Não foi possível excluir o produto/servico {prodserv.Nome}!";
             }
-            var mapper = new Mapper(AutoMapperConfig.RegisterMappings());
-            List<ProdutosServico> listprodserv = new ProdutosServicosRepository().getAll();
-            List<ProdutosServicosModel> listprodservmodel = mapper.Map<List<ProdutosServicosModel>>(listprodserv);
-            return View("Index", listprodservmodel);
+
+            return RedirectToAction("Index");
         }
     }
 }

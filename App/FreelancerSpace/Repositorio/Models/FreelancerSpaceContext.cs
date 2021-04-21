@@ -20,6 +20,7 @@ namespace Repositorio.Models
         public virtual DbSet<Acesso> Acessos { get; set; }
         public virtual DbSet<Cidade> Cidades { get; set; }
         public virtual DbSet<Cliente> Clientes { get; set; }
+        public virtual DbSet<Cnae> Cnaes { get; set; }
         public virtual DbSet<Empresa> Empresas { get; set; }
         public virtual DbSet<Endereco> Enderecos { get; set; }
         public virtual DbSet<EnderecosXempresa> EnderecosXempresas { get; set; }
@@ -58,6 +59,13 @@ namespace Repositorio.Models
 
             modelBuilder.Entity<Acesso>(entity =>
             {
+                entity.Property(e => e.Ativo)
+                    .IsRequired()
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("('S')")
+                    .IsFixedLength(true);
+
                 entity.HasOne(d => d.IdFuncionalidadeNavigation)
                     .WithMany(p => p.Acessos)
                     .HasForeignKey(d => d.IdFuncionalidade)
@@ -97,6 +105,13 @@ namespace Repositorio.Models
 
             modelBuilder.Entity<Cliente>(entity =>
             {
+                entity.Property(e => e.Ativo)
+                    .IsRequired()
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("('S')")
+                    .IsFixedLength(true);
+
                 entity.Property(e => e.Interesses)
                     .HasMaxLength(50)
                     .IsUnicode(false);
@@ -119,8 +134,89 @@ namespace Repositorio.Models
                     .HasConstraintName("FK_Clientes_Usuarios");
             });
 
+            modelBuilder.Entity<Cnae>(entity =>
+            {
+                entity.ToTable("CNAE");
+
+                entity.Property(e => e.Id)
+                    .ValueGeneratedNever()
+                    .HasColumnName("id");
+
+                entity.Property(e => e.CodClasse)
+                    .IsRequired()
+                    .HasMaxLength(6)
+                    .IsUnicode(false)
+                    .HasColumnName("cod_classe");
+
+                entity.Property(e => e.CodDivisao)
+                    .IsRequired()
+                    .HasMaxLength(2)
+                    .IsUnicode(false)
+                    .HasColumnName("cod_divisao");
+
+                entity.Property(e => e.CodGrupo)
+                    .IsRequired()
+                    .HasMaxLength(3)
+                    .IsUnicode(false)
+                    .HasColumnName("cod_grupo");
+
+                entity.Property(e => e.CodSecao)
+                    .IsRequired()
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("cod_secao");
+
+                entity.Property(e => e.CodSubclasse)
+                    .IsRequired()
+                    .HasMaxLength(9)
+                    .IsUnicode(false)
+                    .HasColumnName("cod_subclasse");
+
+                entity.Property(e => e.DescClasse)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("desc_classe");
+
+                entity.Property(e => e.DescDivisao)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("desc_divisao");
+
+                entity.Property(e => e.DescGrupo)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("desc_grupo");
+
+                entity.Property(e => e.DescSecao)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("desc_secao");
+
+                entity.Property(e => e.DescSubclasse)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("desc_subclasse");
+            });
+
             modelBuilder.Entity<Empresa>(entity =>
             {
+                entity.Property(e => e.Id)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .IsFixedLength(true);
+
+                entity.Property(e => e.Ativo)
+                    .IsRequired()
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("('S')")
+                    .IsFixedLength(true);
+
                 entity.Property(e => e.Cnae).HasColumnName("CNAE");
 
                 entity.Property(e => e.Cnpj)
@@ -150,6 +246,13 @@ namespace Repositorio.Models
 
             modelBuilder.Entity<Endereco>(entity =>
             {
+                entity.Property(e => e.Ativo)
+                    .IsRequired()
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("('S')")
+                    .IsFixedLength(true);
+
                 entity.Property(e => e.Bairro)
                     .IsRequired()
                     .HasMaxLength(50)
@@ -190,6 +293,12 @@ namespace Repositorio.Models
                 entity.HasNoKey();
 
                 entity.ToTable("EnderecosXEmpresas");
+
+                entity.Property(e => e.IdEmpresa)
+                    .IsRequired()
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .IsFixedLength(true);
 
                 entity.HasOne(d => d.IdEmpresaNavigation)
                     .WithMany()
@@ -250,6 +359,12 @@ namespace Repositorio.Models
 
                 entity.Property(e => e.DataHorario).HasColumnType("datetime");
 
+                entity.Property(e => e.IdEmpresa)
+                    .IsRequired()
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .IsFixedLength(true);
+
                 entity.Property(e => e.Pergunta)
                     .IsRequired()
                     .HasMaxLength(150)
@@ -284,6 +399,13 @@ namespace Repositorio.Models
 
             modelBuilder.Entity<Funcionalidade>(entity =>
             {
+                entity.Property(e => e.Ativo)
+                    .IsRequired()
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("('S')")
+                    .IsFixedLength(true);
+
                 entity.Property(e => e.Descricao)
                     .HasMaxLength(50)
                     .IsUnicode(false);
@@ -296,7 +418,18 @@ namespace Repositorio.Models
 
             modelBuilder.Entity<Funcionario>(entity =>
             {
+                entity.Property(e => e.Ativo)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .IsFixedLength(true);
+
                 entity.Property(e => e.DataContratacao).HasColumnType("date");
+
+                entity.Property(e => e.IdEmpresa)
+                    .IsRequired()
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .IsFixedLength(true);
 
                 entity.Property(e => e.Username)
                     .IsRequired()
@@ -324,6 +457,13 @@ namespace Repositorio.Models
 
             modelBuilder.Entity<GrupoAcesso>(entity =>
             {
+                entity.Property(e => e.Ativo)
+                    .IsRequired()
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("('S')")
+                    .IsFixedLength(true);
+
                 entity.Property(e => e.Descricao)
                     .HasMaxLength(50)
                     .IsUnicode(false);
@@ -354,6 +494,12 @@ namespace Repositorio.Models
 
                 entity.ToTable("HorarioAtendimentoXEmpresas");
 
+                entity.Property(e => e.IdEmpresa)
+                    .IsRequired()
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .IsFixedLength(true);
+
                 entity.HasOne(d => d.IdEmpresaNavigation)
                     .WithMany()
                     .HasForeignKey(d => d.IdEmpresa)
@@ -372,6 +518,12 @@ namespace Repositorio.Models
                 entity.ToTable("NotaAvaliacao");
 
                 entity.Property(e => e.DataAvaliacao).HasColumnType("datetime");
+
+                entity.Property(e => e.IdEmpresa)
+                    .IsRequired()
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .IsFixedLength(true);
 
                 entity.Property(e => e.NotaAvaliacao1)
                     .HasColumnType("decimal(1, 1)")
@@ -402,6 +554,13 @@ namespace Repositorio.Models
             {
                 entity.ToTable("PerfilEmpresa");
 
+                entity.Property(e => e.IdEmpresa)
+                    .IsRequired()
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("('S')")
+                    .IsFixedLength(true);
+
                 entity.Property(e => e.Likes).HasColumnType("numeric(9, 0)");
 
                 entity.Property(e => e.Visualizacoes).HasColumnType("numeric(9, 0)");
@@ -415,6 +574,13 @@ namespace Repositorio.Models
 
             modelBuilder.Entity<Permissoes>(entity =>
             {
+                entity.Property(e => e.Ativo)
+                    .IsRequired()
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("('S')")
+                    .IsFixedLength(true);
+
                 entity.Property(e => e.Descricao)
                     .HasMaxLength(50)
                     .IsUnicode(false);
@@ -427,6 +593,13 @@ namespace Repositorio.Models
 
             modelBuilder.Entity<Pessoa>(entity =>
             {
+                entity.Property(e => e.Ativo)
+                    .IsRequired()
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("('S')")
+                    .IsFixedLength(true);
+
                 entity.Property(e => e.Cpf)
                     .IsRequired()
                     .HasMaxLength(14)
@@ -448,6 +621,13 @@ namespace Repositorio.Models
 
             modelBuilder.Entity<ProdutosServico>(entity =>
             {
+                entity.Property(e => e.Ativo)
+                    .IsRequired()
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("('S')")
+                    .IsFixedLength(true);
+
                 entity.Property(e => e.Descricao)
                     .HasMaxLength(100)
                     .IsUnicode(false);
@@ -470,6 +650,12 @@ namespace Repositorio.Models
 
                 entity.ToTable("ProdutosServicosXEmpresas");
 
+                entity.Property(e => e.IdEmpresa)
+                    .IsRequired()
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .IsFixedLength(true);
+
                 entity.HasOne(d => d.IdEmpresaNavigation)
                     .WithMany()
                     .HasForeignKey(d => d.IdEmpresa)
@@ -487,6 +673,13 @@ namespace Repositorio.Models
             {
                 entity.ToTable("RamoAtividade");
 
+                entity.Property(e => e.Ativo)
+                    .IsRequired()
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("('S')")
+                    .IsFixedLength(true);
+
                 entity.Property(e => e.Nome)
                     .IsRequired()
                     .HasMaxLength(50)
@@ -496,6 +689,13 @@ namespace Repositorio.Models
             modelBuilder.Entity<TiposEndereco>(entity =>
             {
                 entity.ToTable("TiposEndereco");
+
+                entity.Property(e => e.Ativo)
+                    .IsRequired()
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("('S')")
+                    .IsFixedLength(true);
 
                 entity.Property(e => e.Nome)
                     .IsRequired()
@@ -510,6 +710,13 @@ namespace Repositorio.Models
                 entity.Property(e => e.Username)
                     .HasMaxLength(50)
                     .IsUnicode(false);
+
+                entity.Property(e => e.Ativo)
+                    .IsRequired()
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("('S')")
+                    .IsFixedLength(true);
 
                 entity.Property(e => e.Senha)
                     .IsRequired()

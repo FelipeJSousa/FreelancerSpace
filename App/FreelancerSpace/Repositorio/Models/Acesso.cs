@@ -11,6 +11,7 @@ namespace Repositorio.Models
         public int IdGrupo { get; set; }
         public int IdFuncionalidade { get; set; }
         public int IdPermissao { get; set; }
+        public string Ativo { get; set; }
 
         public virtual Funcionalidade IdFuncionalidadeNavigation { get; set; }
         public virtual GrupoAcesso IdGrupoNavigation { get; set; }

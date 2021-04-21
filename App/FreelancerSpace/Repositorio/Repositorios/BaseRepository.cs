@@ -31,7 +31,7 @@ namespace Repositorio
             
         }
 
-        public void add(T item)
+        public bool add(T item)
         {
             using (_context = new FreelancerSpaceContext())
             {
@@ -39,9 +39,11 @@ namespace Repositorio
                 {
                     _context.Set<T>().Add(item);
                     _context.SaveChanges();
+                    return true;
                 }
-                catch (Exception ex)
+                catch(Exception ex)
                 {
+                    return false;
                 }
             }
         }
@@ -52,7 +54,6 @@ namespace Repositorio
             {
                 try
                 {
-                    //_context.Set<T>().Remove(item);
                     _context.Entry(item).State = EntityState.Deleted;
                     _context.SaveChanges();
                     return true;
@@ -62,18 +63,23 @@ namespace Repositorio
                     return false;
                 }
             }
-
-           
         }
 
-        public void edit(T item)
+        public bool edit(T item)
         {
             using (_context = new FreelancerSpaceContext())
             {
-                _context.Entry(item).State = EntityState.Modified;
-                _context.SaveChanges();
+                try
+                {
+                    _context.Entry(item).State = EntityState.Modified;
+                    _context.SaveChanges();
+                    return true;
+                }
+                catch(Exception ex)
+                {
+                    return false;
+                }
             }
-           
         }
 
         public void Dispose()

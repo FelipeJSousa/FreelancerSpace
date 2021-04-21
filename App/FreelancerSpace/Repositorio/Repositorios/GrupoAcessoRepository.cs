@@ -14,7 +14,7 @@ namespace Repositorio.Repositorios
             List<GrupoAcesso> list = new List<GrupoAcesso>();
             using (_context = new FreelancerSpaceContext())
             {
-                list = _context.GrupoAcessos.Include("IdAcessosNavigation").ToList();
+                list = _context.GrupoAcessos.Where(x => x.Ativo.Equals("S")).ToList();
             }
             return list;
         }
@@ -23,7 +23,7 @@ namespace Repositorio.Repositorios
             GrupoAcesso ga = new GrupoAcesso();
             using (_context = new FreelancerSpaceContext())
             {
-                ga = _context.GrupoAcessos.Include("IdAcessosNavigation").FirstOrDefault(x => x.Id.Equals(id));
+                ga = _context.GrupoAcessos.FirstOrDefault(x => x.Ativo.Equals("S") && x.Id.Equals(id));
             }
             return ga;
         }

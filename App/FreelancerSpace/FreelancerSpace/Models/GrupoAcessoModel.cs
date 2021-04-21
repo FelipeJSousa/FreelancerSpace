@@ -19,7 +19,6 @@ namespace FreelancerSpace.Models
         public string Descricao { get; set; }
         public int IdAcessos { get; set; }
 
-        public virtual AcessosModel IdAcessosNavigation { get; set; }
         public virtual ICollection<UsuariosModel> Usuarios { get; set; }
 
     }

@@ -11,30 +11,30 @@ namespace FreelancerSpace
     public class AutoMapperConfig : Profile
     {
 
-        public static MapperConfiguration RegisterMappings()
-
-        {
-
+        public static MapperConfiguration RegisterMappings(){
             var config = new MapperConfiguration(cfg => {
                 cfg.CreateMap<Usuario, UsuariosModel>();
                 cfg.CreateMap<UsuariosModel, Usuario>();
                 
-                cfg.CreateMap<RamoAtividade, AcessosModel>();
-                cfg.CreateMap<AcessosModel, RamoAtividade>();
+                cfg.CreateMap<ProdutosServico, ProdutosServicosModel>();
+                cfg.CreateMap<ProdutosServicosModel, ProdutosServico>();
 
-                cfg.CreateMap<GruposAcesso, GrupoAcessoModel>();
-                cfg.CreateMap<GrupoAcessoModel, GruposAcesso>();
+                cfg.CreateMap<RamoAtividade, RamoAtividadeModel>();
+                cfg.CreateMap<RamoAtividadeModel, RamoAtividade>();
+
+                cfg.CreateMap<GrupoAcesso, GrupoAcessoModel>();
+                cfg.CreateMap<GrupoAcessoModel, GrupoAcesso>();
                 
-                cfg.CreateMap<PermissaoAcesso, PermissoesModel>();
-                cfg.CreateMap<PermissoesModel, PermissaoAcesso>();
+                cfg.CreateMap<Permissoes, PermissoesModel>();
+                cfg.CreateMap<PermissoesModel, Permissoes>();
 
                 cfg.CreateMap<Acesso, AcessosModel>();
                 cfg.CreateMap<AcessosModel, Acesso>();
 
-
+                cfg.CreateMap<Funcionalidade, FuncionalidadesModel>();
+                cfg.CreateMap<FuncionalidadesModel, Funcionalidade>();
             });
             return config;
-
         }
 
 

@@ -8,11 +8,11 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
+    <title>Grupo Acessos</title>
 </head>
 <body>
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Criar Novo</a>
 </p>
 <table class="table">
     <thead>
@@ -22,9 +22,6 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Descricao)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdAcessosNavigation)
             </th>
             <th></th>
         </tr>
@@ -39,11 +36,8 @@
                 @Html.DisplayFor(modelItem => item.Descricao)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IdAcessosNavigation.Id)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                @Html.ActionLink("Editar", "Create", "GrupoAcessos", new { id = item.Id }) |
+                @Html.ActionLink("Excluir", "Excluir", "GrupoAcessos", new { id = item.Id })
             </td>
         </tr>
 }

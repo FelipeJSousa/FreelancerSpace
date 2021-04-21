@@ -14,6 +14,7 @@ namespace Repositorio.Models
         public string Cep { get; set; }
         public int IdCidade { get; set; }
         public int IdEstado { get; set; }
+        public string Ativo { get; set; }
 
         public virtual Cidade IdCidadeNavigation { get; set; }
         public virtual Estado IdEstadoNavigation { get; set; }
