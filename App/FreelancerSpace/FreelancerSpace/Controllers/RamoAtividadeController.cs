@@ -17,6 +17,7 @@ namespace FreelancerSpace.Controllers
             var mapper = new Mapper(AutoMapperConfig.RegisterMappings());
             List<RamoAtividade> listRamo = new RamoAtividadesRepository().getAll();
             List<RamoAtividadeModel> listRamoModel = mapper.Map<List<RamoAtividadeModel>>(listRamo);
+            ViewBag.message = TempData["redirectMessage"]?.ToString();
             return View(listRamoModel);
         }
         public IActionResult Create(int? id)
@@ -49,41 +50,44 @@ namespace FreelancerSpace.Controllers
                     if(ramo.Id != 0)
                     {
                         operation = "edita";
-                        rep.edit(ramo);
+                        if (!rep.edit(ramo))
+                        {
+                            TempData["redirectMessage"] = $"Não foi possível {operation}r o Ramo de atividade!";
+                        }
                     }
                     else
                     {
                         operation = "cria";
-                        rep.add(ramo);
+                        if (!rep.add(ramo))
+                        {
+                            TempData["redirectMessage"] = $"Não foi possível {operation}r o Ramo de atividade!";
+                        }
                     }
-
-                    ViewBag.message = $"Ramo de atividade {operation}do com Sucesso!";
+                    TempData["redirectMessage"] = $"Ramo de atividade {operation}do com Sucesso!";
                 }
             }
             catch (Exception ex)
             {
-                ViewBag.message = $"Não foi possível {operation}r o Ramo de atividade!";
+                TempData["redirectMessage"] = $"Não foi possível {operation}r o Ramo de atividade!";
             }
-            List<RamoAtividade> listRamo = new RamoAtividadesRepository().getAll();
-            List<RamoAtividadeModel> listRamoModel = mapper.Map<List<RamoAtividadeModel>>(listRamo);
-            return View("Index", listRamoModel);
+            
+            return RedirectToAction("Index") ;
         }
 
         public IActionResult Excluir(int id)
         {
             var ramo = new RamoAtividadesRepository().get(id);
-            if(new RamoAtividadesRepository().delete(ramo))
+            ramo.Ativo = "N";
+            if(new RamoAtividadesRepository().edit(ramo))
             {
-                ViewBag.message = $"Ramo de atividade {ramo.Nome} foi excluído!";
+                TempData["redirectMessage"] = $"Ramo de atividade {ramo.Nome} foi excluído!";
             }
             else
             {
-                ViewBag.message = $"Não foi possível excluir o ramo de atividade {ramo.Nome}!";
+                TempData["redirectMessage"] = $"Não foi possível excluir o ramo de atividade {ramo.Nome}!";
             }
-            var mapper = new Mapper(AutoMapperConfig.RegisterMappings());
-            List<RamoAtividade> listRamo = new RamoAtividadesRepository().getAll();
-            List<RamoAtividadeModel> listRamoModel = mapper.Map<List<RamoAtividadeModel>>(listRamo);
-            return View("Index", listRamoModel);
+
+            return RedirectToAction("Index");
         }
     }
 }
