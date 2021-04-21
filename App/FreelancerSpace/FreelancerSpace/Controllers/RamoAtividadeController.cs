@@ -15,8 +15,9 @@ namespace FreelancerSpace.Controllers
         public IActionResult Index()
         {
             var mapper = new Mapper(AutoMapperConfig.RegisterMappings());
-            List<RamoAtividade> listRamo = new RamoAtividadeRepository().getAll();
+            List<RamoAtividade> listRamo = new RamoAtividadesRepository().getAll();
             List<RamoAtividadeModel> listRamoModel = mapper.Map<List<RamoAtividadeModel>>(listRamo);
+            ViewBag.message = TempData["redirectMessage"]?.ToString();
             return View(listRamoModel);
         }
         public IActionResult Create(int? id)
@@ -24,7 +25,7 @@ namespace FreelancerSpace.Controllers
             RamoAtividadeModel ramoModel = new RamoAtividadeModel();
             if(id != null)
             {
-                var ramo = new RamoAtividadeRepository().get(id.Value);
+                var ramo = new RamoAtividadesRepository().get(id.Value);
                 ramoModel = new Mapper(AutoMapperConfig.RegisterMappings()).Map<RamoAtividadeModel>(ramo);
             }
             else
@@ -38,51 +39,55 @@ namespace FreelancerSpace.Controllers
         public IActionResult Salvar(RamoAtividadeModel model)
         {
             string operation = "";
+            var mapper = new Mapper(AutoMapperConfig.RegisterMappings());
             try
             {
                 if (ModelState.IsValid)
                 {
-
-                    var mapper = new Mapper(AutoMapperConfig.RegisterMappings());
-
                     Repositorio.Models.RamoAtividade ramo = mapper.Map<Repositorio.Models.RamoAtividade>(model);
 
-                    RamoAtividadeRepository rep = new RamoAtividadeRepository();
+                    RamoAtividadesRepository rep = new RamoAtividadesRepository();
                     if(ramo.Id != 0)
                     {
                         operation = "edita";
-                        rep.edit(ramo);
+                        if (!rep.edit(ramo))
+                        {
+                            TempData["redirectMessage"] = $"Não foi possível {operation}r o Ramo de atividade!";
+                        }
                     }
                     else
                     {
                         operation = "cria";
-                        rep.add(ramo);
+                        if (!rep.add(ramo))
+                        {
+                            TempData["redirectMessage"] = $"Não foi possível {operation}r o Ramo de atividade!";
+                        }
                     }
-
-                    ViewBag.message = $"Ramo de atividade {operation}do com Sucesso!";
+                    TempData["redirectMessage"] = $"Ramo de atividade {operation}do com Sucesso!";
                 }
             }
             catch (Exception ex)
             {
-                ViewBag.message = $"Não foi possível {operation}r o Ramo de atividade!";
+                TempData["redirectMessage"] = $"Não foi possível {operation}r o Ramo de atividade!";
             }
-
-            return View("Create");
+            
+            return RedirectToAction("Index") ;
         }
 
         public IActionResult Excluir(int id)
         {
-            var ramo = new RamoAtividadeRepository().get(id);
-            if(new RamoAtividadeRepository().delete(ramo))
+            var ramo = new RamoAtividadesRepository().get(id);
+            ramo.Ativo = "N";
+            if(new RamoAtividadesRepository().edit(ramo))
             {
-                ViewBag.message = $"Ramo de atividade {ramo.Nome} foi excluído!";
+                TempData["redirectMessage"] = $"Ramo de atividade {ramo.Nome} foi excluído!";
             }
             else
             {
-                ViewBag.message = $"Não foi possível excluir o ramo de atividade {ramo.Nome}!";
+                TempData["redirectMessage"] = $"Não foi possível excluir o ramo de atividade {ramo.Nome}!";
             }
 
-            return View("Index");
+            return RedirectToAction("Index");
         }
     }
 }

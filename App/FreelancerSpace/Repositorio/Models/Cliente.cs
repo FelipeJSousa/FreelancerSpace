@@ -11,6 +11,7 @@ namespace Repositorio.Models
         public int IdPessoa { get; set; }
         public string Usuario { get; set; }
         public string Interesses { get; set; }
+        public string Ativo { get; set; }
 
         public virtual Pessoa IdPessoaNavigation { get; set; }
         public virtual Usuario UsuarioNavigation { get; set; }

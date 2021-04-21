@@ -14,6 +14,7 @@ namespace FreelancerSpace.Models
         }
 
         [KeyAttribute]
+        [Display(Name = "Identificador")]
         public int Id { get; set; }
         [Required(ErrorMessage = "Nome do ramo de atividade é obrigatório")]
         [Display(Name = "Nome Ramo de atividade")]

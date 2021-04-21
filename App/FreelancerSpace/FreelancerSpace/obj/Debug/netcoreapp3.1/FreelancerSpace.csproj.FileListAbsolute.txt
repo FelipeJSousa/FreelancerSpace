@@ -158,3 +158,13 @@ F:\Ylksz\Documentos\SI\2021 - 01\Projeto WebXRequisitos\App\FreelancerSpace\Free
 F:\Ylksz\Documentos\SI\2021 - 01\Projeto WebXRequisitos\App\FreelancerSpace\FreelancerSpace\obj\Debug\netcoreapp3.1\Razor\Views\ProdutosServicos\Create.cshtml.g.cs
 F:\Ylksz\Documentos\SI\2021 - 01\Projeto WebXRequisitos\App\FreelancerSpace\FreelancerSpace\obj\Debug\netcoreapp3.1\Razor\Views\RamoAtividade\Create.cshtml.g.cs
 F:\Ylksz\Documentos\SI\2021 - 01\Projeto WebXRequisitos\App\FreelancerSpace\FreelancerSpace\obj\Debug\netcoreapp3.1\Razor\Views\RamoAtividade\Index.cshtml.g.cs
+F:\Ylksz\Documentos\SI\2021 - 01\Projeto WebXRequisitos\App\FreelancerSpace\FreelancerSpace\obj\Debug\netcoreapp3.1\Razor\Views\ProdutosServicos\Index.cshtml.g.cs
+F:\Ylksz\Documentos\SI\2021 - 01\Projeto WebXRequisitos\App\FreelancerSpace\FreelancerSpace\bin\Debug\netcoreapp3.1\xunit.abstractions.dll
+F:\Ylksz\Documentos\SI\2021 - 01\Projeto WebXRequisitos\App\FreelancerSpace\FreelancerSpace\bin\Debug\netcoreapp3.1\xunit.core.dll
+F:\Ylksz\Documentos\SI\2021 - 01\Projeto WebXRequisitos\App\FreelancerSpace\FreelancerSpace\obj\Debug\netcoreapp3.1\Razor\Views\Pessoa\Index.cshtml.g.cs
+F:\Ylksz\Documentos\SI\2021 - 01\Projeto WebXRequisitos\App\FreelancerSpace\FreelancerSpace\obj\Debug\netcoreapp3.1\Razor\Views\GrupoAcessos\Index.cshtml.g.cs
+F:\Ylksz\Documentos\SI\2021 - 01\Projeto WebXRequisitos\App\FreelancerSpace\FreelancerSpace\obj\Debug\netcoreapp3.1\Razor\Views\Funcionalidades\Index.cshtml.g.cs
+F:\Ylksz\Documentos\SI\2021 - 01\Projeto WebXRequisitos\App\FreelancerSpace\FreelancerSpace\obj\Debug\netcoreapp3.1\Razor\Views\Funcionalidades\Create.cshtml.g.cs
+F:\Ylksz\Documentos\SI\2021 - 01\Projeto WebXRequisitos\App\FreelancerSpace\FreelancerSpace\obj\Debug\netcoreapp3.1\Razor\Views\GrupoAcessos\Create.cshtml.g.cs
+F:\Ylksz\Documentos\SI\2021 - 01\Projeto WebXRequisitos\App\FreelancerSpace\FreelancerSpace\obj\Debug\netcoreapp3.1\Razor\Views\Permissoes\Index.cshtml.g.cs
+F:\Ylksz\Documentos\SI\2021 - 01\Projeto WebXRequisitos\App\FreelancerSpace\FreelancerSpace\obj\Debug\netcoreapp3.1\Razor\Views\Permissoes\Create.cshtml.g.cs
