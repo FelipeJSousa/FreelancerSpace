@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "tBPTH3IANfasBHcfGlIsPdpt30z6qkGpdMFHpn3QUq1P2MIEx1F3is+sXgIJuKi2Fdk+PIwKkOtxC7UOe8BMLQ==",
+  "dgSpecHash": "NIutkfLHInhUnw/udXKNhayDkPNHNGwNr2cq7pq4m3U9pn8EUvLjYCjL54TZwX5NlfwBsJwAcPONcQ5DchQp9Q==",
   "success": true,
   "projectFilePath": "F:\\Ylksz\\Documentos\\SI\\2021 - 01\\Projeto WebXRequisitos\\App\\FreelancerSpace\\FreelancerSpace\\FreelancerSpace.csproj",
   "expectedPackageFiles": [
@@ -164,14 +164,9 @@
     "C:\\Users\\Ylksz\\.nuget\\packages\\system.xml.readerwriter\\4.3.0\\system.xml.readerwriter.4.3.0.nupkg.sha512",
     "C:\\Users\\Ylksz\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512",
     "C:\\Users\\Ylksz\\.nuget\\packages\\system.xml.xmldocument\\4.3.0\\system.xml.xmldocument.4.3.0.nupkg.sha512",
-    "C:\\Users\\Ylksz\\.nuget\\packages\\system.xml.xmlserializer\\4.3.0\\system.xml.xmlserializer.4.3.0.nupkg.sha512"
+    "C:\\Users\\Ylksz\\.nuget\\packages\\system.xml.xmlserializer\\4.3.0\\system.xml.xmlserializer.4.3.0.nupkg.sha512",
+    "C:\\Users\\Ylksz\\.nuget\\packages\\xunit.abstractions\\2.0.3\\xunit.abstractions.2.0.3.nupkg.sha512",
+    "C:\\Users\\Ylksz\\.nuget\\packages\\xunit.extensibility.core\\2.4.1\\xunit.extensibility.core.2.4.1.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "Undefined",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Problem reading the cache file F:\\Ylksz\\Documentos\\SI\\2021 - 01\\Projeto WebXRequisitos\\App\\FreelancerSpace\\FreelancerSpace\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
-    }
-  ]
+  "logs": []
 }
