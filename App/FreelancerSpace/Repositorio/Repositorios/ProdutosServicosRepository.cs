@@ -27,5 +27,14 @@ namespace Repositorio.Repositorios
             }
             return prodserv;
         }
+        public new ProdutosServico get(int id)
+        {
+            ProdutosServico prodserv = new ProdutosServico();
+            using (_context = new FreelancerSpaceContext())
+            {
+                prodserv = _context.ProdutosServicos.Include("IdRamoAtividadeNavigation").FirstOrDefault(x => x.Ativo.Equals("S") && x.Id.Equals(id));
+            }
+            return prodserv;
+        }
     }
 }
