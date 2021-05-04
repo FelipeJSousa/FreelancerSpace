@@ -1,0 +1,37 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <div class="container-fluid">
+        <form asp-action="ValidarLogin" asp-controller="Cliente" method="post">
+            <div class="form-group">
+                <label for="exampleInputEmail1">E-mail</label>
+                <input name="txtusername" type="email" class="form-control" id="txtusername" placeholder="E-mail">
+                <small id="lblusername" class="form-text text-muted">Nunca vamos compartilhar seu email, com ninguém.</small>
+            </div>
+            <div class="form-group">
+                <label for="lblsenha">Senha</label>
+                <input name="txtsenha" type="password" class="form-control" id="txtsenha" placeholder="Senha">
+            </div>
+            <span>
+                @ViewBag.mensagem
+            </span>
+            <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+        <a asp-action="Login">Cadastre-se</a>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</body>
+</html>

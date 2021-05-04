@@ -27,6 +27,18 @@ namespace Repositorio.Repositorios
             }
         }
 
+        public Usuario validarLogin(string username, string senha)
+        {
+            Usuario user = new Usuario();
+            using (_context = new FreelancerSpaceContext())
+            {
+                user = _context.Usuarios.Include("IdGrupoAcessoNavigation").FirstOrDefault(x => x.Username == username && 
+                                                                                                x.Senha == Encrypt(senha) && 
+                                                                                                x.Ativo.Equals("S"));
+            }
+            return user;
+        }
+
         public string Encrypt(string Data)
         {
             try
@@ -69,7 +81,7 @@ namespace Repositorio.Repositorios
             return "";
         }
 
-        public string Decrypt(string Data)
+        private string Decrypt(string Data)
         {
             try
             {

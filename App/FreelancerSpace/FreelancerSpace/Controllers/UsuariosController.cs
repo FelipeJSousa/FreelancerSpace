@@ -7,17 +7,48 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Repositorio.Repositorios;
+using Microsoft.AspNetCore.Http;
 
 namespace FreelancerSpace.Controllers
 {
     public class UsuariosController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Login()
         {
             return View();
         }
 
-        public IActionResult Validar(UsuariosModel model)
+        public IActionResult ValidarLogin(UsuariosModel model)
+        {
+            try
+            {
+                model.senha = new UsuarioRepository().Encrypt(model.senha);
+                var mapper = new Mapper(AutoMapperConfig.RegisterMappings());
+                var user = mapper.Map<Usuario>(model);
+                if (new UsuarioRepository().validarLogin(user.Username, user.Senha) != null) { 
+                    HttpContext.Session.SetInt32("idPessoa", user);
+                    HttpContext.Session.SetString("idGrupoAcesso", user.IdGrupoAcesso);
+                    HttpContext.Session.SetInt32("username", user.Username);
+                    return RedirectToAction("Index", "Home");
+                };
+
+            }
+            catch (Exception ex)
+            {
+                ViewBag.message = "Usuário ou senha invalido!";
+            }
+            if(model == null)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToPage("Home");
+            }
+        }
+
+
+        public IActionResult Create(UsuariosModel model)
         {
             try
             {
@@ -36,12 +67,12 @@ namespace FreelancerSpace.Controllers
                     ViewBag.message = "Usuário Salvo com Sucesso!";
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 ViewBag.message = "Não foi possível salvar o usuário!";
             }
 
-            return View("Index");
+            return View();
         }
 
 
