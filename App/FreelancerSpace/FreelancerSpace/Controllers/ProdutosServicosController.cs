@@ -121,5 +121,21 @@ namespace FreelancerSpace.Controllers
 
             return RedirectToAction("Index");
         }
+
+        public JsonResult Listar(string name)
+        {
+            var mapper = new Mapper(AutoMapperConfig.RegisterMappings());
+            List<ProdutosServicosModel> listmodel = new List<ProdutosServicosModel>();
+            try
+            {
+                listmodel = mapper.Map<List<ProdutosServicosModel>>(new ProdutosServicosRepository().listar(name));
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+            return new JsonResult(listmodel);
+        }
     }
 }

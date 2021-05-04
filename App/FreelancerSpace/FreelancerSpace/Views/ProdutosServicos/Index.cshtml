@@ -14,6 +14,7 @@
 <p>
     <a asp-action="Create">Criar Novo</a>
 </p>
+<input type="text" id="txtnome" class="form-control" />
 <table class="table">
     <thead>
         <tr>
@@ -29,7 +30,7 @@
             <th></th>
         </tr>
     </thead>
-    <tbody>
+    <tbody name="tablebody">
 @foreach (var item in Model) {
         <tr>
             <td>
@@ -49,6 +50,30 @@
 }
     </tbody>
 </table>
-    <span>@ViewBag.message</span>
+<span>@ViewBag.message</span>
+@section Scripts{
+    <script>
+        $("#txtnome").on("keyup", () =>
+        {
+            $.ajax({
+                type: "GET",
+                url: "/ProdutosServicos/Listar?name=" + $('#txtnome').val(),
+                contentType: "application/json; charset=utf-8",
+                data: "{}",
+                dataType: "json",
+                success: function (jsonResult) {
+                    console.log(jsonResult);
+                    jsonResult.forEach((item) => {
+                        $("#tablebody").html("<tr><td>" + item.nome + "</td><td>" + item.nescricao + "</td>" + "<td>" + item.idRamoAtividadeNavigation.nome + "</td> </tr>")
+                    });
+                },
+                failure: function (response) {
+                    alert("Erro ao carregar os dados: " + response);
+                }
+            });
+        });
+
+    </script>
+} 
 </body>
 </html>

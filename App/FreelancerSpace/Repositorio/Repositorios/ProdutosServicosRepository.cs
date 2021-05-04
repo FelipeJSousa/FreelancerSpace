@@ -27,12 +27,12 @@ namespace Repositorio.Repositorios
             }
             return prodserv;
         }
-        public new ProdutosServico get(int id)
+        public List<ProdutosServico> listar(string name)
         {
-            ProdutosServico prodserv = new ProdutosServico();
+            List<ProdutosServico> prodserv = new List<ProdutosServico>();
             using (_context = new FreelancerSpaceContext())
             {
-                prodserv = _context.ProdutosServicos.Include("IdRamoAtividadeNavigation").FirstOrDefault(x => x.Ativo.Equals("S") && x.Id.Equals(id));
+                prodserv = _context.ProdutosServicos.Include("IdRamoAtividadeNavigation").Where(x => x.Ativo.Equals("S") && x.Nome.Contains(name)).ToList();
             }
             return prodserv;
         }
