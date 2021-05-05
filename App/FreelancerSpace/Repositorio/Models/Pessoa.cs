@@ -19,7 +19,9 @@ namespace Repositorio.Models
         public string Cpf { get; set; }
         public DateTime DataNascimento { get; set; }
         public string Ativo { get; set; }
+        public string Usuario { get; set; }
 
+        public virtual Usuario UsuarioNavigation { get; set; }
         public virtual ICollection<Cliente> Clientes { get; set; }
         public virtual ICollection<Funcionario> Funcionarios { get; set; }
     }

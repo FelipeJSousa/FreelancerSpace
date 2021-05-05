@@ -18,6 +18,28 @@ namespace Repositorio.Repositorios
 
     public class UsuarioRepository : BaseRepository<Usuario>
     {
+
+        public bool add(string username, string senha)
+        {
+            Usuario user = new Usuario();
+            try
+            {
+                user = new Usuario() { Ativo = "S", IdGrupoAcesso = 1, Senha = senha, Username = username };
+                using (_context = new FreelancerSpaceContext())
+                {
+                    _context.Usuarios.Add(user);
+                    _context.SaveChanges();
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+                throw;
+            }
+        }
+
+
         public new List<Usuario> getAll()
         {
             using (_context = new FreelancerSpaceContext())

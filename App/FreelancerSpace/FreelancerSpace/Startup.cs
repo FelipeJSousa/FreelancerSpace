@@ -23,6 +23,13 @@ namespace FreelancerSpace
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //In-Memory
+            services.AddDistributedMemoryCache();
+            services.AddSession(options => {
+                options.IdleTimeout = TimeSpan.FromMinutes(1);
+            });
+            // Add framework services.
+            services.AddMvc();
             services.AddControllersWithViews();
         }
 
@@ -45,12 +52,12 @@ namespace FreelancerSpace
             app.UseRouting();
 
             app.UseAuthorization();
-
+            app.UseSession();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Usuarios}/{action=Index}/{id?}");
+                    pattern: "{controller=Usuarios}/{action=Login}/{id?}");
             });
         }
     }

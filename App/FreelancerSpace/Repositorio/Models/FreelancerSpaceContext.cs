@@ -116,22 +116,11 @@ namespace Repositorio.Models
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.Property(e => e.Usuario)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
                 entity.HasOne(d => d.IdPessoaNavigation)
                     .WithMany(p => p.Clientes)
                     .HasForeignKey(d => d.IdPessoa)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Clientes_Pessoas");
-
-                entity.HasOne(d => d.UsuarioNavigation)
-                    .WithMany(p => p.Clientes)
-                    .HasForeignKey(d => d.Usuario)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Clientes_Usuarios");
             });
 
             modelBuilder.Entity<Cnae>(entity =>
@@ -431,11 +420,6 @@ namespace Repositorio.Models
                     .IsUnicode(false)
                     .IsFixedLength(true);
 
-                entity.Property(e => e.Username)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
                 entity.HasOne(d => d.IdEmpresaNavigation)
                     .WithMany(p => p.Funcionarios)
                     .HasForeignKey(d => d.IdEmpresa)
@@ -447,12 +431,6 @@ namespace Repositorio.Models
                     .HasForeignKey(d => d.IdPessoa)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Funcionarios_Pessoas");
-
-                entity.HasOne(d => d.UsernameNavigation)
-                    .WithMany(p => p.Funcionarios)
-                    .HasForeignKey(d => d.Username)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Funcionarios_Usuarios");
             });
 
             modelBuilder.Entity<GrupoAcesso>(entity =>
@@ -617,6 +595,17 @@ namespace Repositorio.Models
                     .IsRequired()
                     .HasMaxLength(60)
                     .IsUnicode(false);
+
+                entity.Property(e => e.Usuario)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.UsuarioNavigation)
+                    .WithMany(p => p.Pessoas)
+                    .HasForeignKey(d => d.Usuario)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Pessoas_Usuarios");
             });
 
             modelBuilder.Entity<ProdutosServico>(entity =>

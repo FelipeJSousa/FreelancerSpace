@@ -1,4 +1,5 @@
 ﻿using FreelancerSpace.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -20,6 +21,8 @@ namespace FreelancerSpace.Controllers
 
         public IActionResult Index()
         {
+            ViewBag.nome = HttpContext.Session.GetString("nome");
+            ViewBag.sobrenome = HttpContext.Session.GetString("sobrenome");
             return View();
         }
 

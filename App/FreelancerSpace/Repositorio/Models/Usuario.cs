@@ -9,8 +9,7 @@ namespace Repositorio.Models
     {
         public Usuario()
         {
-            Clientes = new HashSet<Cliente>();
-            Funcionarios = new HashSet<Funcionario>();
+            Pessoas = new HashSet<Pessoa>();
         }
 
         public string Username { get; set; }
@@ -19,7 +18,6 @@ namespace Repositorio.Models
         public string Ativo { get; set; }
 
         public virtual GrupoAcesso IdGrupoAcessoNavigation { get; set; }
-        public virtual ICollection<Cliente> Clientes { get; set; }
-        public virtual ICollection<Funcionario> Funcionarios { get; set; }
+        public virtual ICollection<Pessoa> Pessoas { get; set; }
     }
 }

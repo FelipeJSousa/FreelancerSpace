@@ -15,64 +15,64 @@ namespace FreelancerSpace.Controllers
     {
         public IActionResult Login()
         {
+            ViewBag.message = TempData["redirectMessage"]?.ToString();
             return View();
         }
 
-        public IActionResult ValidarLogin(UsuariosModel model)
+        public IActionResult ValidarLogin(string txtusername, string txtsenha)
         {
+            Usuario user = new Usuario();
             try
             {
-                model.senha = new UsuarioRepository().Encrypt(model.senha);
-                var mapper = new Mapper(AutoMapperConfig.RegisterMappings());
-                var user = mapper.Map<Usuario>(model);
-                if (new UsuarioRepository().validarLogin(user.Username, user.Senha) != null) { 
-                    HttpContext.Session.SetInt32("idPessoa", user);
-                    HttpContext.Session.SetString("idGrupoAcesso", user.IdGrupoAcesso);
-                    HttpContext.Session.SetInt32("username", user.Username);
+                user = new UsuarioRepository().validarLogin(txtusername, txtsenha);
+                if (user != null) {
+                    var pes = new PessoaRepository().get(user);
+                    HttpContext.Session.SetInt32("idPessoa", pes.Id);
+                    HttpContext.Session.SetString("nome", pes.Nome);
+                    HttpContext.Session.SetString("sobrenome", pes.Sobrenome);
+                    HttpContext.Session.SetInt32("idGrupoAcesso", user.IdGrupoAcesso);
+                    HttpContext.Session.SetString("username", user.Username);
                     return RedirectToAction("Index", "Home");
                 };
 
             }
             catch (Exception ex)
             {
-                ViewBag.message = "Usuário ou senha invalido!";
+                TempData["redirectMessage"] = "Usuário ou senha invalido!";
+                return View("Login");
             }
-            if(model == null)
-            {
-                return View();
-            }
-            else
-            {
-                return RedirectToPage("Home");
-            }
+            TempData["redirectMessage"] = "Usuário ou senha invalido!";
+            return View("Login");
+        }
+        
+        public IActionResult Cadastro()
+        {
+            return View();
         }
 
-
-        public IActionResult Create(UsuariosModel model)
+        public IActionResult Create(string txtusername, string txtsenha)
         {
             try
             {
-                if (ModelState.IsValid)
+                txtsenha = new UsuarioRepository().Encrypt(txtsenha);
+                UsuarioRepository rep = new UsuarioRepository();
+                if (rep.add(txtusername, txtsenha))
                 {
-
-                    var mapper = new Mapper(AutoMapperConfig.RegisterMappings());
-
-                    model.senha = new UsuarioRepository().Encrypt(model.senha);
-                    
-                    Usuario user = mapper.Map<Usuario>(model);
-
-                    UsuarioRepository rep = new UsuarioRepository();
-                    rep.add(user);
-
                     ViewBag.message = "Usuário Salvo com Sucesso!";
+                    return View("Login");
+                }
+                else
+                {
+                    ViewBag.message = "Não foi possível salvar o usuário!";
+                    return View("Cadastro");
                 }
             }
             catch (Exception ex)
             {
                 ViewBag.message = "Não foi possível salvar o usuário!";
+                return View("Cadastro");
             }
 
-            return View();
         }
 
 

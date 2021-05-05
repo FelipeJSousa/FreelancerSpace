@@ -13,7 +13,7 @@
 </head>
 <body>
     <div class="container-fluid">
-        <form asp-action="ValidarLogin" asp-controller="Cliente" method="post">
+        <form asp-action="ValidarLogin" asp-controller="Usuarios" method="post">
             <div class="form-group">
                 <label for="exampleInputEmail1">E-mail</label>
                 <input name="txtusername" type="email" class="form-control" id="txtusername" placeholder="E-mail">
@@ -28,7 +28,7 @@
             </span>
             <button type="submit" class="btn btn-primary">Login</button>
         </form>
-        <a asp-action="Login">Cadastre-se</a>
+        <a asp-action="Cadastro">Cadastre-se</a>
     </div>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

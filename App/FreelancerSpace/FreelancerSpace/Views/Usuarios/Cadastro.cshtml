@@ -13,7 +13,7 @@
 </head>
 <body>
     <div class="container-fluid">
-        <form asp-action="Create" asp-controller="Cliente" method="post">
+        <form asp-action="Create" asp-controller="Usuarios" method="post">
             <div class="form-group">
                 <label for="exampleInputEmail1">Endereço de e-mail</label>
                 <input name="txtusername" type="email" class="form-control" id="txtusername" placeholder="E-mail">
@@ -28,7 +28,7 @@
                 <input name="txtconfirmsenha" type="password" class="form-control" id="txtconfirmsenha" placeholder="Senha">
             </div>
             <span>
-                @ViewBag.mensagem
+                @ViewBag.message
             </span>
             <button type="submit" class="btn btn-primary">Criar</button>
         </form>
