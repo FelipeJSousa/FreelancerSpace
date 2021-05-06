@@ -19,7 +19,7 @@ namespace Repositorio.Repositorios
     public class UsuarioRepository : BaseRepository<Usuario>
     {
 
-        public bool add(string username, string senha)
+        public Usuario add(string username, string senha)
         {
             Usuario user = new Usuario();
             try
@@ -30,11 +30,11 @@ namespace Repositorio.Repositorios
                     _context.Usuarios.Add(user);
                     _context.SaveChanges();
                 }
-                return true;
+                return user;
             }
             catch (Exception ex)
             {
-                return false;
+                return user;
                 throw;
             }
         }

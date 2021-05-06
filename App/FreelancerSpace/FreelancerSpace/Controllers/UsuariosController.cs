@@ -50,16 +50,35 @@ namespace FreelancerSpace.Controllers
             return View();
         }
 
-        public IActionResult Create(string txtusername, string txtsenha)
+        public IActionResult Create(string txtusername, string txtsenha, string txtnome, string txtsobrenome, string txtcpf, string txtdataNasc)
         {
             try
             {
                 txtsenha = new UsuarioRepository().Encrypt(txtsenha);
-                UsuarioRepository rep = new UsuarioRepository();
-                if (rep.add(txtusername, txtsenha))
+                Usuario user = new UsuarioRepository().add(txtusername, txtsenha);
+                if (user.Username != null)
                 {
-                    ViewBag.message = "Usuário Salvo com Sucesso!";
-                    return View("Login");
+                    DateTime datanasc = DateTime.Parse(txtdataNasc);
+                    Pessoa pes = new PessoaRepository().add(new Pessoa()
+                    {
+                        Ativo = "S",
+                        Cpf = txtcpf,
+                        Nome = txtnome,
+                        Sobrenome = txtsobrenome,
+                        Usuario = user.Username,
+                        DataNascimento = datanasc,
+                    });
+
+                    if (pes.Usuario != null)
+                    {
+                        ViewBag.message = "Usuário Salvo com Sucesso!";
+                        return View("Login");
+                    }
+                    else
+                    {
+                        ViewBag.message = "Não foi possível salvar o usuário!";
+                        return View("Cadastro");
+                    }
                 }
                 else
                 {

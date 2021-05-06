@@ -19,5 +19,16 @@ namespace Repositorio.Repositorios
 
             return pes;
         }
+
+        public new Pessoa add(Pessoa pes)
+        {
+            using (_context = new FreelancerSpaceContext())
+            {
+                _context.Pessoas.Add(pes);
+                _context.SaveChanges();
+            }
+
+            return pes;
+        }
     }
 }

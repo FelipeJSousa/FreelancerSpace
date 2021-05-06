@@ -14,17 +14,38 @@
 <body>
     <div class="container-fluid">
         <form asp-action="Create" asp-controller="Usuarios" method="post">
+            public string Nome { get; set; }
+            public string Sobrenome { get; set; }
+            public string Cpf { get; set; }
+            public DateTime DataNascimento { get; set; }
+
             <div class="form-group">
-                <label for="exampleInputEmail1">Endereço de e-mail</label>
+                <label for="txtnome">Nome</label>
+                <input name="txtnome" type="text" class="form-control" id="txtnome" placeholder="Nome">
+            </div>
+            <div class="form-group">
+                <label for="txtsobrenome">Sobrenome</label>
+                <input name="txtsobrenome" type="text" class="form-control" id="txtsobrenome" placeholder="Sobrenome">
+            </div>
+                <label for="txtcpf">CPF</label>
+                <input name="txtcpf" type="text" class="form-control" id="txtcpf" placeholder="CPF">
+            <div class="form-group">
+            </div>
+            <div class="form-group">
+                <label for="txtdataNasc">Data Nascimento</label>
+                <input name="txtdataNasc" type="text" class="form-control" id="txtdataNasc" placeholder="Data Nascimento">
+            </div>
+            <div class="form-group">
+                <label for="txtusername">Endereço de e-mail</label>
                 <input name="txtusername" type="email" class="form-control" id="txtusername" placeholder="E-mail">
                 <small id="lblusername" class="form-text text-muted">Nunca vamos compartilhar seu email, com ninguém.</small>
             </div>
             <div class="form-group">
-                <label for="lblsenha">Senha</label>
+                <label for="txtsenha">Senha</label>
                 <input name="txtsenha" type="password" class="form-control" id="txtsenha" placeholder="Senha">
             </div>
             <div class="form-group">
-                <label for="lblsenha">Confirme a Senha</label>
+                <label for="txtconfirmsenha">Confirme a Senha</label>
                 <input name="txtconfirmsenha" type="password" class="form-control" id="txtconfirmsenha" placeholder="Senha">
             </div>
             <span>
