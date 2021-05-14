@@ -459,3 +459,5 @@ App/FreelancerSpace/FreelancerSpace/obj/Debug/netcoreapp3.1/FreelancerSpace.View
 App/FreelancerSpace/FreelancerSpace/obj/Debug/netcoreapp3.1/FreelancerSpace.Views.pdb
 App/FreelancerSpace/FreelancerSpace/obj/Debug/netcoreapp3.1/Razor/Views/Usuarios/Index.cshtml.g.cs
 App/FreelancerSpace/Repositorio/obj/Debug/netcoreapp3.1/Repositorio.csprojAssemblyReference.cache
+*.zip
+*.sql
