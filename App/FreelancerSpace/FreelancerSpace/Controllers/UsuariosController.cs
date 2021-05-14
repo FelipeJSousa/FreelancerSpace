@@ -19,6 +19,12 @@ namespace FreelancerSpace.Controllers
             return View();
         }
 
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return View("Login");
+        }
+
         public IActionResult ValidarLogin(string txtusername, string txtsenha)
         {
             Usuario user = new Usuario();
@@ -33,7 +39,7 @@ namespace FreelancerSpace.Controllers
                     HttpContext.Session.SetInt32("idGrupoAcesso", user.IdGrupoAcesso);
                     HttpContext.Session.SetString("username", user.Username);
                     return RedirectToAction("Index", "Home");
-                };
+                }; 
 
             }
             catch (Exception ex)
