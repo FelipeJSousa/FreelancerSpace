@@ -14,10 +14,13 @@
 <p>
     <a asp-action="Create">Criar Novo</a>
 </p>
-<input type="text" id="txtnome" class="form-control" />
+<input type="text" id="txtbusca" class="form-control" />
 <table class="table">
     <thead>
         <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Nome)
             </th>
@@ -30,9 +33,12 @@
             <th></th>
         </tr>
     </thead>
-    <tbody name="tablebody">
+    <tbody id="tablebody">
 @foreach (var item in Model) {
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Nome)
             </td>
@@ -55,8 +61,26 @@
     <script>
         console.log(soma(1, 2));
         const busca = searchServProd;
-        $('#txtnome').on("keyup", () => {
-            busca($('#txtnome').val(),(ret) => console.log(ret));
+        $('#txtbusca').on("keyup", () => {
+            busca($('#txtbusca').val(), (ret) => {
+                console.log(ret);
+                if (ret.length > 0) {
+                    $("#tablebody").empty();
+                    ret.forEach((elem, i) => {
+                        const linha = $("<tr>", {});
+                        const coluna0 = $("<td>", { text: elem.id });
+                        const coluna1 = $("<td>", { text: elem.nome });
+                        const coluna2 = $("<td>", { text: elem.descricao });
+                        const coluna3 = $("<td>", { text: elem.idRamoAtividadeNavigation.nome});
+                        const coluna4 = $("<td>", {});
+                        const b1 = $("<a>", { text: "Alterar", href: "/ProdutosServicos/Create/" + elem.id });
+                        const b2 = $("<a>", { text: "Excluir", href: "/ProdutosServicos/Excluir/" + elem.id });
+                        coluna4.append(b1).append(" | ").append(b2);
+                        linha.append(coluna0).append(coluna1).append(coluna2).append(coluna3).append(coluna4);
+                        $("#tablebody").append(linha);
+                    })
+                }
+            });
         });
     </script>
 } 
