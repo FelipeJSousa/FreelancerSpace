@@ -106,6 +106,7 @@ ipch/
 *.cachefile
 *.VC.db
 *.VC.VC.opendb
+*.cache
 
 # Visual Studio profiler
 *.psess
@@ -451,8 +452,8 @@ App/FreelancerSpace/FreelancerSpace/obj/Debug/netcoreapp3.1/FreelancerSpace.cspr
 App/FreelancerSpace/.vs/FreelancerSpace/v16/.suo
 App/FreelancerSpace/.vs/FreelancerSpace/v16/.suo
 
-App/FreelancerSpace/FreelancerSpace/bin/Debug/netcoreapp3.1/FreelancerSpace.Views.dll
-App/FreelancerSpace/FreelancerSpace/bin/Debug/netcoreapp3.1/FreelancerSpace.Views.pdb
+*.dll
+*.pdb
 App/FreelancerSpace/FreelancerSpace/obj/Debug/netcoreapp3.1/FreelancerSpace.csprojAssemblyReference.cache
 App/FreelancerSpace/FreelancerSpace/obj/Debug/netcoreapp3.1/FreelancerSpace.Views.dll
 App/FreelancerSpace/FreelancerSpace/obj/Debug/netcoreapp3.1/FreelancerSpace.Views.pdb
