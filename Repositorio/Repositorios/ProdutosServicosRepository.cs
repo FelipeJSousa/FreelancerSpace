@@ -32,7 +32,7 @@ namespace Repositorio.Repositorios
             List<ProdutosServico> prodserv = new List<ProdutosServico>();
             using (_context = new FreelancerSpaceContext())
             {
-                prodserv = _context.ProdutosServicos.Include("IdRamoAtividadeNavigation").Where(x => x.Ativo.Equals("S") && x.Nome.Contains(name)).ToList();
+                prodserv = _context.ProdutosServicos.Include("IdRamoAtividadeNavigation").Where(x => x.Ativo.Equals("S") && x.Nome.ToUpper().Contains(name.ToUpper())).ToList();
             }
             return prodserv;
         }
