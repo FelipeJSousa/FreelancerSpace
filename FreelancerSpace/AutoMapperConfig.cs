@@ -19,9 +19,6 @@ namespace FreelancerSpace
                 cfg.CreateMap<ProdutosServico, ProdutosServicosModel>();
                 cfg.CreateMap<ProdutosServicosModel, ProdutosServico>();
 
-                cfg.CreateMap<RamoAtividade, RamoAtividadeModel>();
-                cfg.CreateMap<RamoAtividadeModel, RamoAtividade>();
-
                 cfg.CreateMap<GrupoAcesso, GrupoAcessoModel>();
                 cfg.CreateMap<GrupoAcessoModel, GrupoAcesso>();
                 
@@ -33,6 +30,9 @@ namespace FreelancerSpace
 
                 cfg.CreateMap<Funcionalidade, FuncionalidadesModel>();
                 cfg.CreateMap<FuncionalidadesModel, Funcionalidade>();
+
+                cfg.CreateMap<Cnae, CnaeModel>();
+                cfg.CreateMap<CnaeModel, Cnae>();
             });
             return config;
         }

@@ -12,7 +12,7 @@ namespace Repositorio.Models
             ProdutosServicos = new HashSet<ProdutosServico>();
         }
 
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string CodSecao { get; set; }
         public string DescSecao { get; set; }
         public string CodDivisao { get; set; }
@@ -23,6 +23,7 @@ namespace Repositorio.Models
         public string DescClasse { get; set; }
         public string CodSubclasse { get; set; }
         public string DescSubclasse { get; set; }
+        public string CodCnae { get; set; }
 
         public virtual ICollection<ProdutosServico> ProdutosServicos { get; set; }
     }

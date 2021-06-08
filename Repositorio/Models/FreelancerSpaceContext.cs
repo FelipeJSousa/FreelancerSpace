@@ -48,7 +48,7 @@ namespace Repositorio.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=. ; Database=FreelancerSpace; integrated security=true;");
+                optionsBuilder.UseSqlServer("Server=. ; Database= FreelancerSpace; integrated security=true;");
             }
         }
 
@@ -124,11 +124,15 @@ namespace Repositorio.Models
 
             modelBuilder.Entity<Cnae>(entity =>
             {
-                entity.ToTable("CNAE");
+                entity.HasKey(e => e.CodCnae)
+                    .HasName("PK__CNAE__3213E83F7B233C96");
 
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("id");
+                entity.ToTable("Cnae");
+
+                entity.Property(e => e.CodCnae)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("cod_cnae");
 
                 entity.Property(e => e.CodClasse)
                     .IsRequired()
@@ -189,6 +193,12 @@ namespace Repositorio.Models
                     .HasMaxLength(255)
                     .IsUnicode(false)
                     .HasColumnName("desc_subclasse");
+
+                entity.Property(e => e.Id)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("id");
             });
 
             modelBuilder.Entity<Empresa>(entity =>
@@ -619,6 +629,11 @@ namespace Repositorio.Models
                     .HasMaxLength(100)
                     .IsUnicode(false);
 
+                entity.Property(e => e.IdRamoAtividade)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.Nome)
                     .IsRequired()
                     .HasMaxLength(50)
@@ -628,7 +643,7 @@ namespace Repositorio.Models
                     .WithMany(p => p.ProdutosServicos)
                     .HasForeignKey(d => d.IdRamoAtividade)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_ProdutosServicos_CNAE");
+                    .HasConstraintName("FK_ProdutosServicos_Cnae");
             });
 
             modelBuilder.Entity<ProdutosServicosXempresa>(entity =>

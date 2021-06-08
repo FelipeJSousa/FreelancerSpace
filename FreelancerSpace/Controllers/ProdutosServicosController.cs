@@ -42,7 +42,6 @@ namespace FreelancerSpace.Controllers
         {
             ProdutosServicosModel prodservmodel = new ProdutosServicosModel();
             var mapper = new Mapper(AutoMapperConfig.RegisterMappings());
-            List<RamoAtividadeModel> listmodel = null;
             try
             {
                 if (id != null)
@@ -54,28 +53,26 @@ namespace FreelancerSpace.Controllers
                 {
                     prodservmodel.Id = 0;
                 }
-                var list = new RamoAtividadesRepository().getAll();
-                listmodel = mapper.Map<List<RamoAtividadeModel>>(list);
             }
             catch (Exception)
             {
                 throw;
             }
 
-            ViewBag.listRamoAtividade = listmodel;
-
             return View(prodservmodel);
         }
-
-        public IActionResult Salvar(ProdutosServicosModel model)
+        [HttpPost]
+        public virtual JsonResult Salvar([FromBody] ProdutosServicosModel model)
         {
             string operation = "";
             var mapper = new Mapper(AutoMapperConfig.RegisterMappings());
+            ProdutosServico prodserv = new ProdutosServico();
             try
             {
-                if (ModelState.IsValid)
+                if (model?.Id != null)
                 {
-                    ProdutosServico prodserv = mapper.Map<ProdutosServico>(model);
+                    
+                    prodserv = mapper.Map<ProdutosServico>(model);
 
                     ProdutosServicosRepository rep = new ProdutosServicosRepository();
                     if (prodserv.Id != 0)
@@ -89,6 +86,7 @@ namespace FreelancerSpace.Controllers
                     }
                     else
                     {
+                        prodserv.Ativo = "S";
                         operation = "cria";
                         if (!rep.add(prodserv))
                         {
@@ -103,7 +101,7 @@ namespace FreelancerSpace.Controllers
             {
                 TempData["redirectMessage"] = $"Não foi possível {operation}r o Produto/Serviço!";
             }
-            return RedirectToAction("Index");
+            return new JsonResult(prodserv);
         }
 
         public IActionResult Excluir(int id)

@@ -11,6 +11,12 @@
     <title>Lista de Produtos/Serviços</title>
 </head>
 <body>
+<style>
+.ui-autocomplete {
+    z-index: 1050 !important;
+}
+</style>
+
 <p>
     <a asp-action="Create">Criar Novo</a>
 </p>
@@ -25,7 +31,7 @@
                 @Html.DisplayNameFor(model => model.Descricao)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdRamoAtividadeNavigation.Nome)
+                @Html.DisplayNameFor(model => model.IdRamoAtividadeNavigation.DescSubclasse)
             </th>
             <th></th>
         </tr>
@@ -40,7 +46,7 @@
                 @Html.DisplayFor(modelItem => item.Descricao)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IdRamoAtividadeNavigation.Nome)
+                @Html.DisplayFor(modelItem => item.IdRamoAtividadeNavigation.DescSubclasse)
             </td>
             <td>
                 @Html.ActionLink("Editar", "Create", "ProdutosServicos", new { id = item.Id }) |
