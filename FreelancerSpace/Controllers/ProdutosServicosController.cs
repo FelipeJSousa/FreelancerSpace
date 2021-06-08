@@ -37,30 +37,30 @@ namespace FreelancerSpace.Controllers
             return View(GetProdutosServicos());
         }
 
-        public IActionResult Index(int? id)
-        {
-            List<ProdutosServicosModel> listprodservmodel = null;
-            try
-            {
-                if (id != null)
-                {
-                    listprodservmodel = new Mapper(AutoMapperConfig.RegisterMappings())
-                                               .Map<List<ProdutosServicosModel>>(
-                                                   new ProdutosServicosRepository().getAllProdServ(id.Value)
-                    );
-                }
-                else
-                {
+        //public IActionResult Index(int? id)
+        //{
+        //    List<ProdutosServicosModel> listprodservmodel = null;
+        //    try
+        //    {
+        //        if (id != null)
+        //        {
+        //            listprodservmodel = new Mapper(AutoMapperConfig.RegisterMappings())
+        //                                       .Map<List<ProdutosServicosModel>>(
+        //                                           new ProdutosServicosRepository().getAllProdServ(id.Value)
+        //            );
+        //        }
+        //        else
+        //        {
 
-                }
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-            ViewBag.message = TempData["redirectMessage"]?.ToString();
-            return View(listprodservmodel);
-        }
+        //        }
+        //    }
+        //    catch (Exception)
+        //    {
+        //        throw;
+        //    }
+        //    ViewBag.message = TempData["redirectMessage"]?.ToString();
+        //    return View(listprodservmodel);
+        //}
 
 
         public IActionResult Create(int? id)

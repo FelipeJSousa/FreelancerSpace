@@ -1,5 +1,8 @@
-﻿using FreelancerSpace.Models;
+﻿using AutoMapper;
+using FreelancerSpace.Models;
 using Microsoft.AspNetCore.Mvc;
+using Repositorio.Models;
+using Repositorio.Repositorios;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,16 +17,50 @@ namespace FreelancerSpace.Controllers
             return View();
         }
 
-        public IActionResult Cadastrar()
+        public IActionResult Cadastro()
         {
-
             return View();
         }
-
-        public JsonResult Salvar()
+        [HttpPost]
+        public JsonResult Salvar([FromBody] EmpresaModel empresaModel)
         {
-            EmpresaModel empresa = new EmpresaModel();
+            var mapper = new Mapper(AutoMapperConfig.RegisterMappings());
+            Empresa empresa = new Empresa();
+            try
+            {
+                if (empresaModel?.Id != null)
+                {
 
+                    empresa = mapper.Map<Empresa>(empresaModel);
+                    string operation = "";
+
+                    EmpresaRepository rep = new EmpresaRepository();
+                    if (empresa.Id != 0)
+                    {
+                        empresa.Ativo = "S";
+                        operation = "edita";
+                        if (!rep.edit(empresa))
+                        {
+                            TempData["redirectMessage"] = $"Não foi possível {operation}r a Empresa!";
+                        }
+                    }
+                    else
+                    {
+                        empresa.Ativo = "S";
+                        operation = "cria";
+                        if (!rep.add(empresa))
+                        {
+                            TempData["redirectMessage"] = $"Não foi possível {operation}r a Empresa!";
+                        }
+                    }
+
+                    TempData["redirectMessage"] = $"Empresa {operation}do com Sucesso!";
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
             return new JsonResult(empresa);
         }
 

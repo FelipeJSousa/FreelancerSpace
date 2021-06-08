@@ -15,7 +15,7 @@ namespace Repositorio.Models
             PerfilEmpresas = new HashSet<PerfilEmpresa>();
         }
 
-        public string Id { get; set; }
+        public int Id { get; set; }
         public string Cnae { get; set; }
         public string RazaoSocial { get; set; }
         public string NomeFantasia { get; set; }
