@@ -1,13 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace FreelancerSpace.Models
+#nullable disable
+
+namespace Repositorio.Models
 {
-    public class CnaeModel
+    public partial class Cnae
     {
-        public int Id { get; set; }
+        public Cnae()
+        {
+            ProdutosServicos = new HashSet<ProdutosServico>();
+        }
+
+        public string Id { get; set; }
         public string CodSecao { get; set; }
         public string DescSecao { get; set; }
         public string CodDivisao { get; set; }

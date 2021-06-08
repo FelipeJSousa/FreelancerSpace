@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Repositorio.Repositorios
 {
-    public class CnaeRepository : BaseRepository<CnaeRepository>
+    public class CnaeRepository : BaseRepository<Cnae>
     {
         public List<Cnae> getTopAtividades(string atividade)
         {
