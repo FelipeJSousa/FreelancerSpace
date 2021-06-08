@@ -13,6 +13,6 @@ namespace Repositorio.Models
         public string Descricao { get; set; }
         public string Ativo { get; set; }
 
-        public virtual RamoAtividade IdRamoAtividadeNavigation { get; set; }
+        public virtual Cnae IdRamoAtividadeNavigation { get; set; }
     }
 }

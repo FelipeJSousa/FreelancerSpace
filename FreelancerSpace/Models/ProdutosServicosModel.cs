@@ -20,6 +20,6 @@ namespace FreelancerSpace.Models
         [StringLength(maximumLength: 100, ErrorMessage = "Informar no máximo 100 caracteres")]
         public string Descricao { get; set; }
         [ForeignKey("Article")]
-        public RamoAtividadeModel IdRamoAtividadeNavigation { get; set; }
+        public virtual CnaeModel IdRamoAtividadeNavigation { get; set; }
     }
 }

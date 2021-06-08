@@ -1,17 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-#nullable disable
-
-namespace Repositorio.Models
+namespace FreelancerSpace.Models
 {
-    public partial class Cnae
+    public class CnaeModel
     {
-        public Cnae()
-        {
-            ProdutosServicos = new HashSet<ProdutosServico>();
-        }
-
         public int Id { get; set; }
         public string CodSecao { get; set; }
         public string DescSecao { get; set; }
@@ -24,6 +19,6 @@ namespace Repositorio.Models
         public string CodSubclasse { get; set; }
         public string DescSubclasse { get; set; }
 
-        public virtual ICollection<ProdutosServico> ProdutosServicos { get; set; }
+        public virtual ICollection<ProdutosServicosModel> ProdutosServicos { get; set; }
     }
 }

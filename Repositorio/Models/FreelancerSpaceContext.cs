@@ -20,7 +20,7 @@ namespace Repositorio.Models
         public virtual DbSet<Acesso> Acessos { get; set; }
         public virtual DbSet<Cidade> Cidades { get; set; }
         public virtual DbSet<Cliente> Clientes { get; set; }
-        public virtual DbSet<Cnae> Cnaes { get; set; }
+        public virtual DbSet<Cnae> Cnae { get; set; }
         public virtual DbSet<Empresa> Empresas { get; set; }
         public virtual DbSet<Endereco> Enderecos { get; set; }
         public virtual DbSet<EnderecosXempresa> EnderecosXempresas { get; set; }
@@ -40,7 +40,6 @@ namespace Repositorio.Models
         public virtual DbSet<Pessoa> Pessoas { get; set; }
         public virtual DbSet<ProdutosServico> ProdutosServicos { get; set; }
         public virtual DbSet<ProdutosServicosXempresa> ProdutosServicosXempresas { get; set; }
-        public virtual DbSet<RamoAtividade> RamoAtividades { get; set; }
         public virtual DbSet<TiposEndereco> TiposEnderecos { get; set; }
         public virtual DbSet<Usuario> Usuarios { get; set; }
 
@@ -49,7 +48,7 @@ namespace Repositorio.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=. ; Database= FreelancerSpace; integrated security=true;");
+                optionsBuilder.UseSqlServer("Server=. ; Database=FreelancerSpace; integrated security=true;");
             }
         }
 
@@ -614,7 +613,6 @@ namespace Repositorio.Models
                     .IsRequired()
                     .HasMaxLength(1)
                     .IsUnicode(false)
-                    .HasDefaultValueSql("('S')")
                     .IsFixedLength(true);
 
                 entity.Property(e => e.Descricao)
@@ -630,7 +628,7 @@ namespace Repositorio.Models
                     .WithMany(p => p.ProdutosServicos)
                     .HasForeignKey(d => d.IdRamoAtividade)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_ProdutosServicos_AtividadesClasses");
+                    .HasConstraintName("FK_ProdutosServicos_CNAE");
             });
 
             modelBuilder.Entity<ProdutosServicosXempresa>(entity =>
@@ -656,23 +654,6 @@ namespace Repositorio.Models
                     .HasForeignKey(d => d.IdProdutoServico)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ProdutosServicosXEmpresas_ProdutosServicos");
-            });
-
-            modelBuilder.Entity<RamoAtividade>(entity =>
-            {
-                entity.ToTable("RamoAtividade");
-
-                entity.Property(e => e.Ativo)
-                    .IsRequired()
-                    .HasMaxLength(1)
-                    .IsUnicode(false)
-                    .HasDefaultValueSql("('S')")
-                    .IsFixedLength(true);
-
-                entity.Property(e => e.Nome)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<TiposEndereco>(entity =>
