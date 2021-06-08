@@ -39,13 +39,19 @@ namespace FreelancerSpace.Controllers
 
         public IActionResult Index(int? id)
         {
+            List<ProdutosServicosModel> listprodservmodel = null;
             try
             {
                 if (id != null)
                 {
+                    listprodservmodel = new Mapper(AutoMapperConfig.RegisterMappings())
+                                               .Map<List<ProdutosServicosModel>>(
+                                                   new ProdutosServicosRepository().getAllProdServ(id.Value)
+                    );
                 }
                 else
                 {
+
                 }
             }
             catch (Exception)
@@ -53,7 +59,7 @@ namespace FreelancerSpace.Controllers
                 throw;
             }
             ViewBag.message = TempData["redirectMessage"]?.ToString();
-            return View(GetProdutosServicos());
+            return View(listprodservmodel);
         }
 
 

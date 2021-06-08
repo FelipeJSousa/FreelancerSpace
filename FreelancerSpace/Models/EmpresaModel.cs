@@ -8,7 +8,7 @@ namespace FreelancerSpace.Models
     public class EmpresaModel
     {
         public int Id { get; set; }
-        public int Cnae { get; set; }
+        public string Cnae { get; set; }
         public string RazaoSocial { get; set; }
         public string NomeFantasia { get; set; }
         public string Cnpj { get; set; }

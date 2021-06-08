@@ -16,6 +16,7 @@ namespace FreelancerSpace.Controllers
 
         public IActionResult Cadastrar()
         {
+
             return View();
         }
 
