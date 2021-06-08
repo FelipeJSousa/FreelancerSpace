@@ -37,6 +37,25 @@ namespace FreelancerSpace.Controllers
             return View(GetProdutosServicos());
         }
 
+        public IActionResult Index(int? id)
+        {
+            try
+            {
+                if (id != null)
+                {
+                }
+                else
+                {
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            ViewBag.message = TempData["redirectMessage"]?.ToString();
+            return View(GetProdutosServicos());
+        }
+
 
         public IActionResult Create(int? id)
         {
