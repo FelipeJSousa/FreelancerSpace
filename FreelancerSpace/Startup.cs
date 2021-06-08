@@ -29,6 +29,11 @@ namespace FreelancerSpace
                 options.IdleTimeout = TimeSpan.FromMinutes(1);
             });
             // Add framework services.
+            services.AddControllersWithViews()
+                .AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
+            services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddMvc();
             services.AddControllersWithViews();
         }

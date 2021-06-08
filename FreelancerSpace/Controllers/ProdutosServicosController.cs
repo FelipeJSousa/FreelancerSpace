@@ -94,7 +94,7 @@ namespace FreelancerSpace.Controllers
                         }
                     }
 
-                    TempData["redirectMessage"] = $"Ramo de atividade {operation}do com Sucesso!";
+                    TempData["redirectMessage"] = $"Produto/Serviço {operation}do com Sucesso!";
                 }
             }
             catch (Exception ex)
@@ -126,11 +126,17 @@ namespace FreelancerSpace.Controllers
             List<ProdutosServicosModel> listmodel = new List<ProdutosServicosModel>();
             try
             {
-                listmodel = mapper.Map<List<ProdutosServicosModel>>(new ProdutosServicosRepository().listar(name));
+                if (String.IsNullOrEmpty(name)) 
+                {
+                    listmodel = mapper.Map<List<ProdutosServicosModel>>(new ProdutosServicosRepository().getAllProdServ());
+                }
+                else
+                {
+                    listmodel = mapper.Map<List<ProdutosServicosModel>>(new ProdutosServicosRepository().listar(name));
+                }
             }
             catch (Exception ex)
             {
-
                 throw;
             }
             return new JsonResult(listmodel);
