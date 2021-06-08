@@ -18,8 +18,8 @@ namespace FreelancerSpace.Models
         public string DescClasse { get; set; }
         public string CodSubclasse { get; set; }
         public string DescSubclasse { get; set; }
-        public string CodCnae { get; set; }
+        public string Cnae { get; set; }
 
-        public virtual ICollection<ProdutosServico> ProdutosServicos { get; set; }
+        public virtual ICollection<ProdutosServicosModel> ProdutosServicos { get; set; }
     }
 }

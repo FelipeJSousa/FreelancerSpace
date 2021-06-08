@@ -22,7 +22,6 @@ namespace Repositorio.Models
         public string Cnpj { get; set; }
         public string Descricao { get; set; }
         public string ImagemDestaque { get; set; }
-        public int IdAtividadesDivisao { get; set; }
         public string Ativo { get; set; }
 
         public virtual ICollection<FaqPergunta> FaqPergunta { get; set; }

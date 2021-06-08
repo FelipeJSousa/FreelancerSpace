@@ -14,7 +14,6 @@ namespace FreelancerSpace.Models
         public string Cnpj { get; set; }
         public string Descricao { get; set; }
         public string ImagemDestaque { get; set; }
-        public int IdAtividadesDivisao { get; set; }
 
         public virtual ICollection<FaqPerguntaModel> FaqPergunta { get; set; }
         public virtual ICollection<FuncionariosModel> Funcionarios { get; set; }

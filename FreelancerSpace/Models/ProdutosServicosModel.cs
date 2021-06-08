@@ -12,7 +12,7 @@ namespace FreelancerSpace.Models
         [KeyAttribute]
         public int Id { get; set; }
         [ForeignKey("Article")]
-        public int IdRamoAtividade { get; set; }
+        public string IdRamoAtividade { get; set; }
         [Required(ErrorMessage = "Nome Produto/Serviço é obrigatório")]
         [Display(Name = "Nome Produto/Serviço")]
         public string Nome { get; set; }
@@ -20,6 +20,6 @@ namespace FreelancerSpace.Models
         [StringLength(maximumLength: 100, ErrorMessage = "Informar no máximo 100 caracteres")]
         public string Descricao { get; set; }
         [ForeignKey("Article")]
-        public RamoAtividadeModel IdRamoAtividadeNavigation { get; set; }
+        public virtual CnaeModel IdRamoAtividadeNavigation { get; set; }
     }
 }

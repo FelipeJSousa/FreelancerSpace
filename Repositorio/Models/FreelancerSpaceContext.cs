@@ -20,7 +20,7 @@ namespace Repositorio.Models
         public virtual DbSet<Acesso> Acessos { get; set; }
         public virtual DbSet<Cidade> Cidades { get; set; }
         public virtual DbSet<Cliente> Clientes { get; set; }
-        public virtual DbSet<Cnae> Cnaes { get; set; }
+        public virtual DbSet<Cnae> Cnae { get; set; }
         public virtual DbSet<Empresa> Empresas { get; set; }
         public virtual DbSet<Endereco> Enderecos { get; set; }
         public virtual DbSet<EnderecosXempresa> EnderecosXempresas { get; set; }
@@ -40,7 +40,6 @@ namespace Repositorio.Models
         public virtual DbSet<Pessoa> Pessoas { get; set; }
         public virtual DbSet<ProdutosServico> ProdutosServicos { get; set; }
         public virtual DbSet<ProdutosServicosXempresa> ProdutosServicosXempresas { get; set; }
-        public virtual DbSet<RamoAtividade> RamoAtividades { get; set; }
         public virtual DbSet<TiposEndereco> TiposEnderecos { get; set; }
         public virtual DbSet<Usuario> Usuarios { get; set; }
 
@@ -125,11 +124,15 @@ namespace Repositorio.Models
 
             modelBuilder.Entity<Cnae>(entity =>
             {
-                entity.ToTable("CNAE");
+                entity.HasKey(e => e.CodCnae)
+                    .HasName("PK__CNAE__3213E83F7B233C96");
 
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("id");
+                entity.ToTable("Cnae");
+
+                entity.Property(e => e.CodCnae)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("cod_cnae");
 
                 entity.Property(e => e.CodClasse)
                     .IsRequired()
@@ -190,6 +193,12 @@ namespace Repositorio.Models
                     .HasMaxLength(255)
                     .IsUnicode(false)
                     .HasColumnName("desc_subclasse");
+
+                entity.Property(e => e.Id)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("id");
             });
 
             modelBuilder.Entity<Empresa>(entity =>
@@ -614,11 +623,15 @@ namespace Repositorio.Models
                     .IsRequired()
                     .HasMaxLength(1)
                     .IsUnicode(false)
-                    .HasDefaultValueSql("('S')")
                     .IsFixedLength(true);
 
                 entity.Property(e => e.Descricao)
                     .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.IdRamoAtividade)
+                    .IsRequired()
+                    .HasMaxLength(50)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Nome)
@@ -630,7 +643,7 @@ namespace Repositorio.Models
                     .WithMany(p => p.ProdutosServicos)
                     .HasForeignKey(d => d.IdRamoAtividade)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_ProdutosServicos_AtividadesClasses");
+                    .HasConstraintName("FK_ProdutosServicos_Cnae");
             });
 
             modelBuilder.Entity<ProdutosServicosXempresa>(entity =>
@@ -656,23 +669,6 @@ namespace Repositorio.Models
                     .HasForeignKey(d => d.IdProdutoServico)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ProdutosServicosXEmpresas_ProdutosServicos");
-            });
-
-            modelBuilder.Entity<RamoAtividade>(entity =>
-            {
-                entity.ToTable("RamoAtividade");
-
-                entity.Property(e => e.Ativo)
-                    .IsRequired()
-                    .HasMaxLength(1)
-                    .IsUnicode(false)
-                    .HasDefaultValueSql("('S')")
-                    .IsFixedLength(true);
-
-                entity.Property(e => e.Nome)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<TiposEndereco>(entity =>
