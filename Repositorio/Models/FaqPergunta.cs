@@ -13,7 +13,7 @@ namespace Repositorio.Models
         }
 
         public int Id { get; set; }
-        public string IdEmpresa { get; set; }
+        public int IdEmpresa { get; set; }
         public int IdUsuario { get; set; }
         public string Pergunta { get; set; }
         public DateTime DataHorario { get; set; }

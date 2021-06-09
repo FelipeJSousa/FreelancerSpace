@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FreelancerSpace.Models;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 using Repositorio.Models;
 using Repositorio.Repositorios;
 using System;
@@ -22,38 +23,70 @@ namespace FreelancerSpace.Controllers
             return View();
         }
         [HttpPost]
-        public JsonResult Salvar([FromBody] EmpresaModel empresaModel)
+        public JsonResult Salvar([FromBody] JObject json)
         {
-            var mapper = new Mapper(AutoMapperConfig.RegisterMappings());
-            Empresa empresa = new Empresa();
+            Empresa empr = new Empresa();
+            List<Endereco> ende = new List<Endereco>();
+            List<Telefone> tel = new List<Telefone>();
+            Usuario usuario = new Usuario();
             try
             {
-                if (empresaModel?.Id != null)
-                {
+                empr = json["Empresa"].ToObject<Empresa>();
+                ende = json["Enderecos"].ToObject<List<Endereco>>();
+                tel = json["Telefones"].ToObject<List<Telefone>>();
+                usuario = json["Usuario"].ToObject<Usuario>();
+                string operation = "";
 
-                    empresa = mapper.Map<Empresa>(empresaModel);
-                    string operation = "";
+                if (empr?.Id != null)
+                {
+                    usuario.IdGrupoAcesso = 1;
+                    if (!new UsuarioRepository().add(usuario))
+                    {
+                        TempData["redirectMessage"] = $"Não foi possível {operation}r a Empresa!";
+                    }
 
                     EmpresaRepository rep = new EmpresaRepository();
-                    if (empresa.Id != 0)
+                    if (empr.Id != 0)
                     {
-                        empresa.Ativo = "S";
+                        empr.Ativo = "S";
                         operation = "edita";
-                        if (!rep.edit(empresa))
+                        if (!rep.edit(empr))
                         {
                             TempData["redirectMessage"] = $"Não foi possível {operation}r a Empresa!";
                         }
                     }
                     else
                     {
-                        empresa.Ativo = "S";
+                        empr.Ativo = "S";
                         operation = "cria";
-                        if (!rep.add(empresa))
+                        if (!rep.add(empr))
                         {
                             TempData["redirectMessage"] = $"Não foi possível {operation}r a Empresa!";
                         }
                     }
 
+                    foreach (var item in tel)
+                    {
+
+                        if (!new TelefoneRepository().add(item))
+                        {
+                            if (!new TelefoneRepository().SalvarTelefoneEmpresa(item.Id, empr.Id))
+                            {
+                                TempData["redirectMessage"] = $"Não foi possível {operation}r o telefone da Empresa!";
+                            }
+                        }
+                    }
+                    foreach (var item in ende)
+                    {
+                        if (!new EnderecoRepository().add(item)) 
+                        { 
+                            if(!new EnderecoRepository().SalvarEnderecoEmpresa(item.Id, empr.Id))
+                            {
+                                TempData["redirectMessage"] = $"Não foi possível {operation}r o endereco da Empresa!";
+                            }
+                        }
+                    }
+                    empr = rep.get(empr.Id);
                     TempData["redirectMessage"] = $"Empresa {operation}do com Sucesso!";
                 }
             }
@@ -61,7 +94,7 @@ namespace FreelancerSpace.Controllers
             {
 
             }
-            return new JsonResult(empresa);
+            return new JsonResult(empr);
         }
 
 

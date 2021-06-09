@@ -5,10 +5,9 @@ using System.Collections.Generic;
 
 namespace Repositorio.Models
 {
-    public partial class TiposEndereco
+    public partial class Telefone
     {
         public int Id { get; set; }
-        public string Nome { get; set; }
-        public string Ativo { get; set; }
+        public string Numero { get; set; }
     }
 }

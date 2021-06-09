@@ -23,7 +23,9 @@ namespace Repositorio.Models
         public string Descricao { get; set; }
         public string ImagemDestaque { get; set; }
         public string Ativo { get; set; }
+        public string Username { get; set; }
 
+        public virtual Usuario UsernameNavigation { get; set; }
         public virtual ICollection<FaqPergunta> FaqPergunta { get; set; }
         public virtual ICollection<Funcionario> Funcionarios { get; set; }
         public virtual ICollection<NotaAvaliacao> NotaAvaliacaos { get; set; }

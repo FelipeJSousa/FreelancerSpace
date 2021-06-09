@@ -2,7 +2,7 @@
 for details on configuring this project to bundle and minify static web assets. */
 
 .ui-autocomplete {
-    z-index: 1050 !important;
+    z-index: 9999 !important;
 }
 
 

@@ -96,9 +96,7 @@ namespace FreelancerSpace.Controllers
             {
                 if (model?.Id != null)
                 {
-                    
                     prodserv = mapper.Map<ProdutosServico>(model);
-
                     ProdutosServicosRepository rep = new ProdutosServicosRepository();
                     if (prodserv.Id != 0)
                     {
@@ -118,7 +116,6 @@ namespace FreelancerSpace.Controllers
                             TempData["redirectMessage"] = $"Não foi possível {operation}r o Produto/Serviço!";
                         }
                     }
-
                     TempData["redirectMessage"] = $"Produto/Serviço {operation}do com Sucesso!";
                 }
             }
