@@ -41,6 +41,7 @@ namespace Repositorio.Models
         public virtual DbSet<ProdutosServicosXempresa> ProdutosServicosXempresas { get; set; }
         public virtual DbSet<Telefone> Telefones { get; set; }
         public virtual DbSet<TelefoneXempresa> TelefoneXempresas { get; set; }
+        public virtual DbSet<TelefoneXpessoa> TelefoneXpessoas { get; set; }
         public virtual DbSet<Usuario> Usuarios { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -280,18 +281,16 @@ namespace Repositorio.Models
 
             modelBuilder.Entity<EnderecosXempresa>(entity =>
             {
-                entity.HasNoKey();
-
                 entity.ToTable("EnderecosXEmpresas");
 
                 entity.HasOne(d => d.IdEmpresaNavigation)
-                    .WithMany()
+                    .WithMany(p => p.EnderecosXempresas)
                     .HasForeignKey(d => d.IdEmpresa)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_EnderecosXEmpresas_Empresas");
 
                 entity.HasOne(d => d.IdEnderecoNavigation)
-                    .WithMany()
+                    .WithMany(p => p.EnderecosXempresas)
                     .HasForeignKey(d => d.IdEndereco)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_EnderecosXEmpresas_Enderecos");
@@ -299,18 +298,16 @@ namespace Repositorio.Models
 
             modelBuilder.Entity<EnderecosXpessoa>(entity =>
             {
-                entity.HasNoKey();
-
                 entity.ToTable("EnderecosXPessoas");
 
                 entity.HasOne(d => d.IdEnderecoNavigation)
-                    .WithMany()
+                    .WithMany(p => p.EnderecosXpessoas)
                     .HasForeignKey(d => d.IdEndereco)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_EnderecosXPessoas_Enderecos");
 
                 entity.HasOne(d => d.IdPessoaNavigation)
-                    .WithMany()
+                    .WithMany(p => p.EnderecosXpessoas)
                     .HasForeignKey(d => d.IdPessoa)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_EnderecosXPessoas_Pessoas");
@@ -451,18 +448,18 @@ namespace Repositorio.Models
 
             modelBuilder.Entity<HorarioAtendimentoXempresa>(entity =>
             {
-                entity.HasNoKey();
-
                 entity.ToTable("HorarioAtendimentoXEmpresas");
 
+                entity.Property(e => e.Id).HasColumnName("id");
+
                 entity.HasOne(d => d.IdEmpresaNavigation)
-                    .WithMany()
+                    .WithMany(p => p.HorarioAtendimentoXempresas)
                     .HasForeignKey(d => d.IdEmpresa)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_HorarioAtendimentoXEmpresas_Empresas");
 
                 entity.HasOne(d => d.IdHorarioAtendimentoNavigation)
-                    .WithMany()
+                    .WithMany(p => p.HorarioAtendimentoXempresas)
                     .HasForeignKey(d => d.IdHorarioAtendimento)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_HorarioAtendimentoXEmpresas_HorarioAtendimento");
@@ -605,18 +602,18 @@ namespace Repositorio.Models
 
             modelBuilder.Entity<ProdutosServicosXempresa>(entity =>
             {
-                entity.HasNoKey();
-
                 entity.ToTable("ProdutosServicosXEmpresas");
 
+                entity.Property(e => e.Id).HasColumnName("id");
+
                 entity.HasOne(d => d.IdEmpresaNavigation)
-                    .WithMany()
+                    .WithMany(p => p.ProdutosServicosXempresas)
                     .HasForeignKey(d => d.IdEmpresa)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ProdutosServicosXEmpresas_Empresas");
 
                 entity.HasOne(d => d.IdProdutoServicoNavigation)
-                    .WithMany()
+                    .WithMany(p => p.ProdutosServicosXempresas)
                     .HasForeignKey(d => d.IdProdutoServico)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ProdutosServicosXEmpresas_ProdutosServicos");
@@ -634,21 +631,36 @@ namespace Repositorio.Models
 
             modelBuilder.Entity<TelefoneXempresa>(entity =>
             {
-                entity.HasNoKey();
-
                 entity.ToTable("TelefoneXEmpresas");
 
                 entity.HasOne(d => d.IdEmpresaNavigation)
-                    .WithMany()
+                    .WithMany(p => p.TelefoneXempresas)
                     .HasForeignKey(d => d.IdEmpresa)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_TelefoneXEmpresas_Empresas");
 
                 entity.HasOne(d => d.IdTelefoneNavigation)
-                    .WithMany()
+                    .WithMany(p => p.TelefoneXempresas)
                     .HasForeignKey(d => d.IdTelefone)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_TelefoneXEmpresas_Telefone");
+            });
+
+            modelBuilder.Entity<TelefoneXpessoa>(entity =>
+            {
+                entity.ToTable("TelefoneXPessoas");
+
+                entity.HasOne(d => d.IdPessoaNavigation)
+                    .WithMany(p => p.TelefoneXpessoas)
+                    .HasForeignKey(d => d.IdPessoa)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_TelefoneXPessoas_Pessoas");
+
+                entity.HasOne(d => d.IdTelefoneNavigation)
+                    .WithMany(p => p.TelefoneXpessoas)
+                    .HasForeignKey(d => d.IdTelefone)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_TelefoneXPessoas_Telefone");
             });
 
             modelBuilder.Entity<Usuario>(entity =>

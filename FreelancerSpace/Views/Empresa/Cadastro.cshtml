@@ -263,7 +263,24 @@
                 <h6>Realize o login utilizando seu e-mail e senha cadastrados.</h6>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="btnsuccess" data-dismiss="modal">Fazer Login</button>
+                <button type="button" class="btn btn-primary" id="btnsuccess" onclick="redirectHome()">Fazer Login</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ModalFailure" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLabel">Cadastro</h4>
+            </div>
+            <div class="modal-body">
+                <h5>Não foi possível realizar o cadastro!</h5>
+                <h6>Tente novemente dentro de algum momento.</h6>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnfailure" data-dismiss="modal">Ok!</button>
             </div>
         </div>
     </div>
@@ -285,6 +302,10 @@
         }
         else {
             document.getElementById("btnsalvar").value = "Salvar";
+        }
+
+        function redirectHome() {
+            document.location = document.location.toString().replace("Empresa/Cadastro","")+'Usuarios/Login';
         }
 
         function salvarEmpresa() {
@@ -346,42 +367,23 @@
                 dataType: "json",
                 contentType: 'application/json; charset=UTF-8',
                 data: JSON.stringify(obj),
+                error: (data) => {
+                    console.log(data.responseText);
+                    $("#ModalFailure").modal("show");
+                },
                 success: function (data) {
-                    console.log(data);
-                    if (data.status) {
-                        $("#mensagem").removeClass('alert-danger').addClass('alert-success').text(data.mensagem);
-                        $("#Id").val(data.obj.Id);
-                        //limpar
-                        $("#Id").val("");
-                        $("#txtnome").val("");
-                        $("#txtdescricao").val("");
-                        $("#cnae").val("");
-                        $("#cnaeCodigo").val("");
-                        bootbox.alert(data.mensagem);
-                    }
-                    else {
-                        $("#mensagem").addClass('alert-danger').removeClass('alert-success').text(data.mensagem);
-                        bootbox.alert(data.mensagem);
-                    }
-                }
-            });
-
-            $.ajax({
-                url: "/Usuario/Salvar",
-                type: "POST",
-                dataType: "json",
-                contentType: "application/json; charset=UTF-8",
-                data: JSON.stringify(objUsuario),
-                success: function (data) {
-                    console.log(data);
-                    if (data.status) {
-
-                        $("#txtrazaosocial").val("");
-                        $("#txtnomefantasia").val("");
-                        $("#cnae").val("");
-                        $("#txtcnpj").val("");
-
-                    }
+                    console.log('Success', data);
+                    $("#ModalSuccess").modal("show");
+                    $("#txtrazaosocial").val("");
+                    $("#txtnomefantasia").val("");
+                    $("#txtcnpj").val("");
+                    $("#cnae").val("");
+                    $("#cnaeCodigo").val("");
+                    $("#txtemail").val("");
+                    $("#tabTelefones").val("");
+                    $("#tabEnderecos").val("");
+                    $("#txtsenha").val("");
+                    $("#txtconfirmasenha").val("");
                 }
             });
         }
@@ -613,22 +615,6 @@
                     $("#spancep").text("O CEP informado é inexistente");
                 }
             });
-
-            $("#btnsuccess").on('click', () => {
-                $.ajax({
-                    url: '@Url.Action("Login","Usuarios")',
-                    dataType: 'html',
-                    cache: false,
-                    type: "GET",
-                    error: (e) => {
-                        bootbox.alert(e.responseText);
-                    },
-                    success: (res) => {
-                        
-                    }
-                });
-            })
-
         });
     </script>
 }

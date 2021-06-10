@@ -5,13 +5,13 @@ using System.Collections.Generic;
 
 namespace Repositorio.Models
 {
-    public partial class TelefoneXempresa
+    public partial class TelefoneXpessoa
     {
         public int IdTelefone { get; set; }
-        public int IdEmpresa { get; set; }
+        public int IdPessoa { get; set; }
         public int Id { get; set; }
 
-        public virtual Empresa IdEmpresaNavigation { get; set; }
+        public virtual Pessoa IdPessoaNavigation { get; set; }
         public virtual Telefone IdTelefoneNavigation { get; set; }
     }
 }

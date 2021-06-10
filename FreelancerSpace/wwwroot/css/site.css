@@ -5,6 +5,9 @@ for details on configuring this project to bundle and minify static web assets. 
     z-index: 9999 !important;
 }
 
+body {
+    background-color: #FFF !important;
+}
 
 a.navbar-brand {
   white-space: normal;
@@ -69,7 +72,6 @@ body {
 }
 .footer {
   position: absolute;
-  bottom: 0;
   width: 100%;
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */

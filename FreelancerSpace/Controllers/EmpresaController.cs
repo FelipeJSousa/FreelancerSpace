@@ -7,6 +7,7 @@ using Repositorio.Repositorios;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace FreelancerSpace.Controllers
@@ -42,7 +43,7 @@ namespace FreelancerSpace.Controllers
                     usuario.IdGrupoAcesso = 1;
                     if (!new UsuarioRepository().add(usuario))
                     {
-                        TempData["redirectMessage"] = $"Não foi possível {operation}r a Empresa!";
+                        throw new Exception($"Não foi possível {operation}r o endereco da Empresa!");
                     }
 
                     EmpresaRepository rep = new EmpresaRepository();
@@ -52,7 +53,7 @@ namespace FreelancerSpace.Controllers
                         operation = "edita";
                         if (!rep.edit(empr))
                         {
-                            TempData["redirectMessage"] = $"Não foi possível {operation}r a Empresa!";
+                            throw new Exception($"Não foi possível {operation}r o endereco da Empresa!");
                         }
                     }
                     else
@@ -61,29 +62,37 @@ namespace FreelancerSpace.Controllers
                         operation = "cria";
                         if (!rep.add(empr))
                         {
-                            TempData["redirectMessage"] = $"Não foi possível {operation}r a Empresa!";
+                            throw new Exception($"Não foi possível {operation}r o endereco da Empresa!");
                         }
                     }
 
-                    foreach (var item in tel)
+                    foreach (var itel in tel)
                     {
 
-                        if (!new TelefoneRepository().add(item))
+                        if (new TelefoneRepository().add(itel))
                         {
-                            if (!new TelefoneRepository().SalvarTelefoneEmpresa(item.Id, empr.Id))
+                            if (!new TelefoneRepository().SalvarTelefoneEmpresa(itel.Id, empr.Id))
                             {
-                                TempData["redirectMessage"] = $"Não foi possível {operation}r o telefone da Empresa!";
+                                throw new Exception($"Não foi possível {operation}r o endereco da Empresa!");
                             }
                         }
+                        else
+                        {
+                            throw new Exception($"Não foi possível {operation}r o endereco da Empresa!");
+                        }
                     }
-                    foreach (var item in ende)
+                    foreach (var iend in ende)
                     {
-                        if (!new EnderecoRepository().add(item)) 
+                        if (new EnderecoRepository().add(iend)) 
                         { 
-                            if(!new EnderecoRepository().SalvarEnderecoEmpresa(item.Id, empr.Id))
+                            if(!new EnderecoRepository().SalvarEnderecoEmpresa(iend.Id, empr.Id))
                             {
-                                TempData["redirectMessage"] = $"Não foi possível {operation}r o endereco da Empresa!";
+                                throw new Exception($"Não foi possível {operation}r o endereco da Empresa!");
                             }
+                        }
+                        else
+                        {
+                            throw new Exception($"Não foi possível {operation}r o endereco da Empresa!");
                         }
                     }
                     empr = rep.get(empr.Id);
@@ -92,7 +101,7 @@ namespace FreelancerSpace.Controllers
             }
             catch (Exception ex)
             {
-
+                return Json(new { success = false, responseText = ex.Message });
             }
             return new JsonResult(empr);
         }
