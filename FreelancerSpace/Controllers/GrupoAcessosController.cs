@@ -54,7 +54,7 @@ namespace FreelancerSpace.Controllers
 
             ViewBag.listFuncionalidades = funcionalidadesModels;
             ViewBag.listPermissoes = permissoesModels;
-            return View(acessosModel);
+            return View(grupoacessomodel);
         }
 
         [HttpPost]
@@ -66,22 +66,52 @@ namespace FreelancerSpace.Controllers
             try
             {
                 grupo = json["GrupoAcesso"].ToObject<GrupoAcesso>();
-                if (new GrupoAcessoRepository().add(grupo))
+                acessos = json["Acessos"].ToObject<List<Acesso>>();
+                if (grupo.Id > 0)
                 {
-                    acessos = json["Acessos"].ToObject<List<Acesso>>();
-                    foreach (var item in acessos)
+                    if(new GrupoAcessoRepository().edit(grupo))
                     {
-                        item.IdGrupo = grupo.Id;
-                        if (!new AcessoRepository().add(item))
+                        var listacessos = new AcessoRepository().getAll(x => x.IdGrupo == grupo.Id && x.Ativo.Equals("S"));
+                        foreach (var item in listacessos)
                         {
-                            throw new Exception("Falha ao criar acesso.");
-                        };
+                            item.Ativo = "N";
+                            if(!new AcessoRepository().edit(item))
+                            {
+                                throw new Exception("Falha ao editar acessos.");
+                            }
+                        }
+                        foreach (var item in acessos)
+                        {
+                            item.IdGrupo = grupo.Id;
+                            if (!new AcessoRepository().add(item))
+                            {
+                                throw new Exception("Falha ao criar acesso.");
+                            };
+                        }
+                    }
+                    else
+                    {
+                        throw new Exception("Falha ao editar grupo de acesso.");
                     }
                 }
                 else
                 {
-                    throw new Exception("Falha ao criar grupo de acesso.");
-                };
+                    if (new GrupoAcessoRepository().add(grupo))
+                    {
+                        foreach (var item in acessos)
+                        {
+                            item.IdGrupo = grupo.Id;
+                            if (!new AcessoRepository().add(item))
+                            {
+                                throw new Exception("Falha ao criar acesso.");
+                            };
+                        }
+                    }
+                    else
+                    {
+                        throw new Exception("Falha ao criar grupo de acesso.");
+                    };
+                }
             }
             catch (Exception ex)
             {
