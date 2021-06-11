@@ -18,7 +18,6 @@ namespace Repositorio.Models
         }
 
         public virtual DbSet<Acesso> Acessos { get; set; }
-        public virtual DbSet<Cidade> Cidades { get; set; }
         public virtual DbSet<Cliente> Clientes { get; set; }
         public virtual DbSet<Cnae> Cnae { get; set; }
         public virtual DbSet<Empresa> Empresas { get; set; }
@@ -40,7 +39,9 @@ namespace Repositorio.Models
         public virtual DbSet<Pessoa> Pessoas { get; set; }
         public virtual DbSet<ProdutosServico> ProdutosServicos { get; set; }
         public virtual DbSet<ProdutosServicosXempresa> ProdutosServicosXempresas { get; set; }
-        public virtual DbSet<TiposEndereco> TiposEnderecos { get; set; }
+        public virtual DbSet<Telefone> Telefones { get; set; }
+        public virtual DbSet<TelefoneXempresa> TelefoneXempresas { get; set; }
+        public virtual DbSet<TelefoneXpessoa> TelefoneXpessoas { get; set; }
         public virtual DbSet<Usuario> Usuarios { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -82,24 +83,6 @@ namespace Repositorio.Models
                     .HasForeignKey(d => d.IdPermissao)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Acessos_Permissoes");
-            });
-
-            modelBuilder.Entity<Cidade>(entity =>
-            {
-                entity.Property(e => e.Nome)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Sigla)
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
-
-                entity.HasOne(d => d.IdEstadoNavigation)
-                    .WithMany(p => p.Cidades)
-                    .HasForeignKey(d => d.IdEstado)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Cidades_Estados");
             });
 
             modelBuilder.Entity<Cliente>(entity =>
@@ -203,11 +186,6 @@ namespace Repositorio.Models
 
             modelBuilder.Entity<Empresa>(entity =>
             {
-                entity.Property(e => e.Id)
-                    .HasMaxLength(1)
-                    .IsUnicode(false)
-                    .IsFixedLength(true);
-
                 entity.Property(e => e.Ativo)
                     .IsRequired()
                     .HasMaxLength(1)
@@ -215,11 +193,15 @@ namespace Repositorio.Models
                     .HasDefaultValueSql("('S')")
                     .IsFixedLength(true);
 
-                entity.Property(e => e.Cnae).HasColumnName("CNAE");
+                entity.Property(e => e.Cnae)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("CNAE");
 
                 entity.Property(e => e.Cnpj)
                     .IsRequired()
-                    .HasMaxLength(14)
+                    .HasMaxLength(20)
                     .IsUnicode(false)
                     .HasColumnName("CNPJ");
 
@@ -240,6 +222,17 @@ namespace Repositorio.Models
                     .IsRequired()
                     .HasMaxLength(80)
                     .IsUnicode(false);
+
+                entity.Property(e => e.Username)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.UsernameNavigation)
+                    .WithMany(p => p.Empresas)
+                    .HasForeignKey(d => d.Username)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Empresas_Usuarios");
             });
 
             modelBuilder.Entity<Endereco>(entity =>
@@ -262,50 +255,42 @@ namespace Repositorio.Models
                     .HasColumnName("CEP")
                     .IsFixedLength(true);
 
+                entity.Property(e => e.Cidade)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Complemento)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Estado)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.Logradouro)
                     .IsRequired()
                     .HasMaxLength(80)
                     .IsUnicode(false);
 
-                entity.HasOne(d => d.IdCidadeNavigation)
-                    .WithMany(p => p.Enderecos)
-                    .HasForeignKey(d => d.IdCidade)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Enderecos_Cidades");
-
-                entity.HasOne(d => d.IdEstadoNavigation)
-                    .WithMany(p => p.Enderecos)
-                    .HasForeignKey(d => d.IdEstado)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Enderecos_Estados");
-
-                entity.HasOne(d => d.IdTipoEnderecoNavigation)
-                    .WithMany(p => p.Enderecos)
-                    .HasForeignKey(d => d.IdTipoEndereco)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Enderecos_TiposEndereco");
+                entity.Property(e => e.Pais)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<EnderecosXempresa>(entity =>
             {
-                entity.HasNoKey();
-
                 entity.ToTable("EnderecosXEmpresas");
 
-                entity.Property(e => e.IdEmpresa)
-                    .IsRequired()
-                    .HasMaxLength(1)
-                    .IsUnicode(false)
-                    .IsFixedLength(true);
-
                 entity.HasOne(d => d.IdEmpresaNavigation)
-                    .WithMany()
+                    .WithMany(p => p.EnderecosXempresas)
                     .HasForeignKey(d => d.IdEmpresa)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_EnderecosXEmpresas_Empresas");
 
                 entity.HasOne(d => d.IdEnderecoNavigation)
-                    .WithMany()
+                    .WithMany(p => p.EnderecosXempresas)
                     .HasForeignKey(d => d.IdEndereco)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_EnderecosXEmpresas_Enderecos");
@@ -313,18 +298,16 @@ namespace Repositorio.Models
 
             modelBuilder.Entity<EnderecosXpessoa>(entity =>
             {
-                entity.HasNoKey();
-
                 entity.ToTable("EnderecosXPessoas");
 
                 entity.HasOne(d => d.IdEnderecoNavigation)
-                    .WithMany()
+                    .WithMany(p => p.EnderecosXpessoas)
                     .HasForeignKey(d => d.IdEndereco)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_EnderecosXPessoas_Enderecos");
 
                 entity.HasOne(d => d.IdPessoaNavigation)
-                    .WithMany()
+                    .WithMany(p => p.EnderecosXpessoas)
                     .HasForeignKey(d => d.IdPessoa)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_EnderecosXPessoas_Pessoas");
@@ -356,12 +339,6 @@ namespace Repositorio.Models
                     .IsUnicode(false);
 
                 entity.Property(e => e.DataHorario).HasColumnType("datetime");
-
-                entity.Property(e => e.IdEmpresa)
-                    .IsRequired()
-                    .HasMaxLength(1)
-                    .IsUnicode(false)
-                    .IsFixedLength(true);
 
                 entity.Property(e => e.Pergunta)
                     .IsRequired()
@@ -423,12 +400,6 @@ namespace Repositorio.Models
 
                 entity.Property(e => e.DataContratacao).HasColumnType("date");
 
-                entity.Property(e => e.IdEmpresa)
-                    .IsRequired()
-                    .HasMaxLength(1)
-                    .IsUnicode(false)
-                    .IsFixedLength(true);
-
                 entity.HasOne(d => d.IdEmpresaNavigation)
                     .WithMany(p => p.Funcionarios)
                     .HasForeignKey(d => d.IdEmpresa)
@@ -477,24 +448,18 @@ namespace Repositorio.Models
 
             modelBuilder.Entity<HorarioAtendimentoXempresa>(entity =>
             {
-                entity.HasNoKey();
-
                 entity.ToTable("HorarioAtendimentoXEmpresas");
 
-                entity.Property(e => e.IdEmpresa)
-                    .IsRequired()
-                    .HasMaxLength(1)
-                    .IsUnicode(false)
-                    .IsFixedLength(true);
+                entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.HasOne(d => d.IdEmpresaNavigation)
-                    .WithMany()
+                    .WithMany(p => p.HorarioAtendimentoXempresas)
                     .HasForeignKey(d => d.IdEmpresa)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_HorarioAtendimentoXEmpresas_Empresas");
 
                 entity.HasOne(d => d.IdHorarioAtendimentoNavigation)
-                    .WithMany()
+                    .WithMany(p => p.HorarioAtendimentoXempresas)
                     .HasForeignKey(d => d.IdHorarioAtendimento)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_HorarioAtendimentoXEmpresas_HorarioAtendimento");
@@ -505,12 +470,6 @@ namespace Repositorio.Models
                 entity.ToTable("NotaAvaliacao");
 
                 entity.Property(e => e.DataAvaliacao).HasColumnType("datetime");
-
-                entity.Property(e => e.IdEmpresa)
-                    .IsRequired()
-                    .HasMaxLength(1)
-                    .IsUnicode(false)
-                    .IsFixedLength(true);
 
                 entity.Property(e => e.NotaAvaliacao1)
                     .HasColumnType("decimal(1, 1)")
@@ -541,12 +500,7 @@ namespace Repositorio.Models
             {
                 entity.ToTable("PerfilEmpresa");
 
-                entity.Property(e => e.IdEmpresa)
-                    .IsRequired()
-                    .HasMaxLength(1)
-                    .IsUnicode(false)
-                    .HasDefaultValueSql("('S')")
-                    .IsFixedLength(true);
+                entity.Property(e => e.IdEmpresa).HasDefaultValueSql("('S')");
 
                 entity.Property(e => e.Likes).HasColumnType("numeric(9, 0)");
 
@@ -648,44 +602,65 @@ namespace Repositorio.Models
 
             modelBuilder.Entity<ProdutosServicosXempresa>(entity =>
             {
-                entity.HasNoKey();
-
                 entity.ToTable("ProdutosServicosXEmpresas");
 
-                entity.Property(e => e.IdEmpresa)
-                    .IsRequired()
-                    .HasMaxLength(1)
-                    .IsUnicode(false)
-                    .IsFixedLength(true);
+                entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.HasOne(d => d.IdEmpresaNavigation)
-                    .WithMany()
+                    .WithMany(p => p.ProdutosServicosXempresas)
                     .HasForeignKey(d => d.IdEmpresa)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ProdutosServicosXEmpresas_Empresas");
 
                 entity.HasOne(d => d.IdProdutoServicoNavigation)
-                    .WithMany()
+                    .WithMany(p => p.ProdutosServicosXempresas)
                     .HasForeignKey(d => d.IdProdutoServico)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ProdutosServicosXEmpresas_ProdutosServicos");
             });
 
-            modelBuilder.Entity<TiposEndereco>(entity =>
+            modelBuilder.Entity<Telefone>(entity =>
             {
-                entity.ToTable("TiposEndereco");
+                entity.ToTable("Telefone");
 
-                entity.Property(e => e.Ativo)
+                entity.Property(e => e.Numero)
                     .IsRequired()
-                    .HasMaxLength(1)
-                    .IsUnicode(false)
-                    .HasDefaultValueSql("('S')")
+                    .HasMaxLength(14)
                     .IsFixedLength(true);
+            });
 
-                entity.Property(e => e.Nome)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+            modelBuilder.Entity<TelefoneXempresa>(entity =>
+            {
+                entity.ToTable("TelefoneXEmpresas");
+
+                entity.HasOne(d => d.IdEmpresaNavigation)
+                    .WithMany(p => p.TelefoneXempresas)
+                    .HasForeignKey(d => d.IdEmpresa)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_TelefoneXEmpresas_Empresas");
+
+                entity.HasOne(d => d.IdTelefoneNavigation)
+                    .WithMany(p => p.TelefoneXempresas)
+                    .HasForeignKey(d => d.IdTelefone)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_TelefoneXEmpresas_Telefone");
+            });
+
+            modelBuilder.Entity<TelefoneXpessoa>(entity =>
+            {
+                entity.ToTable("TelefoneXPessoas");
+
+                entity.HasOne(d => d.IdPessoaNavigation)
+                    .WithMany(p => p.TelefoneXpessoas)
+                    .HasForeignKey(d => d.IdPessoa)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_TelefoneXPessoas_Pessoas");
+
+                entity.HasOne(d => d.IdTelefoneNavigation)
+                    .WithMany(p => p.TelefoneXpessoas)
+                    .HasForeignKey(d => d.IdTelefone)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_TelefoneXPessoas_Telefone");
             });
 
             modelBuilder.Entity<Usuario>(entity =>

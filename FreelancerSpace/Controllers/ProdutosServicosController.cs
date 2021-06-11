@@ -37,6 +37,31 @@ namespace FreelancerSpace.Controllers
             return View(GetProdutosServicos());
         }
 
+        //public IActionResult Index(int? id)
+        //{
+        //    List<ProdutosServicosModel> listprodservmodel = null;
+        //    try
+        //    {
+        //        if (id != null)
+        //        {
+        //            listprodservmodel = new Mapper(AutoMapperConfig.RegisterMappings())
+        //                                       .Map<List<ProdutosServicosModel>>(
+        //                                           new ProdutosServicosRepository().getAllProdServ(id.Value)
+        //            );
+        //        }
+        //        else
+        //        {
+
+        //        }
+        //    }
+        //    catch (Exception)
+        //    {
+        //        throw;
+        //    }
+        //    ViewBag.message = TempData["redirectMessage"]?.ToString();
+        //    return View(listprodservmodel);
+        //}
+
 
         public IActionResult Create(int? id)
         {
@@ -71,9 +96,7 @@ namespace FreelancerSpace.Controllers
             {
                 if (model?.Id != null)
                 {
-                    
                     prodserv = mapper.Map<ProdutosServico>(model);
-
                     ProdutosServicosRepository rep = new ProdutosServicosRepository();
                     if (prodserv.Id != 0)
                     {
@@ -93,7 +116,6 @@ namespace FreelancerSpace.Controllers
                             TempData["redirectMessage"] = $"Não foi possível {operation}r o Produto/Serviço!";
                         }
                     }
-
                     TempData["redirectMessage"] = $"Produto/Serviço {operation}do com Sucesso!";
                 }
             }

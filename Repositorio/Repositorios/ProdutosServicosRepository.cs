@@ -18,6 +18,25 @@ namespace Repositorio.Repositorios
             }
             return list;
         }
+
+        public List<ProdutosServico> getAllProdServ(int idEmpresa)
+        {
+            List<ProdutosServico> list = new List<ProdutosServico>();
+            using (_context = new FreelancerSpaceContext())
+            {
+                list = (from p in _context.ProdutosServicos
+                        join pse in _context.ProdutosServicosXempresas on
+                           p.Id equals pse.IdProdutoServico
+                        join e in _context.Empresas on
+                           pse.IdEmpresa equals e.Id
+                        where e.Id.Equals(idEmpresa)
+                        orderby p.Nome
+                        select p).ToList();
+            }
+            return list;
+        }
+
+
         public new ProdutosServico get(int id)
         {
             ProdutosServico prodserv = new ProdutosServico();

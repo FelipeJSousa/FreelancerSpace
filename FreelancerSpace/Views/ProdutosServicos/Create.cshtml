@@ -1,7 +1,6 @@
 ﻿@model FreelancerSpace.Models.ProdutosServicosModel
 
 @{
-
 }
 
 <!DOCTYPE html>
@@ -58,7 +57,7 @@
     </div>
 
     <div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Tipo</h5>
@@ -98,18 +97,14 @@
                 document.getElementById("btnsalvar").value = "Salvar";
             }
 
-            function salvarEmpresa() {
-
-                // criar a lista de produtos
-                var listaProd = new Array();
-
+            function salvarProdServ() {
                 var obj = {
                     id: parseInt($("#Id").val() == "" ? 0 : $("#Id").val()),
                     Nome: $("#txtnome").val(),
                     Descricao: $("#txtdescricao").val(),
                     IdRamoAtividade: $("#codigo").val()
                 }
-                console.log(JSON.stringify(obj));
+                /*console.log(JSON.stringify(obj));*/
                 $.ajax({
                     url: "/ProdutosServicos/Salvar",
                     type: "POST",
@@ -151,7 +146,7 @@
                         mensagem = "Informe o Ramo de atividade do Produto/Serviço."
                     }
                     if (validacao) {
-                        salvarEmpresa();
+                        salvarProdServ();
                     }
                     else {
                         $("#mensagem").addClass('alert-danger').html(mensagem);

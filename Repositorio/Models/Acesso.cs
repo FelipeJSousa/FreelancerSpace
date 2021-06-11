@@ -15,6 +15,6 @@ namespace Repositorio.Models
 
         public virtual Funcionalidade IdFuncionalidadeNavigation { get; set; }
         public virtual GrupoAcesso IdGrupoNavigation { get; set; }
-        public virtual Permisso IdPermissaoNavigation { get; set; }
+        public virtual Permissoes IdPermissaoNavigation { get; set; }
     }
 }

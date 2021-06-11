@@ -10,7 +10,9 @@ namespace Repositorio.Models
         public Pessoa()
         {
             Clientes = new HashSet<Cliente>();
+            EnderecosXpessoas = new HashSet<EnderecosXpessoa>();
             Funcionarios = new HashSet<Funcionario>();
+            TelefoneXpessoas = new HashSet<TelefoneXpessoa>();
         }
 
         public int Id { get; set; }
@@ -23,6 +25,8 @@ namespace Repositorio.Models
 
         public virtual Usuario UsuarioNavigation { get; set; }
         public virtual ICollection<Cliente> Clientes { get; set; }
+        public virtual ICollection<EnderecosXpessoa> EnderecosXpessoas { get; set; }
         public virtual ICollection<Funcionario> Funcionarios { get; set; }
+        public virtual ICollection<TelefoneXpessoa> TelefoneXpessoas { get; set; }
     }
 }

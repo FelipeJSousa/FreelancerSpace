@@ -7,17 +7,23 @@ namespace Repositorio.Models
 {
     public partial class Endereco
     {
+        public Endereco()
+        {
+            EnderecosXempresas = new HashSet<EnderecosXempresa>();
+            EnderecosXpessoas = new HashSet<EnderecosXpessoa>();
+        }
+
         public int Id { get; set; }
-        public int IdTipoEndereco { get; set; }
         public string Logradouro { get; set; }
         public string Bairro { get; set; }
         public string Cep { get; set; }
-        public int IdCidade { get; set; }
-        public int IdEstado { get; set; }
         public string Ativo { get; set; }
+        public string Cidade { get; set; }
+        public string Estado { get; set; }
+        public string Pais { get; set; }
+        public string Complemento { get; set; }
 
-        public virtual Cidade IdCidadeNavigation { get; set; }
-        public virtual Estado IdEstadoNavigation { get; set; }
-        public virtual TiposEndereco IdTipoEnderecoNavigation { get; set; }
+        public virtual ICollection<EnderecosXempresa> EnderecosXempresas { get; set; }
+        public virtual ICollection<EnderecosXpessoa> EnderecosXpessoas { get; set; }
     }
 }

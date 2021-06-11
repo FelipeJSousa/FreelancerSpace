@@ -28,7 +28,14 @@
             </span>
             <button type="submit" class="btn btn-primary">Login</button>
         </form>
-        <a asp-action="Cadastro">Cadastre-se</a>
+        <ul>
+            <li>
+                <a asp-action="Cadastro">Cadastre-se como cliente!</a>
+            </li>
+            <li>
+                <a asp-controller="Empresa" asp-action="Cadastro">Cadastre sua Empresa!</a>
+            </li>
+        </ul>
     </div>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

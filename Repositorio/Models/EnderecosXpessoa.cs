@@ -9,6 +9,7 @@ namespace Repositorio.Models
     {
         public int IdEndereco { get; set; }
         public int IdPessoa { get; set; }
+        public int Id { get; set; }
 
         public virtual Endereco IdEnderecoNavigation { get; set; }
         public virtual Pessoa IdPessoaNavigation { get; set; }

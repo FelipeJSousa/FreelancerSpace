@@ -31,7 +31,8 @@ namespace FreelancerSpace.Controllers
             try
             {
                 user = new UsuarioRepository().validarLogin(txtusername, txtsenha);
-                if (user != null) {
+                if (user != null)
+                {
                     var pes = new PessoaRepository().get(user);
                     HttpContext.Session.SetInt32("idPessoa", pes.Id);
                     HttpContext.Session.SetString("nome", pes.Nome);
@@ -39,7 +40,7 @@ namespace FreelancerSpace.Controllers
                     HttpContext.Session.SetInt32("idGrupoAcesso", user.IdGrupoAcesso);
                     HttpContext.Session.SetString("username", user.Username);
                     return RedirectToAction("Index", "Home");
-                }; 
+                };
 
             }
             catch (Exception ex)
@@ -50,13 +51,13 @@ namespace FreelancerSpace.Controllers
             TempData["redirectMessage"] = "Usuário ou senha invalido!";
             return View("Login");
         }
-        
+
         public IActionResult Cadastro()
         {
             return View();
         }
 
-        public IActionResult Create(string txtusername, string txtsenha, string txtnome, string txtsobrenome, string txtcpf, string txtdataNasc)
+        public IActionResult CreateUsuario(string txtusername, string txtsenha, string txtnome, string txtsobrenome, string txtcpf, string txtdataNasc)
         {
             try
             {
@@ -100,6 +101,20 @@ namespace FreelancerSpace.Controllers
 
         }
 
+        [HttpPost]
+        public virtual JsonResult Salvar([FromBody] UsuariosModel usuario)
+        {
+            try
+            {
+                usuario.senha = new UsuarioRepository().Encrypt(usuario.senha);
+                Usuario user = new UsuarioRepository().add(usuario.username, usuario.senha);
+            }
+            catch (Exception ex)
+            {
+            }
+            return new JsonResult(usuario);
+        }
 
     }
+
 }
