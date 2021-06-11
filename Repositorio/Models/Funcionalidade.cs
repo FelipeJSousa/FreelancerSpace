@@ -16,6 +16,7 @@ namespace Repositorio.Models
         public string Nome { get; set; }
         public string Descricao { get; set; }
         public string Ativo { get; set; }
+        public string Caminho { get; set; }
 
         public virtual ICollection<Acesso> Acessos { get; set; }
     }
