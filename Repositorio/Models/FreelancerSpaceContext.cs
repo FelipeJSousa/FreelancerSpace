@@ -381,6 +381,10 @@ namespace Repositorio.Models
                     .HasDefaultValueSql("('S')")
                     .IsFixedLength(true);
 
+                entity.Property(e => e.Caminho)
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.Descricao)
                     .HasMaxLength(50)
                     .IsUnicode(false);

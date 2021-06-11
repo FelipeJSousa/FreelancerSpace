@@ -23,6 +23,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Descricao)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Caminho)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -34,6 +37,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Descricao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Caminho)
             </td>
             <td>
                 @Html.ActionLink("Editar", "Create", "Funcionalidades", new { id = item.Id }) |

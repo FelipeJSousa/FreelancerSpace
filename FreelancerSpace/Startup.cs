@@ -29,6 +29,7 @@ namespace FreelancerSpace
             services.AddSession(options => {
                 options.IdleTimeout = TimeSpan.FromMinutes(1);
             });
+            services.AddHttpContextAccessor();
             // Add framework services.
             services.AddControllersWithViews()
                 .AddNewtonsoftJson(options =>
