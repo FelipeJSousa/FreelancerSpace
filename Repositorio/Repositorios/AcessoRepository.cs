@@ -30,5 +30,17 @@ namespace Repositorio.Repositorios
                 return acesso;
             }
         }
+
+
+        public List<Acesso> getAll(Expression<Func<Acesso, bool>> predicate)
+        {
+            using (_context = new FreelancerSpaceContext())
+            {
+                List<Acesso> acessos = _context.Acessos.Include("IdFuncionalidadeNavigation")
+                                                .Include("IdGrupoNavigation")
+                                                .Include("IdPermissaoNavigation").Where(predicate).ToList();
+                return acessos;
+            }
+        }
     }
 }
