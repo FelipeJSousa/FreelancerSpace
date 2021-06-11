@@ -40,7 +40,8 @@ namespace FreelancerSpace.Controllers
 
                 if (empr?.Id != null)
                 {
-                    usuario.IdGrupoAcesso = 1;
+                    usuario.IdGrupoAcesso = 2;
+                    usuario.Senha = new UsuarioRepository().Encrypt(usuario.Senha);
                     if (!new UsuarioRepository().add(usuario))
                     {
                         throw new Exception($"Não foi possível {operation}r o endereco da Empresa!");

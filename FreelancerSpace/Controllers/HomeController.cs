@@ -22,7 +22,7 @@ namespace FreelancerSpace.Controllers
         public IActionResult Index()
         {
             ViewBag.nome = HttpContext.Session.GetString("nome");
-            ViewBag.sobrenome = HttpContext.Session.GetString("sobrenome");
+            ViewBag.sobrenome = HttpContext.Session.GetInt32("idGrupoAcesso");
             return View();
         }
 

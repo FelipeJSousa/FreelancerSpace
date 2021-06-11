@@ -34,12 +34,26 @@ namespace FreelancerSpace.Controllers
                 if (user != null)
                 {
                     var pes = new PessoaRepository().get(user);
-                    HttpContext.Session.SetInt32("idPessoa", pes.Id);
-                    HttpContext.Session.SetString("nome", pes.Nome);
-                    HttpContext.Session.SetString("sobrenome", pes.Sobrenome);
-                    HttpContext.Session.SetInt32("idGrupoAcesso", user.IdGrupoAcesso);
-                    HttpContext.Session.SetString("username", user.Username);
-                    return RedirectToAction("Index", "Home");
+                    if (pes != null)
+                    {
+                        HttpContext.Session.SetInt32("idPessoa", pes.Id);
+                        HttpContext.Session.SetString("nome", pes.Nome);
+                        HttpContext.Session.SetString("sobrenome", pes.Sobrenome);
+                        HttpContext.Session.SetInt32("idGrupoAcesso", user.IdGrupoAcesso);
+                        HttpContext.Session.SetString("username", user.Username);
+                        return RedirectToAction("Index", "Home"); 
+                    }
+
+                    var empr = new EmpresaRepository().get(user);
+                    if (empr != null)
+                    {
+                        HttpContext.Session.SetInt32("idEmpresa", empr.Id);
+                        HttpContext.Session.SetString("nome", empr.NomeFantasia);
+                        HttpContext.Session.SetString("sobrenome", empr.NomeFantasia);
+                        HttpContext.Session.SetInt32("idGrupoAcesso", user.IdGrupoAcesso);
+                        HttpContext.Session.SetString("username", user.Username);
+                        return RedirectToAction("Index", "Home");
+                    }
                 };
 
             }
