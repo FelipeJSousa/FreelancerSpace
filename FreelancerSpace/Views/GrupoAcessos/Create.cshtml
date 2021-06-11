@@ -3,46 +3,79 @@
 @{
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Grupo Acessos</title>
-</head>
-<body>
-
 <h4>Grupo Acessos</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Salvar">
+    <div class="col-md-8">
+        <form>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <input asp-for="Id" class="form-control" hidden />
+                <input id="txtid" class="form-control" hidden />
             </div>
             <div class="form-group">
                 <label asp-for="IdGrupoNavigation.Nome" class="control-label"></label>
-                <input asp-for="IdGrupoNavigation.Nome" class="form-control" />
+                <input id="txtnome" class="form-control" />
                 <span asp-validation-for="IdGrupoNavigation.Nome" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="IdGrupoNavigation.Descricao" class="control-label"></label>
-                <input asp-for="IdGrupoNavigation.Descricao" class="form-control" />
+                <input id="txtdescricao" class="form-control" />
                 <span asp-validation-for="IdGrupoNavigation.Descricao" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="IdFuncionalidade" class="control-label"></label>
-                <select asp-for="IdFuncionalidade" class="form-control" asp-items='(new SelectList(@ViewBag.listFuncionalidades,"Id","Nome"))'></select>
+                <label class="control-label">Acesso a Funcionalidades</label>
+                <select multiple="multiple" size="5" name="duallistbox_funcionalidades[]" uncionalidadestbox_funcioduallistbox_funcionalidades asp-for="IdFuncionalidade" class="form-control" asp-items='(new SelectList(@ViewBag.listFuncionalidades,"Id","Nome"))'></select>
             </div>
-            <div class="form-group">
-                <label asp-for="IdPermissao" class="control-label"></label>
-                <select asp-for="IdPermissao" class="form-control" asp-items='(new SelectList(@ViewBag.listPermissoes,"Id","Nome"))'></select>
+
+            <!--<div class="form-group">
+                <label class="control-label">Selecione a Funcionalidade</label>
+                <select id="funcionalidadesSelecionadas"></select>
             </div>
-            <div class="form-group">
-                <input id="btnSubmit" type="submit" value="Create" class="btn btn-primary" />
+
+            <div class="form-check form-check-inline">
+                <input type="checkbox" value="" class="form-check-input" />-->
+            @*<label asp-for="IdPermissao" class="control-label"></label>
+                <select multiple="multiple" size="10" name="duallistbox_demo1[]" title="duallistbox_demo1[]"
+                        asp-for="IdPermissao" class="form-control" asp-items='(new SelectList(@ViewBag.listPermissoes,"Id","Nome"))'></select>*@
+            <!--</div>-->
+
+            <div class="form-group m-3">
+                <input id="btnSubmit" type="button" value="Create" class="btn btn-primary" />
             </div>
         </form>
+    </div>
+</div>
+
+<div class="modal fade" id="ModalSuccess" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLabel">Grupo de Acesso</h4>
+            </div>
+            <div class="modal-body">
+                <h5>Grupo de Acesso Criado com Sucesso!</h5>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnsuccess" onclick="redirectList()">Ok!</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ModalFailure" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLabel">Grupo de Acessos</h4>
+            </div>
+            <div class="modal-body">
+                <h5>Não foi possível realizar o cadastro!</h5>
+                <h6>Tente novemente dentro de algum momento.</h6>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary close" data-bs-dismiss="modal">Fechar</button>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -51,15 +84,79 @@
 </div>
 
 @section Scripts {
+    <script src="~/js/jquery.bootstrap-duallistbox.min.js"></script>
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        var demo1 = $('select[name="duallistbox_funcionalidades[]"]').bootstrapDualListbox();
+        $("#demoform").submit(function () {
+            alert($('[name="duallistbox_funcionalidades[]"]').val());
+            return false;
+        });
+    </script>
+
+    <script>
+        function redirectList() {
+            document.location = document.location.toString().replace("Create", "") + 'Index';
+        }
+        function salvarGrupo() {
+            let arrFuncionalidades = $('[name="duallistbox_funcionalidades[]"]').val();
+
+            let objGrupoAcesso = {
+                Id: parseInt($("#txtid").val()) || 0,
+                Nome: $("#txtnome").val(),
+                Descricao: $("#txtdescricao").val(),
+            }
+
+            let objFuncionalidades = arrFuncionalidades.map((e) => { return { "IdFuncionalidade": e } });
+            let permissoes = [1, 2, 3, 4];
+            let objAcessos = arrFuncionalidades.map((e) => {
+                return permissoes.map((j) => {
+                    return {
+                        "IdFuncionalidade": e,
+                        "IdPermissao": j
+                    }
+                })
+            }).flat();
+
+            let obj = { "GrupoAcesso": objGrupoAcesso, "Funcionalidades": objFuncionalidades, "Acessos": objAcessos };
+
+            console.log('Obj', obj);
+
+            $.ajax({
+                url: "Salvar",
+                type: "POST",
+                dataType: "json",
+                contentType: 'application/json; charset=UTF-8',
+                data: JSON.stringify(obj),
+                error: (data) => {
+                    console.log(data.responseText);
+                    $("#ModalFailure").modal("show");
+                },
+                success: function (data) {
+                    console.log('Success', data);
+                    $("#ModalSuccess").modal("show");
+                }
+            })
+
+        };
+
+        $(document).ready(() => {
+
+            $("#btnSubmit").on('click', function () {
+                //Validação
+
+                salvarGrupo();
+            });
+
+        });
+    </script>
+
+    <script>
+        if (window.location.href.includes("Create/")) {
+            document.getElementById("btnSubmit").value = "Editar";
+        }
+        else {
+            document.getElementById("btnSubmit").value = "Salvar";
+        }
+    </script>
 }
-<script>
-    if (window.location.href.includes("Create/")) {
-        document.getElementById("btnSubmit").value = "Editar";
-    }
-    else{
-        document.getElementById("btnSubmit").value = "Salvar";
-    }
-</script>
-</body>
-</html>

@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using FreelancerSpace.Models;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
+using Repositorio.Models;
 using Repositorio.Repositorios;
 using System;
 using System.Collections.Generic;
@@ -34,16 +36,16 @@ namespace FreelancerSpace.Controllers
                     grupoacessomodel = mapper.Map<GrupoAcessoModel>(grupacesso);
                     var acesso = new AcessoRepository().get(x => x.IdGrupo.Equals(grupoacessomodel.Id) && x.Ativo.Equals("S"));
                     acessosModel = mapper.Map<AcessosModel>(acesso);
-                    var listfuncionalidade = new FuncionalidadeRepository().getAll();
-                    funcionalidadesModels = mapper.Map<List<FuncionalidadesModel>>(listfuncionalidade);
-                    var listpermissoes = new PermissoesRepository().getAll();
-                    permissoesModels = mapper.Map<List<PermissoesModel>>(listpermissoes);
                 }
                 else
                 {
                     grupoacessomodel.Id = 0;
                     acessosModel.Id = 0;
                 }
+                var listfuncionalidade = new FuncionalidadeRepository().getAll();
+                funcionalidadesModels = mapper.Map<List<FuncionalidadesModel>>(listfuncionalidade);
+                var listpermissoes = new PermissoesRepository().getAll();
+                permissoesModels = mapper.Map<List<PermissoesModel>>(listpermissoes);
             }
             catch (Exception ex)
             {
@@ -53,6 +55,40 @@ namespace FreelancerSpace.Controllers
             ViewBag.listFuncionalidades = funcionalidadesModels;
             ViewBag.listPermissoes = permissoesModels;
             return View(acessosModel);
+        }
+
+        [HttpPost]
+        public JsonResult Salvar([FromBody] JObject json)
+        {
+            var mapper = new Mapper(AutoMapperConfig.RegisterMappings());
+            List<Acesso> acessos = new List<Acesso>();
+            GrupoAcesso grupo = new GrupoAcesso();
+            try
+            {
+                grupo = json["GrupoAcesso"].ToObject<GrupoAcesso>();
+                if (new GrupoAcessoRepository().add(grupo))
+                {
+                    acessos = json["Acessos"].ToObject<List<Acesso>>();
+                    foreach (var item in acessos)
+                    {
+                        item.IdGrupo = grupo.Id;
+                        if (!new AcessoRepository().add(item))
+                        {
+                            throw new Exception("Falha ao criar acesso.");
+                        };
+                    }
+                }
+                else
+                {
+                    throw new Exception("Falha ao criar grupo de acesso.");
+                };
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, responseText = ex.Message });
+            }
+
+            return new JsonResult(acessos);
         }
     }
 }
