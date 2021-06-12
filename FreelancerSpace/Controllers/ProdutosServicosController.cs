@@ -2,6 +2,7 @@
 using FreelancerSpace.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 using Repositorio.Models;
 using Repositorio.Repositorios;
 using System;
@@ -32,13 +33,14 @@ namespace FreelancerSpace.Controllers
         }
 
 
-        public IActionResult Index(int? idEmpresa)
+        public IActionResult Index(int? id)
         {
             List<ProdutosServicosModel> prodserv = new List<ProdutosServicosModel>();
-            if (idEmpresa.HasValue)
+            if (id.HasValue)
             {
                 prodserv = new Mapper(AutoMapperConfig.RegisterMappings())
-                                        .Map<List<ProdutosServicosModel>>(new ProdutosServicosRepository().getAll(idEmpresa.Value));
+                                        .Map<List<ProdutosServicosModel>>(new ProdutosServicosRepository().getAll(id.Value));
+                ViewBag.idEmpresa = id;
             }
             else if (HttpContext.Session.GetInt32("idGrupoAcesso") == 1)
             {
@@ -51,59 +53,37 @@ namespace FreelancerSpace.Controllers
             return View(prodserv);
         }
 
-        //public IActionResult Index(int? id)
-        //{
-        //    List<ProdutosServicosModel> listprodservmodel = null;
-        //    try
-        //    {
-        //        if (id != null)
-        //        {
-        //            listprodservmodel = new Mapper(AutoMapperConfig.RegisterMappings())
-        //                                       .Map<List<ProdutosServicosModel>>(
-        //                                           new ProdutosServicosRepository().getAllProdServ(id.Value)
-        //            );
-        //        }
-        //        else
-        //        {
-
-        //        }
-        //    }
-        //    catch (Exception)
-        //    {
-        //        throw;
-        //    }
-        //    ViewBag.message = TempData["redirectMessage"]?.ToString();
-        //    return View(listprodservmodel);
-        //}
-
-
-        public IActionResult Create(int? id)
+        public IActionResult Create(int? id, int? idEmpresa)
         {
             ProdutosServicosModel prodservmodel = new ProdutosServicosModel();
             var mapper = new Mapper(AutoMapperConfig.RegisterMappings());
             try
             {
-                if (id != null)
+                if (id != 0)
                 {
                     var prodserv = new ProdutosServicosRepository().get(id.Value);
                     prodservmodel = new Mapper(AutoMapperConfig.RegisterMappings()).Map<ProdutosServicosModel>(prodserv);
-                }
-                else
-                {
-                    prodservmodel.Id = 0;
+                    var temp = mapper.Map<List<ProdutosServicosModel>>(new ProdutosServicosRepository().
+                                        getAll(idEmpresa.Value));
+                    if (temp.FirstOrDefault(x=> x.Id == prodservmodel.Id)==null)
+                    {
+                        throw new Exception();
+                    }
+                    ViewBag.idempresa = idEmpresa.Value;
                 }
             }
             catch (Exception)
             {
-                throw;
+                return RedirectToAction("Index");
             }
-
             return View(prodservmodel);
         }
         [HttpPost]
-        public virtual JsonResult Salvar([FromBody] ProdutosServicosModel model)
+        public virtual JsonResult Salvar([FromBody] JObject json)
         {
             string operation = "";
+            ProdutosServicosModel model = json["produtoservico"].ToObject<ProdutosServicosModel>(); 
+            int idempresa = int.Parse(json["idempresa"].ToString()); 
             var mapper = new Mapper(AutoMapperConfig.RegisterMappings());
             ProdutosServico prodserv = new ProdutosServico();
             try
@@ -130,6 +110,10 @@ namespace FreelancerSpace.Controllers
                             TempData["redirectMessage"] = $"Não foi possível {operation}r o Produto/Serviço!";
                         }
                     }
+                    if (new ProdutosServicosRepository().SalvarProdServEmpresa(prodserv.Id, idempresa))
+                    {
+                        throw new Exception();
+                    };
                     TempData["redirectMessage"] = $"Produto/Serviço {operation}do com Sucesso!";
                 }
             }

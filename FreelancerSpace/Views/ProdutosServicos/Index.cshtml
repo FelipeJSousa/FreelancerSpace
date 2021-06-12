@@ -49,7 +49,7 @@
                 @Html.DisplayFor(modelItem => item.IdRamoAtividadeNavigation.DescSubclasse)
             </td>
             <td>
-                @Html.ActionLink("Editar", "Create", "ProdutosServicos", new { id = item.Id }) |
+                @Html.ActionLink("Editar", "Create", "ProdutosServicos", new { id = item.Id, idEmpresa = ViewBag.idempresa }) |
                 @Html.ActionLink("Excluir", "Excluir", "ProdutosServicos", new { id = item.Id })
             </td>
         </tr>
@@ -65,7 +65,6 @@
                 type: "GET",
                 url: "/ProdutosServicos/Listar?name=" + $('#txtnome').val(),
                 contentType: "application/json; charset=utf-8",
-                data: "{}",
                 dataType: "json",
                 success: function (jsonResult) {
                     console.log(jsonResult);

@@ -9,6 +9,23 @@ namespace Repositorio.Repositorios
 {
     public class ProdutosServicosRepository : BaseRepository<ProdutosServico>
     {
+
+        public bool SalvarProdServEmpresa(int idprodserv, int idEmpresa)
+        {
+            try
+            {
+                using (_context = new FreelancerSpaceContext())
+                {
+                    var ret = _context.ProdutosServicosXempresas.Add(new ProdutosServicosXempresa() { IdProdutoServico = idprodserv, IdEmpresa = idEmpresa });
+                    _context.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            return true;
+        }
         public List<ProdutosServico> getAllProdServ()
         {
             List<ProdutosServico> list = new List<ProdutosServico>();

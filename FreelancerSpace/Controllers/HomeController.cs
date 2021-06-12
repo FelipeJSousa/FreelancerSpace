@@ -24,7 +24,7 @@ namespace FreelancerSpace.Controllers
         public IActionResult Index()
         {
             ViewBag.nome = HttpContext.Session.GetString("nome");
-            ViewBag.sobrenome = HttpContext.Session.GetInt32("idGrupoAcesso");
+            ViewBag.grupoacesso = HttpContext.Session.GetInt32("idGrupoAcesso");
             ViewBag.username = HttpContext.Session.GetString("username");
             if (HttpContext.Session.GetInt32("idPessoa").HasValue) {
                 ViewBag.idPessoa = HttpContext.Session.GetInt32("idPessoa");
