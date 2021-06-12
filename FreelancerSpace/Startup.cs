@@ -27,7 +27,7 @@ namespace FreelancerSpace
             //In-Memory
             services.AddDistributedMemoryCache();
             services.AddSession(options => {
-                options.IdleTimeout = TimeSpan.FromMinutes(1);
+                options.IdleTimeout = TimeSpan.FromMinutes(20);
             });
             services.AddHttpContextAccessor();
             // Add framework services.

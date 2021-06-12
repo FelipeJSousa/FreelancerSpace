@@ -24,7 +24,7 @@ namespace Repositorio.Repositorios
             Usuario user = new Usuario();
             try
             {
-                user = new Usuario() { Ativo = "S", IdGrupoAcesso = 1, Senha = senha, Username = username };
+                user = new Usuario() { Ativo = "S", IdGrupoAcesso = 6, Senha = senha, Username = username };
                 using (_context = new FreelancerSpaceContext())
                 {
                     _context.Usuarios.Add(user);

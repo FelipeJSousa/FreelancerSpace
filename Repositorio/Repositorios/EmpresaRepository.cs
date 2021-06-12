@@ -9,6 +9,23 @@ namespace Repositorio.Repositorios
 {
     public class EmpresaRepository : BaseRepository<Empresa>
     {
+
+        public new List<Empresa> getAll()
+        {
+            List<Empresa> empr = new List<Empresa>();
+            try
+            {
+                using (_context = new FreelancerSpaceContext())
+                {
+                    empr = _context.Empresas.Where(x => x.Ativo.Equals("S")).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return empr;
+        }
         public Empresa get(Usuario user)
         {
             Empresa empr = new Empresa();
