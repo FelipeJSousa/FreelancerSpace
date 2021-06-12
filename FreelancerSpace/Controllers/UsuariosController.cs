@@ -49,7 +49,8 @@ namespace FreelancerSpace.Controllers
                     {
                         HttpContext.Session.SetInt32("idEmpresa", empr.Id);
                         HttpContext.Session.SetString("nome", empr.NomeFantasia);
-                        HttpContext.Session.SetString("sobrenome", empr.NomeFantasia);
+                        HttpContext.Session.SetString("razaosocial", empr.RazaoSocial);
+                        HttpContext.Session.SetString("cnpj", empr.Cnpj);
                         HttpContext.Session.SetInt32("idGrupoAcesso", user.IdGrupoAcesso);
                         HttpContext.Session.SetString("username", user.Username);
                         return RedirectToAction("Index", "Home");

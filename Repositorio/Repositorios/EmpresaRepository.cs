@@ -9,6 +9,44 @@ namespace Repositorio.Repositorios
 {
     public class EmpresaRepository : BaseRepository<Empresa>
     {
+
+        public new List<Empresa> getAll()
+        {
+            List<Empresa> empr = new List<Empresa>();
+            try
+            {
+                using (_context = new FreelancerSpaceContext())
+                {
+                    empr = _context.Empresas.Where(x => x.Ativo.Equals("S")).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return empr;
+        }
+        public List<Empresa> getAll(string busca)
+        {
+            List<Empresa> empr = new List<Empresa>();
+            try
+            {
+                using (_context = new FreelancerSpaceContext())
+                {
+                    empr = (from e in _context.Empresas
+                            join c in _context.Cnae on e.Cnae equals c.CodCnae
+                            where e.Ativo.Equals("S") && 
+                            (e.NomeFantasia.Contains(busca) || e.RazaoSocial.Contains(busca) ||
+                             e.Descricao.Contains(busca) || c.DescSubclasse.Contains(busca))
+                            select e).ToList(); 
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return empr;
+        }
         public Empresa get(Usuario user)
         {
             Empresa empr = new Empresa();

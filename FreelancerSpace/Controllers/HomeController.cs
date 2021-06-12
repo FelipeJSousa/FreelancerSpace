@@ -1,7 +1,9 @@
-﻿using FreelancerSpace.Models;
+﻿using AutoMapper;
+using FreelancerSpace.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Repositorio.Repositorios;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -23,8 +25,22 @@ namespace FreelancerSpace.Controllers
         {
             ViewBag.nome = HttpContext.Session.GetString("nome");
             ViewBag.sobrenome = HttpContext.Session.GetInt32("idGrupoAcesso");
+            ViewBag.username = HttpContext.Session.GetString("username");
+            if (HttpContext.Session.GetInt32("idPessoa").HasValue) {
+                ViewBag.idPessoa = HttpContext.Session.GetInt32("idPessoa");
+                ViewBag.sobrenome = HttpContext.Session.GetString("sobrenome");
+            };
+            if (HttpContext.Session.GetInt32("idEmpresa").HasValue)
+            {
+                ViewBag.idEmpresa = HttpContext.Session.GetInt32("idEmpresa");
+            }
+
+            List<EmpresaModel> empr = new List<EmpresaModel>();
+            empr = new Mapper(AutoMapperConfig.RegisterMappings()).Map<List<EmpresaModel>>(new EmpresaRepository().getAll());
+            ViewBag.empresa = empr;
             return View();
         }
+
 
         public IActionResult Privacy()
         {

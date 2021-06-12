@@ -19,7 +19,7 @@ namespace Repositorio.Repositorios
             return list;
         }
 
-        public List<ProdutosServico> getAllProdServ(int idEmpresa)
+        public List<ProdutosServico> getAll(int idEmpresa)
         {
             List<ProdutosServico> list = new List<ProdutosServico>();
             using (_context = new FreelancerSpaceContext())
@@ -27,11 +27,10 @@ namespace Repositorio.Repositorios
                 list = (from p in _context.ProdutosServicos
                         join pse in _context.ProdutosServicosXempresas on
                            p.Id equals pse.IdProdutoServico
-                        join e in _context.Empresas on
-                           pse.IdEmpresa equals e.Id
-                        where e.Id.Equals(idEmpresa)
+                        where pse.IdEmpresa.Equals(idEmpresa)
+                        && p.Ativo.Equals("S")
                         orderby p.Nome
-                        select p).ToList();
+                        select p).Include("IdRamoAtividadeNavigation").ToList();
             }
             return list;
         }
