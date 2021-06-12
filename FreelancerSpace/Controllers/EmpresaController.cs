@@ -159,5 +159,16 @@ namespace FreelancerSpace.Controllers
             return Ok(new JsonResult(empr));
         }
 
+        public IActionResult Detalhes(int id)
+        {
+            EmpresaModel empr = new EmpresaModel();
+            empr = new Mapper(AutoMapperConfig.RegisterMappings())
+                                                .Map<EmpresaModel>(new EmpresaRepository().get(id));
+
+            ViewBag.prodserv = new Mapper(AutoMapperConfig.RegisterMappings())
+                                            .Map<List<ProdutosServicosModel>>(new ProdutosServicosRepository().getAll(empr.Id.Value));
+            return View(empr);
+        }
+
     }
 }

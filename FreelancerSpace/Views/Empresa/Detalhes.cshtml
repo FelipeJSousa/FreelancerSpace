@@ -1,0 +1,99 @@
+﻿@model FreelancerSpace.Models.EmpresaModel
+@{
+    ViewData["Title"] = "Detalhes";
+}
+
+<h1>@Model.NomeFantasia</h1>
+
+<div>
+    <h4>Sobre</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.Cnae)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Cnae)
+        </dd>
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.RazaoSocial)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.RazaoSocial)
+        </dd>
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.NomeFantasia)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NomeFantasia)
+        </dd>
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.Cnpj)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Cnpj)
+        </dd>
+        <dt class="col-sm-4">
+            Descrição
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Descricao)
+        </dd>
+        @*<dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ImagemDestaque)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ImagemDestaque)
+        </dd>*@
+        <dt class="col-sm-4">
+            E-mail para contato
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Username)
+        </dd>
+    </dl>
+</div>
+<div id="Produtos">
+    <h1>Produtos e Serviços</h1>
+    <table class="table">
+        <thead>
+            <tr class="table-primary">
+                <th scope="col">
+                    Nome
+                </th>
+                <th scope="col">
+                    Descricao
+                </th>
+                <th scope="col">
+                    Cnae
+                </th scope="col">
+                <th scope="col">
+                    Categoria
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+
+        @foreach(var item in ViewBag.prodserv)
+        {
+            <tr>
+                <td>
+                    @item.Nome
+                </td>
+                <td>
+                    @item.Descricao
+                </td>
+                <td>
+                    @item.IdRamoAtividade
+                </td>
+                <td>
+                    @item.IdRamoAtividadeNavigation.DescSubclasse
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+<div class="m-5">
+    <a asp-action="Index" asp-controller="Home">Voltar</a>
+</div>
