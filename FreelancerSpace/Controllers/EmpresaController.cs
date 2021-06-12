@@ -170,5 +170,32 @@ namespace FreelancerSpace.Controllers
             return View(empr);
         }
 
+        [HttpGet]
+        public IActionResult Buscar(string busca)
+        {
+            List<EmpresaModel> empr = new List<EmpresaModel>();
+            try
+            {
+                empr = new Mapper(AutoMapperConfig.RegisterMappings())
+                                                        .Map<List<EmpresaModel>>(new EmpresaRepository().getAll(busca)); 
+                if (busca == "" || empr.Count == 0)
+                {
+                    if (empr.Count == 0)
+                    {
+                        empr = new Mapper(AutoMapperConfig.RegisterMappings())
+                                                .Map<List<EmpresaModel>>(new EmpresaRepository().getAll());
+                        throw new Exception();
+                    }
+                    empr = new Mapper(AutoMapperConfig.RegisterMappings())
+                                                .Map<List<EmpresaModel>>(new EmpresaRepository().getAll());
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new JsonResult(empr));
+            }
+            return Ok(new JsonResult(empr));
+        }
+
     }
 }

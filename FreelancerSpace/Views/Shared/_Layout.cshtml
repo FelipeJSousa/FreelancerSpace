@@ -55,6 +55,9 @@
                             <li class="nav-item">
                                 @Html.ActionLink("Perfil Empresa", "Perfil", "Empresa", new { id = Context.Request.HttpContext.Session.GetInt32("idEmpresa") }, new { @class = "nav-link text-dark" })
                             </li>
+                            <li class="nav-item">
+                                @Html.ActionLink("Produtos e Serviços", "Index", "ProdutosServicos", new { id = Context.Request.HttpContext.Session.GetInt32("idEmpresa") }, new { @class = "nav-link text-dark" })
+                            </li>
                         </ul>
                     }
                     @*Funcionario*@
@@ -64,9 +67,9 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                             </li>
-                            <li class="nav-item">
+                            @*<li class="nav-item">
                                 @Html.ActionLink("Perfil Empresa", "Perfil", "Cliente", new { id = Context.Request.HttpContext.Session.GetInt32("idPessoa") }, new { @class = "nav-link text-dark" })
-                            </li>
+                            </li>*@
                         </ul>
                     }
                 </div>

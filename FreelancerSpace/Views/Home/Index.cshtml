@@ -8,34 +8,74 @@
 <div class="m-5">
     @if (ViewBag.idPessoa != 0)
     {
-     <div class="row">
-         <input type="text" value="" class="form-control col m-2" />
-         <button type="button" id="buscarProdServ" class="btn btn-primary col-auto m-2" placeholder="Busque por um produto ou serviço.">Buscar <i class="bi bi-search"></i></button>
-     </div>
-     <div id="feed">
-        <div class="card" style="width: 18rem;" hidden>
-            <img src="..." class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
+        <div class="row">
+            <input id="txtbusca" type="text" value="" class="form-control col m-2" />
+            <button type="button" id="btnbuscar" class="btn btn-primary col-auto m-2" placeholder="Busque por um produto ou serviço.">Buscar <i class="bi bi-search"></i></button>
         </div>
-        <div class="row row-cols-1 row-cols-md-2 g-4">
-            @foreach (var item in ViewBag.empresa)
-            {
-                <div class="col">
-                    <div class="card m-2" style="width: 18rem;">
-                        <img src="..." class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Empresa: @item.NomeFantasia</h5>
-                            <p class="card-text">@item.Descricao</p>
-                            @Html.ActionLink("Detalhes", "Detalhes", "Empresa", new { id = item.Id }, new { @class = "btn btn-primary" })
+        <div id="feed">
+            <div id="cardexemplo" class="card" style="width: 18rem;" hidden>
+                <img src="..." class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+            <div id="cards" class="row row-cols-1 row-cols-md-2 g-4">
+                @foreach (var item in ViewBag.empresa)
+                {
+                    <div class="col">
+                        <div class="card m-2" style="width: 18rem;">
+                            <img src="..." class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Empresa: @item.NomeFantasia</h5>
+                                <p class="card-text">@item.Descricao</p>
+                                @Html.ActionLink("Detalhes", "Detalhes", "Empresa", new { id = item.Id }, new { @class = "btn btn-primary" })
+                            </div>
                         </div>
                     </div>
-                </div>
-            }
+                }
+            </div>
         </div>
-    </div>
     }
 </div>
+@section Scripts{
+    <script>
+    $("#btnbuscar").on("click", function () {
+        buscar();
+    });
+    $("#txtbusca").on("keyup", function () {
+        buscar();
+    });
+
+    function buscar() {
+        //console.log($("#txtnome").val());
+        $.ajax({
+            type: "GET",
+            url: "/Empresa/Buscar?busca=" + $('#txtbusca').val().trim(),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (jsonResult) {
+                //console.log("Lista:");
+                $("#cards").empty(); //limpar
+                console.log(jsonResult);
+                $(jsonResult.value).each(function (index, ele) {
+                    console.log(ele);
+                    var card = $("#cardexemplo").clone();
+                    $(card).removeAttr('hidden');
+                    $(card).find("h5").text(ele.nomeFantasia);
+                    $(card).find("p").text(ele.descricao);
+                    $(card).find("a").attr("href", "/Empresa/detalhes/" + ele.id);
+                    $(card).find("a").text("Detalhes");
+                    $(card).attr("id", 'empresa'+ele.id);
+                    //adicionar a linha na tab
+                    $("#cards").append(card);
+                });
+            },
+            error: function (response) {
+                alert("Não foi encontrado nenhuma empresa ou produto");
+            }
+        });
+    }
+    </script>
+}
