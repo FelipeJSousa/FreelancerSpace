@@ -9,15 +9,36 @@ namespace Repositorio.Repositorios
 {
     public class EmpresaRepository : BaseRepository<Empresa>
     {
-        public new Empresa get(Usuario user)
+        public Empresa get(Usuario user)
         {
             Empresa empr = new Empresa();
             using (_context = new FreelancerSpaceContext())
             {
-                empr = _context.Empresas.Include("UsernameNavigation").FirstOrDefault(x => x.Username == user.Username);
+                empr = _context.Empresas.Include("UsernameNavigation")
+                    .Include("Funcionarios")
+                    .Include("NotaAvaliacaos")
+                    .Include("FaqPergunta").FirstOrDefault(x => x.Username == user.Username && x.Ativo.Equals("S"));
             }
 
             return empr;
         }
+        public new Empresa get(int id)
+        {
+            Empresa empr = new Empresa();
+            try
+            {
+                using (_context = new FreelancerSpaceContext())
+                {
+                    empr = _context.Empresas.AsNoTracking().FirstOrDefault(x => x.Id.Equals(id) && x.Ativo.Equals("S"));
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+            return empr;
+        }
+
     }
 }

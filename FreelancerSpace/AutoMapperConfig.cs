@@ -33,6 +33,16 @@ namespace FreelancerSpace
 
                 cfg.CreateMap<Cnae, CnaeModel>();
                 cfg.CreateMap<CnaeModel, Cnae>();
+
+                cfg.CreateMap<EmpresaModel, Empresa>();
+                cfg.CreateMap<Empresa, EmpresaModel>();
+
+                cfg.CreateMap<TelefoneModel, Telefone>();
+                cfg.CreateMap<Telefone, TelefoneModel>();
+
+                cfg.CreateMap<EnderecoModel, Endereco>();
+                cfg.CreateMap<Endereco, EnderecoModel>();
+
             });
             return config;
         }

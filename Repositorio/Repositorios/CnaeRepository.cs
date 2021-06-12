@@ -18,5 +18,15 @@ namespace Repositorio.Repositorios
             return list;
         }
 
+
+        public Cnae get(string cnae)
+        {
+            Cnae c = new Cnae();
+            using (_context = new FreelancerSpaceContext())
+            {
+                c = _context.Cnae.FirstOrDefault(x => x.CodCnae.Equals(cnae));
+            }
+            return c;
+        }
     }
 }

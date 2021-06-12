@@ -15,6 +15,7 @@ namespace Repositorio.Models
 
         public int Id { get; set; }
         public string Numero { get; set; }
+        public string Ativo { get; set; }
 
         public virtual ICollection<TelefoneXempresa> TelefoneXempresas { get; set; }
         public virtual ICollection<TelefoneXpessoa> TelefoneXpessoas { get; set; }
