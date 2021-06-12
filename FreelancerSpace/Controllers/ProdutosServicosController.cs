@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FreelancerSpace.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Repositorio.Models;
 using Repositorio.Repositorios;
@@ -31,10 +32,23 @@ namespace FreelancerSpace.Controllers
         }
 
 
-        public IActionResult Index()
+        public IActionResult Index(int? idEmpresa)
         {
-            ViewBag.message = TempData["redirectMessage"]?.ToString();
-            return View(GetProdutosServicos());
+            List<ProdutosServicosModel> prodserv = new List<ProdutosServicosModel>();
+            if (idEmpresa.HasValue)
+            {
+                prodserv = new Mapper(AutoMapperConfig.RegisterMappings())
+                                        .Map<List<ProdutosServicosModel>>(new ProdutosServicosRepository().getAll(idEmpresa.Value));
+            }
+            else if (HttpContext.Session.GetInt32("idGrupoAcesso") == 1)
+            {
+                prodserv = GetProdutosServicos();
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            return View(prodserv);
         }
 
         //public IActionResult Index(int? id)
