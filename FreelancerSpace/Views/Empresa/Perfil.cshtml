@@ -1,0 +1,763 @@
+﻿@model FreelancerSpace.Models.EmpresaModel
+
+@{
+    ViewData["Title"] = "Perfil Empresa";
+}
+<h1>Perfil - @Model.NomeFantasia </h1>
+<hr />
+<div class="row">
+    <form>
+        <div asp-validation-summary="ModelOnly" class="text-danger" ></div>
+        <div class="form-group">
+            <input asp-for="Id" name="idEmpresa" class="form-control" hidden />
+        </div>
+        <div class="form-group">
+            <label asp-for="RazaoSocial" class="control-label"></label>
+            <input asp-for="RazaoSocial" name="txtrazaosocial" class="form-control" required />
+            <span asp-validation-for="RazaoSocial" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="NomeFantasia" class="control-label"></label>
+            <input asp-for="NomeFantasia" name="txtnomefantasia" class="form-control" required />
+            <span asp-validation-for="NomeFantasia" class="text-danger"></span>
+        </div>
+        <div class="row">
+            <div class="form-group col-6">
+                <label class="control-label">CNAE</label>
+                <span>
+                    <button id="buscar_cnae" type="button" class="btn" data-toggle="modal" data-target="#ModalCnae">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                        </svg>
+                        Buscar
+                    </button>
+                    <input class="form-control" type="text" id="cnae" name="cnae" value="@Model.Cnae | @ViewBag.Cnae.DescSubclasse" disabled required>
+                </span>
+                <span asp-validation-for="Cnae" class="text-danger"></span>
+            </div>
+            <div class="form-group col-6">
+                <label asp-for="Cnpj" class="control-label"></label>
+                <input asp-for="Cnpj" name="txtcnpj" class="form-control" />
+                <span asp-validation-for="Cnpj" class="text-danger" required></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Descrição</label>
+            <input asp-for="Descricao" name="txtdescricao" class="form-control" />
+            <span asp-validation-for="Descricao" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label for="txtemail" class="control-label">E-mail</label>
+            <input type="email" asp-for="Username" name="txtemail" class="form-control" disabled />
+        </div>
+        <div class="form-group">
+            <label for="txtsenha" class="control-label">Alterar a senha</label>
+            <input type="password" id="txtsenha" value ="Hoje não haha" class="form-control" disabled/>
+        </div>
+        
+        <span id="spanSenha"></span>
+        @*<div class="form-group">
+                <label asp-for="ImagemDestaque" class="control-label"></label>
+                <input asp-for="ImagemDestaque" class="form-control" />
+                <span asp-validation-for="ImagemDestaque" class="text-danger"></span>
+            </div>*@
+        <div class="m-3">
+            <button type="button" class="btn" data-bs-toggle="modal" href="#ModalTelefone"><i class="bi bi-plus"></i>Telefone</button>
+            <button type="button" class="btn" data-bs-toggle="modal" href="#ModalEndereco"><i class="bi bi-plus"></i>Endereço</button>
+            @*<button type="button" class="btn" data-toggle="modal" data-target="#ModalDisponibilidade"><i class="far fa-plus-square">Disponibilidade</i></button>*@
+        </div>
+        <div class="form-group">
+            <input id="btnsalvar" type="button" value="Editar" class="btn btn-primary" />
+        </div>
+    </form>
+    <div>
+        <a asp-controller="Home" asp-action="Index">Voltar</a>
+    </div>
+
+    <div class="modal fade" id="ModalCriaEndereco" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Novo Telefone</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <input id="idEndereco" type="text" class="form-control" hidden />
+                        </div>
+                        <div class="form-group">
+                            <label for="txtcep" class="col-form-label">CEP</label>
+                            <input name="txtcep" id="txtcep" type="text" class="form-control" />
+                            <span id="spancep"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="txtrua" class="col-form-label">Rua</label>
+                            <input name="txtrua" id="txtrua" type="text" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="txtnumero" class="col-form-label">Numero</label>
+                            <input name="txtnumero" id="txtnumero" type="text" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="txtcomplemento" class="col-form-label">Complemento</label>
+                            <input name="txtcomplemento" id="txtcomplemento" type="text" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="txtbairro" class="col-form-label">Bairro</label>
+                            <input name="txtbairro" id="txtbairro" type="text" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="txtcidade" class="col-form-label">Cidade</label>
+                            <input name="txtcidade" id="txtcidade" type="text" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="txtestado" class="col-form-label">Estado</label>
+                            <input name="txtestado" id="txtestado" type="text" class="form-control" />
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary fechar" data-bs-target="#ModalEndereco" data-bs-dismiss="modal">Fechar</button>
+                    <button type="button" class="btn btn-primary" data-bs-target="#ModalEndereco" data-bs-toggle="modal" id="btnEnderecoadicionar">Adicionar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="ModalEndereco" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Telefones</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#ModalCriaEndereco" data-bs-dismiss="modal">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
+                                <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
+                                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                            </svg>
+                            Criar Novo
+                        </button>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Id</th>
+                                <th scope="col">Logradouro</th>
+                                <th scope="col">Bairro</th>
+                                <th scope="col">Complemento</th>
+                                <th scope="col">CEP</th>
+                                <th scope="col">Cidade</th>
+                                <th scope="col">Estado</th>
+                                <th scope="col">Editar</th>
+                                <th scope="col">Excluir</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabEnderecos">
+                           @foreach (var item in @ViewBag.Enderecos)
+                            {
+                            <tr>
+                                <td class="idEndereco">
+                                    @item.Id
+                                </td>
+                                <td class="ruaEndereco">
+                                    @item.Logradouro
+                                </td>
+                                <td class="bairroEndereco">
+                                    @item.Bairro
+                                </td>
+                                <td class="complementoEndereco">
+                                    @item.Complemento
+                                </td>
+                                <td class="cepEndereco">
+                                    @item.Cep
+                                </td>
+                                <td class="cidadeEndereco">
+                                    @item.Cidade
+                                </td>
+                                <td class="estadoEndereco">
+                                    @item.Estado
+                                </td>
+                                <td>
+                                    <button class="btn teste" type="button" onclick="editEndereco(this)"><i class="bi bi-pencil"></i></button>
+                                </td>
+                                <td>
+                                    <button class="btn btnexcluir" type="button" onclick="excluir(this)"><i class="bi bi-trash"></i></button>
+                                </td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary fechar" data-bs-dismiss="modal">Fechar</button>
+                    <button type="button" class="btn btn-primary" id="btnEndercosalvar" data-bs-dismiss="modal">Salvar Alterações</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="modal fade" id="ModalCriaTelefone" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Novo Telefone</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <input name="NumeroTelefone" id="IdTelefone" type="text" class="form-control" hidden />
+                    </div>
+                    <div class="form-group">
+                        <label for="NumeroTelefone" class="col-form-label">Número Telefone</label>
+                        <input name="NumeroTelefone" id="NumeroTelefone" type="text" class="form-control" />
+                        <span id="spanTelefone"></span>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary fechar" data-bs-dismiss="modal" data-bs-target="#ModalTelefone">Fechar</button>
+                <button type="button" class="btn btn-primary" data-bs-target="#ModalTelefone" id="btnTelefoneadicionar">Adicionar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ModalTelefone" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Telefones</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#ModalCriaTelefone" data-bs-dismiss="modal">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
+                            <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
+                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                        </svg>
+                        Criar Novo
+                    </button>
+                </div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">Numero</th>
+                            <th scope="col">Editar</th>
+                            <th scope="col">Excluir</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabTelefones">
+                        @foreach (var item in @ViewBag.Telefones)
+                        {
+                            <tr>
+                                <td class="idTelefone">
+                                    @item.Id
+                                </td>
+                                <td class="numeroTelefone">
+                                    @item.Numero
+                                </td>
+                                <td>
+                                    <button class="btn teste" type="button" onclick="editTelefone(this)"><i class="bi bi-pencil"></i></button>
+                                </td>
+                                <td>
+                                    <button class="btn btnexcluir" type="button" onclick="excluir(this)"><i class="bi bi-trash"></i></button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary fechar" data-bs-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-primary" id="btntelefoneSalvar" data-bs-dismiss="modal">Salvar Alterações</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ModalCnae" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">CNAE - Busca por Atividade</h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Nome Atividade</label>
+                        <input name="Nome" id="cnaeDescricao" type="text" value="@ViewBag.Cnae.DescSubclasse" class="form-control" />
+                        <input id="cnaeCodigo" name="cnaeCodigo" value="@Model.Cnae" class="form-control" type="hidden" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary close" data-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-primary" id="btnCnaeadicionar" data-dismiss="modal">Adicionar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ModalSuccess" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLabel">Perfil</h4>
+            </div>
+            <div class="modal-body">
+                <h5>Empresa Editada com Sucesso!</h5>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnsuccess" onclick="redirectHome()">Ok!</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ModalFailure" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLabel">Cadastro</h4>
+            </div>
+            <div class="modal-body">
+                <h5>Não foi possível realizar a edição!</h5>
+                <h6>Tente novemente dentro de algum momento.</h6>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnfailure" data-bs-dismiss="modal">Ok!</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="~/js/jquery.mask.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.5.2/bootbox.min.js"></script>
+    <script>
+        function redirectHome() {
+            document.location = location.protocol + "//" + location.hostname + ":" + location.port + "/" + location.pathname.substring(1, location.pathname.indexOf('/', 2) + 1) + 'Home';
+        }
+
+        function editEndereco(e) {
+            var id, Logradouro, Bairro, Complemento, Cep, Cidade, Estado;
+            id = $($(e).parent().parent()).find('td')[0].innerText.trim();
+            $($($(e).parent().parent()).find('td')[0]).addClass("idEnderecoEdit");
+
+            Logradouro = $($(e).parent().parent()).find('td')[1].innerText.trim().split(',');
+            rua = Logradouro[0];
+            numero = Logradouro[1].trim();
+            $($($(e).parent().parent()).find('td')[1]).addClass("logradouroEdit");
+
+            Bairro = $($(e).parent().parent()).find('td')[2].innerText.trim();
+            $($($(e).parent().parent()).find('td')[2]).addClass("bairroEdit");
+
+            Complemento = $($(e).parent().parent()).find('td')[3].innerText.trim();
+            $($($(e).parent().parent()).find('td')[3]).addClass("complementoEdit");
+
+            Cep = $($(e).parent().parent()).find('td')[4].innerText.trim();
+            $($($(e).parent().parent()).find('td')[4]).addClass("cepEdit");
+
+            Cidade = $($(e).parent().parent()).find('td')[5].innerText.trim();
+            $($($(e).parent().parent()).find('td')[5]).addClass("cidadeEdit");
+
+            Estado = $($(e).parent().parent()).find('td')[6].innerText.trim();
+            $($($(e).parent().parent()).find('td')[6]).addClass("estadoEdit");
+
+            $('#idEndereco').val(id);
+            $('#txtcep').val(Cep);
+            $('#txtrua').val(rua);
+            $('#txtnumero').val(numero);
+            $('#txtcomplemento').val(Complemento);
+            $('#txtbairro').val(Bairro);
+            $('#txtcidade').val(Cidade);
+            $('#txtestado').val(Estado);
+            $("#ModalEndereco").modal('hide');
+            $('#ModalCriaEndereco').modal('show');
+        }
+
+        function editTelefone(e) {
+            var id;
+            id = $($(e).parent().parent()).find('td')[0].innerText.trim();
+            $($($(e).parent().parent()).find('td')[0]).addClass("idEdit");
+            var numero;
+            numero = $($(e).parent().parent()).find('td')[1].innerText.trim();
+            $($($(e).parent().parent()).find('td')[1]).addClass("numeroEdit");
+
+            $("#ModalTelefone").modal('hide');
+            $('#ModalCriaTelefone').modal('show');
+            $('#IdTelefone').val(id);
+            $('#NumeroTelefone').val(numero);
+        }
+
+        function salvarEmpresa() {
+            // criar a lista de Telefone
+            var listaTelefones = new Array();
+            var listaEnderecos = new Array();
+            $("#tabTelefones").children().each(function (index, item) {
+                // item
+                var id = $(item).find('.idTelefone').text();
+                var numero = $(item).find('.numeroTelefone').text();
+
+                var ing = new Object();
+                ing.id = parseInt(id.trim()) || 0;
+                ing.Numero = numero.trim();
+                listaTelefones.push(ing);
+            });
+
+            $("#tabEnderecos").children().each(function (index, item) {
+                // item
+                var id = $(item).find('.idEndereco').text();
+                var rua = $(item).find('.ruaEndereco').text();
+                var bairro = $(item).find('.bairroEndereco').text();
+                var complemento = $(item).find('.complementoEndereco').text();
+                var cep = $(item).find('.cepEndereco').text();
+                var cidade = $(item).find('.cidadeEndereco').text();
+                var estado = $(item).find('.estadoEndereco').text();
+
+                var ing = new Object();
+                ing.id = parseInt(id.trim()) || 0;
+                ing.logradouro = rua.trim();
+                ing.bairro = bairro.trim();
+                ing.complemento = complemento.trim();
+                ing.cep = cep.trim();
+                ing.cidade = cidade.trim();
+                ing.estado = estado.trim();
+                listaEnderecos.push(ing);
+            });
+
+            var objEmpresa = {
+                Id: parseInt($('input[name="idEmpresa"]').val()) || 0,
+                RazaoSocial: $('input[name = "txtrazaosocial"]').val(),
+                NomeFantasia: $('input[name = "txtnomefantasia"]').val(),
+                Descricao: $('input[name = "txtdescricao"]').val(),
+                Cnae: $('input[name = "cnaeCodigo"]').val(),
+                Cnpj: $('input[name = "txtcnpj"]').val(),
+                Username: $('input[name = "txtemail"]').val()
+            }
+            var objUsuario = {
+                Username: $('input[name = "txtemail"]').val(),
+                Senha: $("#txtsenha").val() == "Hoje não haha" ? "|" : $("#txtsenha").val()
+            }
+            var obj = {
+                Empresa: objEmpresa,
+                Enderecos: listaEnderecos,
+                Telefones: listaTelefones,
+                Usuario: objUsuario
+            }
+
+            console.log(JSON.stringify(obj));
+            $.ajax({
+                url: "/Empresa/Salvar",
+                type: "POST",
+                dataType: "json",
+                contentType: 'application/json; charset=UTF-8',
+                data: JSON.stringify(obj),
+                error: (data) => {
+                    console.log(data.responseText);
+                    $("#ModalFailure").modal("show");
+                },
+                success: function (data) {
+                    console.log('Success', data);
+                    $("#ModalSuccess").modal("show");
+                }
+            });
+        }
+
+        function excluir(botao) {
+            $(botao).parent().parent().remove();
+        }
+
+        $(document).ready(function () {
+            $("#txtcnpj").mask('00.000.000/0000-00', { reverse: true });
+            $('#NumeroTelefone').mask('(00)0000-00000');
+
+            $("#btnEnderecoadicionar").on('click', () => {
+                var logradouro, numero, complemento, cidade, estado, pais, id;
+                id = $('#idEndereco').val() || 0;
+                numero = $("#txtnumero").val();
+                logradouro = $("#txtrua").val() + ", " + numero;
+                complemento = $("#txtcomplemento").val();
+                cep = $("#txtcep").val();
+                bairro = $("#txtbairro").val();
+                cidade = $("#txtcidade").val();
+                estado = $("#txtestado").val();
+
+                if (id == 0) {
+                    var linha = $('<tr>');
+                    var col1, col2, col3, col4, col5, col6, col7;
+                    col0 = $('<td>', { text: "", class: 'idEndereco' });
+                    col1 = $('<td>', { text: logradouro, class: 'ruaEndereco' });
+                    col2 = $('<td>', { text: bairro, class: 'bairroEndereco' });
+                    col3 = $('<td>', { text: complemento, class: 'complementoEndereco' });
+                    col4 = $('<td>', { text: cep, class: 'cepEndereco' });
+                    col5 = $('<td>', { text: cidade, class: 'cidadeEndereco' });
+                    col6 = $('<td>', { text: estado, class: 'estadoEndereco' });
+                    col7 = $('<td>');
+                    col8 = $('<td>');
+
+                    var buttonEdit = $("<button>", {
+                        class: 'btn',
+                        type: 'button',
+                        onclick: 'editTelefone(this)'
+                    });
+                    col7.append(buttonEdit);
+
+                    var i = $("<i>", { class: 'bi bi-pencil' });
+                    buttonEdit.append(i);
+
+                    var buttonDel = $("<button>", {
+                        class: 'btn btnexcluir',
+                        type: 'button',
+                        onclick: 'excluir(this)'
+                    });
+                    col8.append(buttonDel);
+                    i = $("<i>", { class: 'bi bi-trash' });
+                    buttonDel.append(i);
+
+                    linha.append(col0).append(col1).append(col2).append(col3).append(col4).append(col5).append(col6).append(col7).append(col8);
+                    $("#tabEnderecos").append(linha);
+                }
+                else {
+                    $('.idEnderecoEdit')[0].innerText = id;
+                    $('.idEnderecoEdit').removeClass('idEdit');
+                    $('.cepEdit')[0].innerText = cep;
+                    $('.cepEdit').removeClass('cepEdit');
+                    $('.logradouroEdit')[0].innerText = logradouro;
+                    $('.logradouroEdit').removeClass('logradouroEdit');
+                    $('.complementoEdit')[0].innerText = complemento;
+                    $('.complementoEdit').removeClass('complementoEdit');
+                    $('.bairroEdit')[0].innerText = bairro;
+                    $('.bairroEdit').removeClass('bairroEdit');
+                    $('.cidadeEdit')[0].innerText = cidade;
+                    $('.cidadeEdit').removeClass('cidadeEdit');
+                    $('.estadoEdit')[0].innerText = estado;
+                    $('.estadoEdit').removeClass('estadoEdit');
+                }
+
+                //fecha a modal
+                $("#idEndereco").val("");
+                $("#txtrua").val("");
+                $("#txtnumero").val("");
+                $("#txtcomplemento").val("");
+                $("#txtbairro").val("");
+                $("#txtcidade").val("");
+                $("#txtcep").val("");
+                $("#txtestado").val("");
+                $("#ModalCriaEndereco").modal('hide');
+                $("#ModalEndereco").modal("show");
+            })
+
+            $("#btnTelefoneadicionar").on('click', () => {
+                var numero, id;
+                $("#spanTelefone").text("");
+                numero = $("#NumeroTelefone").val();
+                id = $("#IdTelefone").val() || 0;
+
+                //validar se já existe
+                var existe = false;
+                $("#tabTelefones").children().find(".numeroTelefone").each(function (index, ele) {
+                    if ($(ele).text() == numero)
+                        existe = true;
+                });
+
+                //criar linha
+                if (!existe) {
+                    if (validarTelefone(numero)) {
+                        if (id == 0) {
+                            var linha = $('<tr>');
+                            var col1, col2;
+                            col1 = $('<td>', { text: "", class: 'idTelefone' });
+                            col2 = $('<td>', { text: numero, class: 'numeroTelefone' });
+                            col3 = $('<td>');
+                            col4 = $('<td>');
+
+                            var buttonEdit = $("<button>", {
+                                class: 'btn',
+                                type: 'button',
+                                onclick: 'editTelefone(this)'
+                            });
+                            col3.append(buttonEdit);
+
+                            var i = $("<i>", { class: 'bi bi-pencil' });
+                            buttonEdit.append(i);
+
+                            var buttonDel = $("<button>", {
+                                class: 'btn btnexcluir',
+                                type: 'button',
+                                onclick: 'excluir(this)'
+                            });
+                            col4.append(buttonDel);
+
+                            i = $("<i>", { class: 'bi bi-trash' });
+                            buttonDel.append(i);
+
+                            linha.append(col1).append(col2).append(col3).append(col4);
+                            $("#tabTelefones").append(linha);
+                        }
+                        else {
+                            $('.idEdit')[0].innerText = id;
+                            $('.numeroEdit')[0].innerText = numero;
+                            $('.idEdit').removeClass('idEdit');
+                            $('.numeroEdit').removeClass('numeroEdit');
+                        }
+                        //fecha a modal
+                        $("#IdTelefone").val("");
+                        $("#NumeroTelefone").val("");
+                        $("#ModalCriaTelefone").modal('hide');
+                        $("#ModalTelefone").modal("show");
+                    }
+                    else {
+                        $("#spanTelefone").text("O número é inválido!");
+                    }
+                }
+                else {
+                    $("#spanTelefone").text("Número já foi adicionado!");
+                }
+            })
+
+
+            $("#btnsalvar").on('click', function () {
+                $("#mensagem").html("");
+                var validacao = true;
+                var mensagem = "";
+                if ($("#txtrazaosocial").val() == "") {
+                    validacao = false;
+                    mensagem = "Informe a Razão Social.";
+                }
+                if ($("#txtnomefantasia").val() == "") {
+                    validacao = false;
+                    mensagem = "Informe o nome fantasia.";
+                }
+                if ($("#txtcnpj").val() == "") {
+                    validacao = false;
+                    mensagem = "Informe o CNPJ.";
+                }
+                if ($("#cnae").val() == "") {
+                    validacao = false;
+                    mensagem = "Informe o CNAE."
+                }
+                if ($("#txtsenha").val() == "") {
+                    validacao = false;
+                    mensagem = "Informe uma senha."
+                }
+                if ($("#txtconfirmasenha").val() == "") {
+                    validacao = false;
+                    mensagem = "Confirme a senha."
+                }
+                if ($("#txtemail").val() == "") {
+                    validacao = false;
+                    mensagem = "Informe o e-mail."
+                }
+                if ($("#tabTelefones").children().length < 1) {
+                    validacao = false;
+                    mensagem = "Insira pelo menos um telefone."
+                }
+                if ($("#tabEnderecos").children().length < 1) {
+                    validacao = false;
+                    mensagem = "Insira pelo menos um endereço."
+                }
+
+                if (validacao) {
+                    salvarEmpresa();
+                }
+                else {
+                    $("#mensagem").addClass('alert-danger').html(mensagem);
+                    bootbox.alert(mensagem);
+                }
+            });
+
+            $("#cnaeDescricao").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: "/Cnae/BuscarAtividade",
+                        type: "GET",
+                        dataType: "json",
+                        data: { nome: request.term },
+                        success: function (data) {
+                            console.log(data)
+                            response($.map(data, (item) => {
+                                return {
+                                    label: item.descSubclasse,
+                                    value: item.codCnae
+                                };
+                            }))
+                        }
+                    })
+                },
+                minLength: 2,
+                select: function (event, ui) {
+                    event.preventDefault();
+                    $(this).val(ui.item.label);
+                    $("#cnaeCodigo").val(ui.item.value);
+                },
+                focus: function (event, ui) {
+                    event.preventDefault();
+                    $("#cnaeDescricao").val(ui.item.label);
+                }
+            });
+
+            $("#btnCnaeadicionar").on('click', function () {
+                var cnae, ele;
+                cnae = $("#cnaeCodigo").val() + "  |  " + $("#cnaeDescricao").val();
+                ele = document.createElement("p");
+                ele.innerText = cnae;
+                $("#cnae").val(cnae);
+                $("#cnaeDescricao").val("");
+                $(".modal-backdrop").hide();
+                $("#ModalCnae").modal('hide');
+            });
+
+            $("#txtcep").blur(() => {
+                $("#spancep").text("");
+                console.log("focusOut");
+
+                if ($("#txtcep").val().length == 8) {
+                    var url = "https://viacep.com.br/ws/" + $("#txtcep").val() + "/json/";
+
+                    $.getJSON(url, function (data) {
+                        console.log(data);
+                        var rua = data.logradouro;
+                        var bairro = data.bairro;
+                        var cidade = data.localidade;
+                        var estado = data.uf;
+                        var complemento = data.complemento;
+
+                        if (rua != undefined) {
+                            $("#txtrua").val(rua);
+                            $("#txtbairro").val(bairro);
+                            $("#txtcomplemento").val(complemento);
+                            $("#txtcidade").val(cidade);
+                            $("#txtestado").val(estado);
+                        } else {
+                            $("#spancep").text("O CEP informado é inexistente");
+                        }
+                    });
+                } else {
+                    $("#spancep").text("O CEP informado é inexistente");
+                }
+            });
+        });
+    </script>
+}
+
+
+

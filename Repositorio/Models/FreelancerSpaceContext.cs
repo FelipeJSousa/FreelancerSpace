@@ -627,6 +627,13 @@ namespace Repositorio.Models
             {
                 entity.ToTable("Telefone");
 
+                entity.Property(e => e.Ativo)
+                    .IsRequired()
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("('S')")
+                    .IsFixedLength(true);
+
                 entity.Property(e => e.Numero)
                     .IsRequired()
                     .HasMaxLength(14)
